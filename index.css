@@ -13,9 +13,14 @@ main {
   margin: 0 auto;
 }
 
+section {
+  z-index: -1;
+}
+
 section button {
   background-color: azure;
   width: 20%;
+  height: 145px;
   margin-left: 50px;
   padding: 20px;
   border-radius: 20px;
@@ -29,8 +34,9 @@ section button:hover {
   border: 2px solid red;
 }
 
-.chosen {
-  background-color: black;
+#chosen {
+  background-image: url('img/netherlands.png');
+  background-repeat: no-repeat;
   color: white;
   border: 2px solid red;
 }
