@@ -6,7 +6,7 @@ body {
 header {
   text-align: center;
   font-size: 100%;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 main {
@@ -19,5 +19,10 @@ section {
   margin: 0 auto;
   width: 500px;
   height: 200px;
+  text-align: center;
+}
+
+footer {
+  margin: 50px;
   text-align: center;
 }

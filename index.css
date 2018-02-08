@@ -9,17 +9,24 @@ header {
 }
 
 main {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
+  text-align: center;
+}
+
+section {
+  width: 80%;
+  margin: 30px auto;
 }
 
 section button {
   background-color: azure;
-  width: 20%;
-  margin-left: 50px;
-  padding: 20px;
+  width: 218px;
+  height: 145px;
+  margin: 20px;
   border-radius: 20px;
   text-align: center;
+  font-size: 1.4em;
   border: 2px solid black;
 }
 
@@ -29,12 +36,18 @@ section button:hover {
   border: 2px solid red;
 }
 
-.chosen {
-  background-color: black;
-  color: white;
+#chosen {
+  color: black;
   border: 2px solid red;
+}
+
+div button {
+  width: 100px;
+  margin: 0 auto;
 }
 
 button:focus {
   outline: 0;
 }
+
+
