@@ -6,23 +6,38 @@ body {
 header {
   text-align: center;
   font-size: 100%;
-  margin-bottom: 50px;
-}
-
-main {
-  width: 100%;
-  margin: 0 auto;
+  margin: 50px 0 100px 0;
+  font-family: 'Boogaloo', cursive;
+  font-size: 1.5em;
 }
 
 section {
   background-color: azure;
   margin: 0 auto;
-  width: 500px;
-  height: 200px;
+  width: 600px;
+  height: 300px;
   text-align: center;
+  border: 15px groove #2165BB;
+}
+
+section h1 {
+  width: 300px;
+  line-height: 2em;
+  margin: 110px auto;
+  text-align: center;
+  font-size: 2.5em;
+  font-family: 'Boogaloo', cursive;
+}
+
+span {
+  color: #2165BB;
+}
+
+button {
+  margin: 30px;
 }
 
 footer {
-  margin: 50px;
+  margin: 100px 0 50px 0;
   text-align: center;
 }
