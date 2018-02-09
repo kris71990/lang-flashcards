@@ -11,7 +11,7 @@ header {
   font-size: 1.5em;
 }
 
-section {
+#card {
   background-color: azure;
   margin: 0 auto;
   width: 600px;
@@ -20,13 +20,22 @@ section {
   border: 15px groove #2165BB;
 }
 
-section h1 {
+#card h1 {
   width: 300px;
   line-height: 2em;
   margin: 110px auto;
   text-align: center;
   font-size: 2.5em;
   font-family: 'Boogaloo', cursive;
+}
+
+#translation {
+  text-align: center;
+}
+
+#buttons {
+  margin: 0 auto;
+  text-align: center;
 }
 
 span {

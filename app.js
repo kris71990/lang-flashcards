@@ -1,7 +1,9 @@
 'use strict';
 
-var sectionEl = document.getElementById('card');
+var cardSectionEl = document.getElementById('card');
 var headerEl = document.getElementsByTagName('h1')[0];
+var translationSectionEl = document.getElementById('translation');
+var buttonSectionEl = document.getElementById('buttons');
 
 Flashcard.allFlashcards = [];
 Flashcard.currentFlashcards = [];
@@ -199,32 +201,50 @@ function randomNum() {
 // use random number generator to choose and render a random card from the
 // currentFlashcards array
 function renderCard() {
-  sectionEl.innerHTML = '';
+  cardSectionEl.innerHTML = '';
+  translationSectionEl.innerHTML = '';
+  buttonSectionEl.innerHTML = '';
   var chosenDirection = JSON.parse(localStorage.getItem('translation-direction'));
   var rand = randomNum();
   var wordEl = document.createElement('h1');
+  var currentWord = Flashcard.currentFlashcards[rand];
 
   if (chosenDirection === 'native-eng') {
-    wordEl.textContent = Flashcard.currentFlashcards[rand].native;
+    wordEl.textContent = currentWord.native;
   } else if (chosenDirection === 'eng-native') {
-    wordEl.textContent = Flashcard.currentFlashcards[rand].eng;
+    wordEl.textContent = currentWord.eng;
   }
-  sectionEl.appendChild(wordEl);
-  renderNextButton();
+  cardSectionEl.appendChild(wordEl);
+  cardSectionEl.addEventListener('click', function renderTranslation() {
+    var translation = document.createElement('h2');
+    if (chosenDirection === 'native-eng') {
+      translation.textContent = currentWord.eng;
+    } else if (chosenDirection === 'eng-native') {
+      translation.textContent = currentWord.native;
+    }
+    translationSectionEl.appendChild(translation);
+    renderNextButton();
+    cardSectionEl.removeEventListener('click', renderTranslation);
+  });
 }
 
 function renderNextButton() {
   var nextButton = document.createElement('button');
   nextButton.textContent = 'Next Card';
-  sectionEl.appendChild(nextButton);
-  sectionEl.addEventListener('click', function(e) {
-    if (e.srcElement.textContent !== 'Next Card') {
-      return;
-    } else {
-      renderCard();
-    }
-  });
+  buttonSectionEl.appendChild(nextButton);
+  buttonSectionEl.addEventListener('click', nextCard);
 }
+
+
+function nextCard(e) {
+  if (e.srcElement.textContent !== 'Next Card') {
+    return;
+  } else {
+    removeEventListener('click', nextCard);
+    renderCard();
+  }
+}
+
 
 renderLang();
 filterCards();
