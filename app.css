@@ -1,28 +1,75 @@
 body {
   width: 100%;
+  padding: 0;
+  margin: 0;
   background-color: antiquewhite;
 }
 
 header {
+  margin: 50px 20px;
   text-align: center;
-  font-size: 100%;
-  margin-bottom: 50px;
 }
 
-main {
-  width: 100%;
+header h1 {
+  width: 50%;
   margin: 0 auto;
+  font-family: 'Boogaloo', cursive;
+  font-size: 2.5em;
 }
 
-section {
+header a {
+  width: 10%;
+  float: right;
+}
+
+#card {
   background-color: azure;
   margin: 0 auto;
-  width: 500px;
-  height: 200px;
+  width: 600px;
+  height: 300px;
   text-align: center;
+  border: 15px groove #2165BB;
+}
+
+#card h1 {
+  width: 300px;
+  line-height: 2em;
+  margin: 110px auto;
+  text-align: center;
+  font-size: 2.5em;
+  font-family: 'Boogaloo', cursive;
+}
+
+#translation {
+  text-align: center;
+  height: 60px;
+}
+
+#buttons {
+  margin: 0 auto;
+  text-align: center;
+  height: 60px;
+}
+
+span {
+  color: #2165BB;
+}
+
+button {
+  border-radius: 10px;
+  background-color: azure;
+  padding: 5px 10px;
+  font-weight: bold;
+  font-size: 1.2em;
+  font-family: Arial, Helvetica, sans-serif;
+  border: 4px solid #2165BB;
+}
+
+button:focus {
+  outline: 0;
 }
 
 footer {
-  margin: 50px;
+  margin-top: 20px;
   text-align: center;
 }
