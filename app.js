@@ -308,6 +308,7 @@ function renderCard() {
       translation.textContent = currentWord.native;
     }
     translationSectionEl.appendChild(translation);
+
     renderNextButton();
     cardSectionEl.removeEventListener('click', renderTranslation);
   });
