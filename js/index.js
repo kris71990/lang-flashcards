@@ -41,7 +41,6 @@ function selectLanguage(e) {
     }
   });
 
-
   for (let x = 0; x < langs.length; x++) {
     if (langs[x].id !== 'chosen') {
       langs[x].style.background = '';
