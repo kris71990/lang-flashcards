@@ -1,37 +1,48 @@
 'use strict';
 
-var sectionEl = document.getElementById('language');
-var divEl = document.getElementById('to-cards');
-var counter = 0;
+const sectionEl = document.getElementById('language');
+const divEl = document.getElementById('to-cards');
+let counter = 0;
 
 sectionEl.addEventListener('click', selectLanguage);
 
 // targets selected language and responds appropriately to user
 function selectLanguage(e) {
-  var langs = document.querySelectorAll('.lang');
-  var target = e.srcElement;
+  const langs = document.querySelectorAll('.lang');
+  const target = e.srcElement;
 
   if (!e.target.name) {
     return;
   }
 
-  for (var i = 0; i < langs.length; i++) {
+  for (let i = 0; i < langs.length; i++) {
     langs[i].id = '';
   }
 
   target.setAttribute('id', 'chosen');
 
-  // when clicked, set flag of country of language to background image
-  if (e.target.name === 'Dutch') {
-    e.target.setAttribute('style', 'background-image: url(img/netherlands.png); background-repeat: no-repeat');
-    // target.style.background = 'url(img/netherlands.png)';
-  } else if (e.target.name === 'German') {
-    e.target.setAttribute('style', 'background-image: url(img/germany.png); background-repeat: no-repeat');
-  } else if (e.target.name === 'French') {
-    e.target.setAttribute('style', 'background-image: url(img/france.png); background-repeat: no-repeat');
-  }
+  $(document).ready(function() {
+    const $chosen = $('#chosen');
+    if ($chosen[0].name === 'Dutch') {
+      $chosen.css({
+        backgroundImage: 'url(img/netherlands.png)',
+        backgroundRepeat: 'no-repeat'
+      });
+    } else if ($chosen[0].name === 'French') {
+      $chosen.css({
+        backgroundImage: 'url(img/france.png)',
+        backgroundRepeat: 'no-repeat'
+      });
+    } else if ($chosen[0].name === 'German') {
+      $chosen.css({
+        backgroundImage: 'url(img/germany.png)',
+        backgroundRepeat: 'no-repeat'
+      });
+    }
+  });
 
-  for (var x = 0; x < langs.length; x++) {
+
+  for (let x = 0; x < langs.length; x++) {
     if (langs[x].id !== 'chosen') {
       langs[x].style.background = '';
     }
@@ -42,9 +53,10 @@ function selectLanguage(e) {
   // counter prevents multiple creation and appending of buttons and changes button text
   // depending on language selection
   if (counter === 0) {
-    var nativeToEngEl = document.createElement('button');
+    const nativeToEngEl = document.createElement('button');
+    const engToNativeEl = document.createElement('button');
+
     nativeToEngEl.setAttribute('id', 'native-eng');
-    var engToNativeEl = document.createElement('button');
     engToNativeEl.setAttribute('id', 'eng-native');
     nativeToEngEl.textContent = target.name + ' to English';
     engToNativeEl.textContent = 'English to ' + target.name;
@@ -61,8 +73,8 @@ function selectLanguage(e) {
     });
 
   } else if (counter > 0) {
-    var nativetoEngButton = document.getElementById('native-eng');
-    var engtoNativeButton = document.getElementById('eng-native');
+    const nativetoEngButton = document.getElementById('native-eng');
+    const engtoNativeButton = document.getElementById('eng-native');
     nativetoEngButton.textContent = target.name + ' to English';
     engtoNativeButton.textContent = 'English to ' + target.name;
   }
