@@ -24,9 +24,11 @@ function selectLanguage(e) {
   $(document).ready(function() {
     const $chosen = $('#chosen');
     if ($chosen[0].name === 'Dutch') {
-      $chosen.css({
-        backgroundImage: 'url(img/netherlands.png)',
-        backgroundRepeat: 'no-repeat'
+      $chosen.animate({opacity: 0.5}, 1000, function() {
+        $chosen.css({
+          backgroundImage: 'url(img/netherlands.png)',
+          backgroundRepeat: 'no-repeat'
+        });
       });
     } else if ($chosen[0].name === 'French') {
       $chosen.css({
