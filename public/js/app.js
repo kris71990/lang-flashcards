@@ -1,9 +1,9 @@
 'use strict';
 
-var cardSectionEl = document.getElementById('card');
-var headerEl = document.getElementsByTagName('h1')[0];
-var translationSectionEl = document.getElementById('translation');
-var buttonSectionEl = document.getElementById('buttons');
+const cardSectionEl = document.getElementById('card');
+const headerEl = document.getElementsByTagName('h1')[0];
+const translationSectionEl = document.getElementById('translation');
+const buttonSectionEl = document.getElementById('buttons');
 
 Flashcard.allFlashcards = [];
 Flashcard.currentFlashcards = [];
@@ -266,10 +266,10 @@ function renderLang() {
 
 // collects only cards from the chosen language
 function filterCards() {
-  var chosenLang = JSON.parse(localStorage.getItem('language'));
-  for (var i in Flashcard.allFlashcards) {
-    var values = Object.values(Flashcard.allFlashcards[i]);
-    for (var j in values) {
+  const chosenLang = JSON.parse(localStorage.getItem('language'));
+  for (let i in Flashcard.allFlashcards) {
+    let values = Object.values(Flashcard.allFlashcards[i]);
+    for (let j in values) {
       if (values[j] === chosenLang) {
         Flashcard.currentFlashcards.push(Flashcard.allFlashcards[i]);
       }
@@ -289,10 +289,10 @@ function renderCard() {
   cardSectionEl.innerHTML = '';
   translationSectionEl.innerHTML = '';
   buttonSectionEl.innerHTML = '';
-  var chosenDirection = JSON.parse(localStorage.getItem('translation-direction'));
-  var rand = randomNum();
-  var wordEl = document.createElement('h1');
-  var currentWord = Flashcard.currentFlashcards[rand];
+  const chosenDirection = JSON.parse(localStorage.getItem('translation-direction'));
+  const rand = randomNum();
+  const wordEl = document.createElement('h1');
+  const currentWord = Flashcard.currentFlashcards[rand];
 
   if (chosenDirection === 'native-eng') {
     wordEl.textContent = currentWord.native;
@@ -301,7 +301,7 @@ function renderCard() {
   }
   cardSectionEl.appendChild(wordEl);
   cardSectionEl.addEventListener('click', function renderTranslation() {
-    var translation = document.createElement('h2');
+    const translation = document.createElement('h2');
     if (chosenDirection === 'native-eng') {
       translation.textContent = currentWord.eng;
     } else if (chosenDirection === 'eng-native') {
@@ -315,7 +315,7 @@ function renderCard() {
 }
 
 function renderNextButton() {
-  var nextButton = document.createElement('button');
+  const nextButton = document.createElement('button');
   nextButton.textContent = 'Next';
   buttonSectionEl.appendChild(nextButton);
   buttonSectionEl.addEventListener('click', nextCard);
