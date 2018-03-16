@@ -1,5 +1,8 @@
 'use strict';
 
+var app = app || {};
+const __API_URL__ = 'http://localhost:3000';
+
 const cardSectionEl = document.getElementById('card');
 const headerEl = document.getElementsByTagName('h1')[0];
 const translationSectionEl = document.getElementById('translation');
@@ -16,6 +19,14 @@ function Flashcard(lang, native, eng, type) {
   this.type = type;
   Flashcard.allFlashcards.push(this);
 }
+
+
+
+
+
+
+
+
 
 // create objects for all flashcards in all languages
 new Flashcard('German', 'danke', 'thank you', 'phrase');
@@ -230,7 +241,6 @@ new Flashcard('Dutch', 'peper', 'pepper', 'food');
 new Flashcard('French', 'sucre', 'sugar', 'food');
 new Flashcard('German', 'zucker', 'sugar', 'food');
 new Flashcard('Dutch', 'suiker', 'sugar', 'food');
-
 new Flashcard('French', 'Lundi', 'Monday', 'calendar');
 new Flashcard('German', 'Montag', 'Monday', 'calendar');
 new Flashcard('Dutch', 'Maandag', 'Monday', 'calendar');

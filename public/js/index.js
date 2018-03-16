@@ -21,27 +21,23 @@ function selectLanguage(e) {
 
   target.setAttribute('id', 'chosen');
 
-  $(document).ready(function() {
-    const $chosen = $('#chosen');
-    if ($chosen[0].name === 'Dutch') {
-      $chosen.animate({opacity: 0.5}, 1000, function() {
-        $chosen.css({
-          backgroundImage: 'url(img/netherlands.png)',
-          backgroundRepeat: 'no-repeat'
-        });
-      });
-    } else if ($chosen[0].name === 'French') {
-      $chosen.css({
-        backgroundImage: 'url(img/france.png)',
-        backgroundRepeat: 'no-repeat'
-      });
-    } else if ($chosen[0].name === 'German') {
-      $chosen.css({
-        backgroundImage: 'url(img/germany.png)',
-        backgroundRepeat: 'no-repeat'
-      });
-    }
-  });
+  const $chosen = $('#chosen');
+  if ($chosen[0].name === 'Dutch') {
+    $chosen.css({
+      backgroundImage: 'url(img/netherlands.png)',
+      backgroundRepeat: 'no-repeat'
+    });
+  } else if ($chosen[0].name === 'French') {
+    $chosen.css({
+      backgroundImage: 'url(img/france.png)',
+      backgroundRepeat: 'no-repeat'
+    });
+  } else if ($chosen[0].name === 'German') {
+    $chosen.css({
+      backgroundImage: 'url(img/germany.png)',
+      backgroundRepeat: 'no-repeat'
+    });
+  }
 
   for (let x = 0; x < langs.length; x++) {
     if (langs[x].id !== 'chosen') {
