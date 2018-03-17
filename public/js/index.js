@@ -45,7 +45,7 @@ function selectLanguage(e) {
     }
   }
 
-  localStorage.setItem('language', JSON.stringify(target.name));
+  localStorage.setItem('language', target.name);
 
   // counter prevents multiple creation and appending of buttons and changes button text
   // depending on language selection
@@ -65,7 +65,7 @@ function selectLanguage(e) {
         return;
       }
       sectionEl.removeEventListener('click', selectLanguage);
-      localStorage.setItem('translation-direction', JSON.stringify(e.target.id));
+      localStorage.setItem('translation-direction', e.target.id);
       window.location.href = 'app.html';
     });
 

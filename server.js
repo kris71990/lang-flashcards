@@ -37,6 +37,6 @@ app.get('/api/german/words', (req, res) => {
 });
 
 
-app.get('/', (req, res) => res.send('hello world'));
-app.get('*', (req, res) => res.redirect(CLIENT_URL));
+// app.get('/', (req, res) => res.send('hello world'));
+// app.get('*', (req, res) => res.redirect(CLIENT_URL));
 app.listen(PORT, () => console.log(`Listening on Port: ${PORT}`));
