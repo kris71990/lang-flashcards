@@ -1,0 +1,14 @@
+// DB loading templates
+
+INSERT INTO french(english, french, type)
+VALUES('', '', '');
+
+
+INSERT INTO german(english, german, type)
+VALUES('', '', '');
+
+
+INSERT INTO dutch(english, dutch, type)
+VALUES('to be', 'zijn', 'verb'), ('to have', 'hebben', 'verb'), ('after', 'na', 'preposition'), ('before', 'voor', 'preposition'), ('in (place)', 'in', 'preposition'), ('in (time)', 'over', 'preposition'), ('since', 'sinds', 'preposition'), ('until', 'tot', 'preposition'), ('how?', 'hoe?', 'question'), ('what?', 'wat?', 'question'), ('when?', 'wanneer?', 'question'), ('where?', 'waar?', 'question'), ('who?', 'wie?', 'question'), ('why?', 'waarom?', 'question'), ('to thank', 'danken', 'verb'), ('to ask', 'vragen', 'verb'), ('to travel', 'reizen', 'verb'), ('will', 'zullen', 'verb');
+
+----------
