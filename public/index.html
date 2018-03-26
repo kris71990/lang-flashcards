@@ -3,24 +3,47 @@
   <head>
     <meta charset="UTF-8">
     <title>Language Flashcards</title>
+    <link href="https://fonts.googleapis.com/css?family=Boogaloo" rel="stylesheet">
     <link href="css/index.css" type="text/css" rel="stylesheet">
   </head>
   <body>
     <header>
-      <h1>Language Flashcards</h1>
-      <p>Learn vocabulary in your chosen language with these flaschards</p>
+      <section id="index-header" class="container">
+        <h1>Language Flashcards</h1>
+        <p>Learn vocabulary in your chosen language with these flaschards</p>
+      </section>
+
+      <section id="cards-header" class="container"> 
+        <h1></h1>
+        <p>Click on card to reveal translation</p>
+        <a href="index.html">Back to index</a>
+      </section>
     </header>
     <main>
-      <h3>Choose a language:</h3>
-      <section id="language">
-        <button class="lang" name="Dutch">Dutch</button>
-        <button class="lang" name="German">German</button>
-        <button class="lang" name="French">French</button>
+      <section id="index-main" class="container">
+        <h3>Choose a language:</h3>
+        <section id="language">
+          <button class="lang" name="Dutch">Dutch</button>
+          <button class="lang" name="German">German</button>
+          <button class="lang" name="French">French</button>
+        </section>
+        <div id="to-cards"></div>
       </section>
-      <div id="to-cards"></div>
+
+      <section id="cards-main" class="container">
+        <section id="card"></section>
+        <section id="translation"></section>
+        <section id="buttons"></section>
+      </section>
     </main>
-    <footer></footer>
+
+    <footer>
+      <p>&copy Kris - 2018</p>
+    </footer>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="js/index.js" type="text/javascript"></script>
+    <script src="js/models/app.js" type="text/javascript"></script>
+    <script src="js/views/index-view.js" type="text/javascript"></script>
+    <script src="js/views/card-view.js" type="text/javascript"></script>
   </body>
 </html>
