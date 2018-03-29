@@ -3,10 +3,10 @@
 var app = app || {};
 const __API_URL__ = 'http://localhost:3000';
 
-const cardSectionEl = document.getElementById('card');
-const headerEl = document.getElementsByTagName('h1')[0];
-const translationSectionEl = document.getElementById('translation');
-const buttonSectionEl = document.getElementById('buttons');
+// const cardSectionEl = document.getElementById('card');
+// const headerEl = document.getElementsByTagName('h1')[0];
+// const translationSectionEl = document.getElementById('translation');
+// const buttonSectionEl = document.getElementById('buttons');
 
 
 (module => {
@@ -14,17 +14,18 @@ const buttonSectionEl = document.getElementById('buttons');
 
   // flaschard constructor
   function Flashcard(card) {
+    let lang = localStorage.language.toLowerCase();
     this.eng = card.english;
-    this.native = card[localStorage.language.toLowerCase()];
+    this[lang] = card[lang];
     this.type = card.type;
   }
 
   Flashcard.loadVocab = words => {
     Flashcard.all = words.map(card => new Flashcard(card));
+    localStorage.setItem('lang-cards', JSON.stringify(Flashcard.all));
   };
 
   Flashcard.fetchVocab = lang => {
-    console.log(lang);
     $.get(`${__API_URL__}/api/${lang}/words`)
       .then(Flashcard.loadVocab)
       .catch(console.error);
