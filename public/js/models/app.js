@@ -10,24 +10,27 @@ const buttonSectionEl = document.getElementById('buttons');
 
 
 (module => {
-
-  let lang = localStorage.language.toLowerCase();
   Flashcard.all = [];
 
   // flaschard constructor
   function Flashcard(card) {
     this.eng = card.english;
-    this.native = card[lang];
+    this.native = card[localStorage.language.toLowerCase()];
     this.type = card.type;
   }
 
-  Flashcard.fetchAndLoadVocab = () => {
+  Flashcard.loadVocab = words => {
+    Flashcard.all = words.map(card => new Flashcard(card));
+  };
+
+  Flashcard.fetchVocab = lang => {
+    console.log(lang);
     $.get(`${__API_URL__}/api/${lang}/words`)
-      .then(words => Flashcard.all = words.map(card => new Flashcard(card)))
+      .then(Flashcard.loadVocab)
       .catch(console.error);
   };
 
-  module.Flaschard = Flashcard;
+  module.Flashcard = Flashcard;
 })(app);
 
 
