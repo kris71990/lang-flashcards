@@ -75,7 +75,6 @@ var app = app || {};
         localStorage.setItem('translation-direction', e.target.id);
         let lang = localStorage.language.toLowerCase();
         module.Flashcard.fetchVocab(lang);
-        module.cardView.initCards();
       });
 
     } else if (counter > 0) {
