@@ -94,6 +94,13 @@ span {
   color: #2165BB;
 }
 
+#card {
+  width: 50%;
+  margin: 10% auto 5% auto;
+  border: 10px ridge #2165BB;
+  background-color: azure;
+}
+
 #buttons button {
   border-radius: 10px;
   background-color: azure;
@@ -104,11 +111,11 @@ span {
   border: 4px solid #2165BB;
 }
 
-#buttons button:focus {
+#buttons:focus {
+  border: 2px solid red;
   outline: 0;
 }
 
 footer {
-  margin-top: 20px;
   text-align: center;
 }
