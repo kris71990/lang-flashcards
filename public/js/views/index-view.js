@@ -57,15 +57,15 @@ var app = app || {};
     // counter prevents multiple creation and appending of buttons and changes button text
     // depending on language selection
     if (counter === 0) {
-      const nativeToEngEl = document.createElement('button');
-      const engToNativeEl = document.createElement('button');
+      const $nativeToEng = $('<button></button>');
+      const $engToNative = $('<button></button>');
 
-      nativeToEngEl.setAttribute('id', 'native-eng');
-      engToNativeEl.setAttribute('id', 'eng-native');
-      nativeToEngEl.textContent = target.name + ' to English';
-      engToNativeEl.textContent = 'English to ' + target.name;
-      $('#to-cards').append(nativeToEngEl);
-      $('#to-cards').append(engToNativeEl);
+      $nativeToEng.attr('id', 'native-eng');
+      $engToNative.attr('id', 'eng-native');
+      $nativeToEng.text(`${target.name} to English`);
+      $engToNative.text(`English to ${target.name}`);
+      $('#to-cards').append($nativeToEng);
+      $('#to-cards').append($engToNative);
 
       $('#to-cards').on('click', function(e) {
         if (e.target.id === 'to-cards') {
@@ -76,16 +76,15 @@ var app = app || {};
         let lang = localStorage.language.toLowerCase();
         module.Flashcard.fetchVocab(lang);
       });
-
     } else if (counter > 0) {
-      const nativetoEngButton = document.getElementById('native-eng');
-      const engtoNativeButton = document.getElementById('eng-native');
-      nativetoEngButton.textContent = target.name + ' to English';
-      engtoNativeButton.textContent = 'English to ' + target.name;
+      const $nativeToEng = $('#native-eng');
+      const $engToNative = $('#eng-native');
+      $nativeToEng.text(`${target.name} to English`);
+      $engToNative.text(`English to ${target.name}`);
     }
     counter += 1;
-
   };
+  
   module.indexView = indexView;
 })(app);
 

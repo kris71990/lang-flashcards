@@ -33,24 +33,26 @@ var app = app || {};
     const chosenDirection = localStorage['translation-direction'];
     const chosenLang = localStorage.language.toLowerCase();
     const rand = cardView.randomNum();
-    const wordEl = document.createElement('h1');
+    const $word = $('<h1></h1>').hide();
     const currentWord = module.Flashcard.all[rand];
 
     if (chosenDirection === 'native-eng') {
-      wordEl.textContent = currentWord[chosenLang];
+      $word.text(`${currentWord[chosenLang]}`);
     } else if (chosenDirection === 'eng-native') {
-      wordEl.textContent = currentWord.eng;
+      $word.text(`${currentWord.eng}`);
     }
 
-    $('#card').append(wordEl);
+    $('#card').append($word);
+    $($word).fadeIn(500);
     $('#card').on('click', function renderTranslation() {
-      const translation = document.createElement('h2');
+      const $translation = $('<h2></h2>').hide();
       if (chosenDirection === 'native-eng') {
-        translation.textContent = currentWord.eng;
+        $translation.text(`${currentWord.eng}`);
       } else if (chosenDirection === 'eng-native') {
-        translation.textContent = currentWord[chosenLang];
+        $translation.text(`${currentWord[chosenLang]}`);
       }
-      $('#translation').append(translation);
+      $('#translation').append($translation);
+      $translation.fadeIn(1000);
 
       cardView.renderNextButton();
       $('#card').off('click', renderTranslation);
@@ -58,9 +60,10 @@ var app = app || {};
   };
 
   cardView.renderNextButton = () => {
-    const nextButton = document.createElement('button');
-    nextButton.textContent = 'Next';
-    $('#buttons').append(nextButton);
+    const $next = $('<button></button>').hide();
+    $next.text('Next');
+    $('#buttons').append($next);
+    $next.fadeIn(1500);
     $('#buttons').on('click', cardView.nextCard);
   };
 
