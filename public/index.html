@@ -4,38 +4,53 @@
     <meta charset="UTF-8">
     <title>Language Flashcards</title>
     <link href="https://fonts.googleapis.com/css?family=Boogaloo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Aladin|Niconne" rel="stylesheet">
+    <!-- <link href="css/normalize.css" type="text/css" rel="stylesheet"> -->
+    <link href="css/reset.css" type="text/css" rel="stylesheet">
     <link href="css/index.css" type="text/css" rel="stylesheet">
   </head>
   <body>
     <header>
-      <section id="index-header" class="container">
-        <h1>Language Flashcards</h1>
-        <p>Learn vocabulary in your chosen language with these flaschards</p>
-      </section>
-
-      <section id="cards-header" class="container"> 
-        <h1></h1>
-        <p>Click on card to reveal translation</p>
-        <a href="index.html">Back to index</a>
-      </section>
+      <h1>Language Learner</h1>
+      <p>Learn a New Language Today!</p>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="#">Cards</a></li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Admin</a></li>
+        </ul>
+      </nav>
     </header>
-    <main>
-      <section id="index-main" class="container">
-        <h3>Choose a language:</h3>
-        <section id="language">
-          <button class="lang" name="Dutch">Dutch</button>
-          <button class="lang" name="German">German</button>
-          <button class="lang" name="French">French</button>
+    <div id="wrapper">
+      <div id="sub-header">
+        <section id="index-header" class="container">
+          <h4>Choose a language and your desired direction of translation to practice your vocabulary skills with these flashcards.</h4>
+          <h4>Or, try and learn a new language!</h4>
         </section>
-        <div id="to-cards"></div>
-      </section>
-
-      <section id="cards-main" class="container">
-        <section id="card"></section>
-        <section id="translation"></section>
-        <section id="buttons"></section>
-      </section>
-    </main>
+  
+        <section id="cards-header" class="container"> 
+          <h1></h1>
+          <p>Click on card to reveal translation</p>
+        </section>
+      </div>
+      <main>
+        <section id="index-main" class="container">
+          <section id="language">
+            <button class="lang" name="Dutch">Dutch</button>
+            <button class="lang" name="German">German</button>
+            <button class="lang" name="French">French</button>
+          </section>
+          <div id="to-cards"></div>
+        </section>
+  
+        <section id="cards-main" class="container">
+          <section id="card"></section>
+          <section id="translation"></section>
+          <section id="buttons"></section>
+        </section>
+      </main>
+    </div>
 
     <footer>
       <p>&copy Kris - 2018</p>

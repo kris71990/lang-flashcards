@@ -1,17 +1,86 @@
 body {
+  height: 100%;
   width: 100%;
-  padding: 0;
-  margin: 0;
   background-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 
+font-family: 'Aladin', cursive;
+font-family: 'Niconne', cursive;
+font-family: 'Boogaloo', cursive;
+*/
+
+header {
+  position: relative;
+  border: 5px ridge grey;
+}
+
+header h1 {
+  margin: 2% 0 2% 0;
+  padding-left: 15%;
+  width: 60%;
+  float: left;
+  font-family: 'Niconne', cursive;
+  font-size: 250%;
+  letter-spacing: 0.2em;
+  font-style: italic;
+}
+
+header p {
+  padding-left: 20%;
+  margin-bottom: 2%;
+  width: 60%;
+  float: left;
+  font-family: 'Aladin', cursive;
+  font-size: 130%;
+  letter-spacing: 0.1em;
+  font-style: italic;
+}
+
+header nav {
+  width: 20%;
+  position: absolute;
+  top: 16%;
+  right: 0;
+  float: right;
+}
+
+nav ul {
+  list-style: none;
+  padding-left: 0;
+  text-align: center;
+}
+
+nav ul li {
+  font-family: 'Aladin', cursive;
+  width: 50%;
+  margin: 1% 1%;
+  border: 2px solid green;
+  background-color: azure;
+  border-radius: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
 }
 
 #index-header {
   text-align: center;
-  margin-bottom: 100px;
+  margin: 2% 0 5% 0;
+}
+
+#index-header h4 {
+  line-height: 1.5em;
+  font-family: 'Aladin', cursive;
+  font-style: italic;
+  font-size: 1.2em;
+  letter-spacing: 0.05em;
 }
 
 #cards-header {
-  margin: 50px 20px;
+  margin: 3% 2% 0% 2%;
   text-align: center;
 }
 
@@ -22,9 +91,10 @@ body {
   font-size: 2.5em;
 }
 
-#cards-header a {
-  width: 10%;
-  float: right;
+#cards-header p {
+  font-family: 'Boogaloo', cursive;
+  margin: 1%;
+  font-size: 1.1em;
 }
 
 #card h1 {
@@ -36,6 +106,7 @@ body {
   font-family: 'Boogaloo', cursive;
 }
 
+
 #index-main {
   width: 100%;
   margin: 0 auto;
@@ -44,7 +115,7 @@ body {
 
 #language {
   width: 80%;
-  margin: 30px auto;
+  margin: 20px auto;
 }
 
 #language button {
@@ -56,6 +127,10 @@ body {
   text-align: center;
   font-size: 1.4em;
   border: 2px solid black;
+}
+
+#language button:focus {
+  outline: 0;
 }
 
 #language button:hover {
@@ -72,7 +147,6 @@ body {
 #to-cards button {
   width: 100px;
   margin: 0 10px;
-
 }
 
 #to-cards button:focus {
@@ -80,12 +154,14 @@ body {
 }
 
 #translation {
+  font-family: 'Boogaloo', cursive;
+  font-size: 1.5em;
   text-align: center;
-  height: 60px;
+  height: 30px;
 }
 
 #buttons {
-  margin: 0 auto;
+  margin: 2% auto;
   text-align: center;
   height: 60px;
 }
@@ -96,7 +172,8 @@ span {
 
 #card {
   width: 50%;
-  margin: 10% auto 5% auto;
+  margin: 5% auto;
+  margin-bottom: 2%;
   border: 10px ridge #2165BB;
   background-color: azure;
 }
@@ -111,11 +188,23 @@ span {
   border: 4px solid #2165BB;
 }
 
-#buttons:focus {
+#buttons button:focus {
   border: 2px solid red;
-  outline: 0;
+  outline: none;
+}
+
+#wrapper {
+  min-height: calc(100vh - 80px);
 }
 
 footer {
   text-align: center;
+  height: 80px;
+  border: 5px ridge grey;
+}
+
+footer p {
+  line-height: 80px;
+  margin: 0;
+  vertical-align: middle;
 }
