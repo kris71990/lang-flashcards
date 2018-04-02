@@ -84,11 +84,6 @@ nav ul li a {
   font-size: 2.5em;
 }
 
-#cards-header a {
-  width: 10%;
-  float: right;
-}
-
 #card h1 {
   width: 300px;
   line-height: 2em;
