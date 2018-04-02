@@ -84,7 +84,7 @@ var app = app || {};
     }
     counter += 1;
   };
-  
+
   module.indexView = indexView;
 })(app);
 
