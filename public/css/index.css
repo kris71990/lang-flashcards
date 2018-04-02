@@ -14,7 +14,8 @@ font-family: 'Boogaloo', cursive;
 
 header {
   position: relative;
-  border: 5px ridge grey;
+  border: 10px ridge grey;
+  background-color: #5693F2;
 }
 
 header h1 {
@@ -26,6 +27,8 @@ header h1 {
   font-size: 250%;
   letter-spacing: 0.2em;
   font-style: italic;
+  color: white;
+  text-shadow: 2px 2px black;
 }
 
 header p {
@@ -37,6 +40,8 @@ header p {
   font-size: 130%;
   letter-spacing: 0.1em;
   font-style: italic;
+  color: white;
+  text-shadow: 2px 2px black;
 }
 
 header nav {
@@ -200,11 +205,23 @@ span {
 footer {
   text-align: center;
   height: 80px;
-  border: 5px ridge grey;
+  border: 10px ridge grey;
+  background-color: #5693F2;
+  color: white;
+  text-shadow: 2px 2px black;
+  font-family: 'Aladin', cursive;
+  font-style: italic;
+  font-size: 1.3em;
 }
 
 footer p {
+  height: 80px;
   line-height: 80px;
-  margin: 0;
-  vertical-align: middle;
+  font-size: 1.2em;
+  color: white;
+}
+
+footer span {
+  font-size: 1.5em;
+  color: white;
 }

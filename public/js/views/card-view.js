@@ -39,15 +39,16 @@ var app = app || {};
     if (chosenDirection === 'native-eng') {
       $word.text(`${currentWord[chosenLang]}`);
     } else if (chosenDirection === 'eng-native') {
-      $word.text(`${currentWord.eng}`);
+      $word.text(`${currentWord.english}`);
     }
 
     $('#card').append($word);
     $($word).fadeIn(500);
     $('#card').on('click', function renderTranslation() {
+      $('#translation').empty();
       const $translation = $('<h2></h2>').hide();
       if (chosenDirection === 'native-eng') {
-        $translation.text(`${currentWord.eng}`);
+        $translation.text(`${currentWord.english}`);
       } else if (chosenDirection === 'eng-native') {
         $translation.text(`${currentWord[chosenLang]}`);
       }
@@ -60,6 +61,7 @@ var app = app || {};
   };
 
   cardView.renderNextButton = () => {
+    $('#buttons').empty();
     const $next = $('<button></button>').hide();
     $next.text('Next');
     $('#buttons').append($next);

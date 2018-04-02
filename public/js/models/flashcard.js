@@ -9,12 +9,17 @@ const __API_URL__ = 'http://localhost:3000';
 
   function Flashcard(card) {
     let lang = localStorage.language.toLowerCase();
-    this.eng = card.english;
+    this.english = card.english;
     this[lang] = card[lang];
     this.type = card.type;
   }
 
-  Flashcard.loadVocab = words => {
+  Flashcard.loadVocabFromLocal = () => {
+    Flashcard.all = JSON.parse(localStorage['lang-cards']).map(card => new Flashcard(card));
+    module.cardView.initCards();
+  };
+
+  Flashcard.loadVocabFromDB = words => {
     Flashcard.all = words.map(card => new Flashcard(card));
     localStorage.setItem('lang-cards', JSON.stringify(Flashcard.all));
     module.cardView.initCards();
@@ -22,7 +27,7 @@ const __API_URL__ = 'http://localhost:3000';
 
   Flashcard.fetchVocab = lang => {
     $.get(`${__API_URL__}/api/${lang}/words`)
-      .then(Flashcard.loadVocab)
+      .then(Flashcard.loadVocabFromDB)
       .catch(console.error);
   };
 
