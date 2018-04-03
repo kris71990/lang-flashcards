@@ -13,7 +13,16 @@ var app = app || {};
     $('#index-header').fadeIn(1000);
     $('#index-main').fadeIn(1000);
     $('#language').off('click', indexView.selectLanguage);
+    $('#login').off('submit', indexView.getLogin);
+    $('#login').on('submit', indexView.getLogin);
     $('#language').on('click', indexView.selectLanguage);
+  };
+
+  indexView.getLogin = e => {
+    e.preventDefault();
+    let username = $('#username').val();
+    let password = $('#password').val();
+    module.User.loginData(username, password);
   };
 
   indexView.selectLanguage = e => {

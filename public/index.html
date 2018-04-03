@@ -31,11 +31,12 @@
           <h1>Log in to track your progress</h1>
           <form>
             <label>Username:
-              <input type="text">
+              <input type="text" id="username">
             </label>
             <label>Password:
-              <input type="password">
+              <input type="password" id="password">
             </label>
+            <button type="submit">Login</button>
           </form>
         </section>
         <section id="index-header" class="container">
@@ -102,9 +103,10 @@
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script> -->
     <script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
     <script src="js/models/flashcard.js" type="text/javascript"></script>
+    <script src="js/models/users.js" type="text/javascript"></script>
     <script src="js/views/index-view.js" type="text/javascript"></script>
     <script src="js/views/card-view.js" type="text/javascript"></script>
     <script src="js/views/admin-view.js" type="text/javascript"></script>

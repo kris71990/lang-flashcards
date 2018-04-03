@@ -18,6 +18,21 @@ const client = new pg.Client(DATABASE_URL);
 client.connect();
 client.on('error', err => console.error(err));
 
+app.get('/api/user', (req, res) => {
+  // console.log(req.query);
+  // req.query = user entered data
+  // users.rows =
+  client.query(`SELECT * FROM users`)
+    .then(users => {
+      for (let i in users.rows) {
+        if (users.rows[i].username === req.query.username &&
+            users.rows[i].password === req.query.password) {
+          res.send('User and password verfied');
+        }
+      }
+    });
+});
+
 app.get('/api/dutch/words', (req, res) => {
   client.query(`SELECT * FROM dutch;`)
     .then(words => res.send(words.rows))
