@@ -8,13 +8,13 @@ var app = app || {};
 
   indexView.initIndex = () => {
     $('.container').hide();
+    $('#login').fadeIn(1000);
     $('#index-header').fadeIn(1000);
     $('#index-main').fadeIn(1000);
     $('#language').on('click', indexView.selectLanguage);
   };
 
   indexView.selectLanguage = e => {
-    console.log(e.target.name);
     const langs = document.querySelectorAll('.lang');
     const target = e.target;
 

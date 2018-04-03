@@ -35,7 +35,6 @@ var app = app || {};
     const rand = cardView.randomNum();
     const $word = $('<h1></h1>').hide();
     const currentWord = module.Flashcard.all[rand];
-    console.log(currentWord);
 
     if (chosenDirection === 'native-eng') {
       $word.text(`${currentWord[chosenLang]}`);
