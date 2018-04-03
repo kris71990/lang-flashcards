@@ -7,7 +7,6 @@ var app = app || {};
 
   cardView.initCards = () => {
     $('.container').hide();
-    $('#add-inputs').off('click', app.addFormField);
     cardView.renderLang();
     cardView.renderCard();
     $('#cards-header').fadeIn(1000);
