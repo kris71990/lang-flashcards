@@ -10,7 +10,7 @@ var app = app || {};
     $('.container').hide();
     $('#index-header').fadeIn(1000);
     $('#index-main').fadeIn(1000);
-    $('#add-vocab').fadeIn(1000);
+    $('#add-inputs').off('click', app.addFormField);
     $('#language').on('click', indexView.selectLanguage);
   };
 

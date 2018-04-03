@@ -7,6 +7,7 @@ var app = app || {};
 
   cardView.initCards = () => {
     $('.container').hide();
+    $('#add-inputs').off('click', app.addFormField);
     cardView.renderLang();
     cardView.renderCard();
     $('#cards-header').fadeIn(1000);
@@ -35,6 +36,7 @@ var app = app || {};
     const rand = cardView.randomNum();
     const $word = $('<h1></h1>').hide();
     const currentWord = module.Flashcard.all[rand];
+    console.log(currentWord);
 
     if (chosenDirection === 'native-eng') {
       $word.text(`${currentWord[chosenLang]}`);

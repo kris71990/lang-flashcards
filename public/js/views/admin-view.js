@@ -7,6 +7,7 @@ var app = app || {};
 
   adminView.initAdminForm = () => {
     $('.container').hide();
+    $('#vocab-form fieldset:not(:first)').empty();
     $('#add-vocab').fadeIn(750);
     $('#add-inputs').on('click', adminView.addFormField);
   };
@@ -14,8 +15,10 @@ var app = app || {};
   adminView.addFormField = e => {
     e.preventDefault();
     let $fieldset = $('fieldset:first').clone();
-    console.log($fieldset);
+    let $buttons = $('#vocab-form button');
+    $buttons.clone();
     $fieldset.appendTo($('#vocab-form'));
+    $buttons.appendTo($('#vocab-form'));
   };
 
   module.adminView = adminView;
