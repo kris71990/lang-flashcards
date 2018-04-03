@@ -8,10 +8,30 @@ var app = app || {};
 
   indexView.initIndex = () => {
     $('.container').hide();
+    $('.lang').css({backgroundImage: ''});
     $('#login').fadeIn(1000);
     $('#index-header').fadeIn(1000);
     $('#index-main').fadeIn(1000);
+    $('#language').off('click', indexView.selectLanguage);
+    $('#login').off('submit', indexView.getLogin);
+    $('#login').on('submit', indexView.getLogin);
     $('#language').on('click', indexView.selectLanguage);
+  };
+
+  indexView.getLogin = e => {
+    e.preventDefault();
+    let username = $('#username').val();
+    let password = $('#password').val();
+    module.User.loginData(username, password);
+  };
+
+  indexView.verifiedUser = user => {
+    $('#login').hide();
+    $('#verified').html(`<h1>Welcome Back ${user.username}!</h1>`).fadeIn(1000);
+  };
+
+  indexView.notVerified = () => {
+    $('#verified').html('<h2>Username/password incorrect, try again</h2>').fadeIn(200);
   };
 
   indexView.selectLanguage = e => {
