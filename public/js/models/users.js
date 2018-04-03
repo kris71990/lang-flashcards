@@ -18,7 +18,16 @@ var app = app || {};
   User.verifyUser = user => {
     console.log(user);
     $.get(`${__API_URL__}/api/user`, user)
-      .then(results => console.log(results))
+      .then(results => {
+        console.log(results);
+        if (results === true) {
+          console.log('Account verified');
+          app.indexView.verifiedUser(user);
+        } else {
+          console.log('Account not verified');
+          app.indexView.notVerified();
+        }
+      })
       .catch(console.error);
   };
 

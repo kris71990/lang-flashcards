@@ -19,17 +19,16 @@ client.connect();
 client.on('error', err => console.error(err));
 
 app.get('/api/user', (req, res) => {
-  // console.log(req.query);
-  // req.query = user entered data
-  // users.rows =
   client.query(`SELECT * FROM users`)
     .then(users => {
+      let response = false;
       for (let i in users.rows) {
         if (users.rows[i].username === req.query.username &&
             users.rows[i].password === req.query.password) {
-          res.send('User and password verfied');
+          response = true;
         }
       }
+      res.send(response);
     });
 });
 

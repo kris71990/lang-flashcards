@@ -25,6 +25,15 @@ var app = app || {};
     module.User.loginData(username, password);
   };
 
+  indexView.verifiedUser = user => {
+    $('#login').hide();
+    $('#verified').html(`<h1>Welcome Back ${user.username}!</h1>`).fadeIn(1000);
+  };
+
+  indexView.notVerified = () => {
+    $('#verified').html('<h2>Username/password incorrect, try again</h2>').fadeIn(200);
+  };
+
   indexView.selectLanguage = e => {
     const langs = document.querySelectorAll('.lang');
     const target = e.target;
