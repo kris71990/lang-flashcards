@@ -8,6 +8,14 @@ var app = app || {};
   adminView.initAdminForm = () => {
     $('.container').hide();
     $('#add-vocab').fadeIn(750);
+    $('#add-inputs').on('click', adminView.addFormField);
+  };
+
+  adminView.addFormField = e => {
+    e.preventDefault();
+    let $fieldset = $('fieldset:first').clone();
+    console.log($fieldset);
+    $fieldset.appendTo($('#vocab-form'));
   };
 
   module.adminView = adminView;

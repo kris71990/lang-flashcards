@@ -37,13 +37,32 @@
       <main>
         <section id="add-vocab" class="container">
           <form id="vocab-form">
+            <legend>Add Words</legend>
             <fieldset>
-              <legend>Add Words</legend>
-                <label>
-                  <input type="text" id="update-title" placeholder="{{title}}"
-                </label>
-
+              <span>1)</span>
+              <div>
+                <label>English</label> 
+                <input type="text" id="update-title" placeholder="boy">
+              </div>
+              <div>
+                <label>Dutch</label>
+                <input type="text" id="update-title" placeholder="jongen">
+              </div>
+              <div>
+                <label>French</label>
+                <input type="text" id="update-title" placeholder="garcon">
+              </div>
+              <div>
+                <label>German</label>
+                <input type="text" id="update-title" placeholder="junge">
+              </div>
+              <div>
+                <label>Type of word</label>
+                <input type="text" placeholder="people"></input>
+              </div>
             </fieldset>
+            <button type="click" id="add-inputs">Add field</button>
+            <button type="submit" id="add-button">Add Words to Database</button>
           </form>
         </section>
 
