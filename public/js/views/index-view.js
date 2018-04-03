@@ -8,9 +8,11 @@ var app = app || {};
 
   indexView.initIndex = () => {
     $('.container').hide();
+    $('.lang').css({backgroundImage: ''});
     $('#login').fadeIn(1000);
     $('#index-header').fadeIn(1000);
     $('#index-main').fadeIn(1000);
+    $('#language').off('click', indexView.selectLanguage);
     $('#language').on('click', indexView.selectLanguage);
   };
 

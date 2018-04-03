@@ -1,0 +1,105 @@
+/* 
+font-family: 'Aladin', cursive;
+font-family: 'Niconne', cursive;
+font-family: 'Boogaloo', cursive;
+*/
+
+body {
+  height: 100%;
+  width: 100%;
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  position: relative;
+  border: 10px ridge grey;
+  background-color: #5693F2;
+}
+
+header h1 {
+  margin: 2% 0 2% 0;
+  padding-left: 15%;
+  width: 60%;
+  float: left;
+  font-family: 'Niconne', cursive;
+  font-size: 250%;
+  letter-spacing: 0.2em;
+  font-style: italic;
+  color: white;
+  text-shadow: 2px 2px black;
+}
+
+header p {
+  padding-left: 20%;
+  margin-bottom: 2%;
+  width: 60%;
+  float: left;
+  font-family: 'Aladin', cursive;
+  font-size: 130%;
+  letter-spacing: 0.1em;
+  font-style: italic;
+  color: white;
+  text-shadow: 2px 2px black;
+}
+
+header nav {
+  width: 20%;
+  position: absolute;
+  top: 16%;
+  right: 0;
+  float: right;
+}
+
+nav ul {
+  list-style: none;
+  padding-left: 0;
+  text-align: center;
+}
+
+nav ul li {
+  font-family: 'Aladin', cursive;
+  width: 50%;
+  margin: 1% 1%;
+  border: 2px solid green;
+  background-color: azure;
+  border-radius: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: inherit;
+}
+
+nav ul li a:hover {
+  color: #5693F2;
+}
+
+#wrapper {
+  min-height: calc(100vh - 80px);
+}
+
+footer {
+  text-align: center;
+  height: 80px;
+  border: 10px ridge grey;
+  background-color: #5693F2;
+  color: white;
+  text-shadow: 2px 2px black;
+  font-family: 'Aladin', cursive;
+  font-style: italic;
+  font-size: 1.3em;
+}
+
+footer p {
+  height: 80px;
+  line-height: 80px;
+  font-size: 1.2em;
+  color: white;
+}
+
+footer span {
+  font-size: 1.5em;
+  color: white;
+}
