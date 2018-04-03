@@ -18,12 +18,23 @@
           <li><a href="/">Home</a></li>
           <li><a href="/cards">Cards</a></li>
           <li><a href="#">Profile</a></li>
-          <li><a href="#">Admin</a></li>
+          <li><a href="/admin">Admin</a></li>
         </ul>
       </nav>
     </header>
     <div id="wrapper">
       <div id="sub-header">
+        <section id="login" class="container"> 
+          <h1>Log in to track your progress</h1>
+          <form>
+            <label>Username:
+              <input type="text">
+            </label>
+            <label>Password:
+              <input type="password">
+            </label>
+          </form>
+        </section>
         <section id="index-header" class="container">
           <h4>Choose a language and your desired direction of translation to practice your vocabulary skills with these flashcards.</h4>
           <h4>Or, try and learn a new language!</h4>
@@ -35,6 +46,54 @@
         </section>
       </div>
       <main>
+        <section id="add-vocab" class="container">
+          <form id="vocab-form">
+            <legend>Add Words</legend>
+            <fieldset>
+              <span>1)</span>
+              <div>
+                <label>English</label> 
+                <input type="text" id="english" placeholder="boy">
+              </div>
+              <div>
+                <label>Dutch</label>
+                <input type="text" id="dutch" placeholder="jongen">
+              </div>
+              <div>
+                <label>French</label>
+                <input type="text" id="french" placeholder="garcon">
+              </div>
+              <div>
+                <label>German</label>
+                <input type="text" id="german" placeholder="junge">
+              </div>
+              <div>
+                <label>Type of word</label>
+                <input type="text" id="type" placeholder="people">
+              </div>
+            </fieldset>
+            <button type="click" id="add-inputs">Add field</button>
+            <button type="submit" id="add-button">Add Words to Database</button>
+          </form>
+        </section>
+
+        <!-- <form id="update-form">
+            <label>
+              <input type="text" id="update-title" placeholder="{{title}}" required>
+            </label>
+            <label>
+              <input type="text" id="update-author" placeholder="{{author}}" required>
+            </label>
+            <label>
+              <input type="text" id="update-isbn" placeholder="{{isbn}}" required>
+            </label>
+            <label>
+              <input type="text" id="update-url" placeholder="{{image_url}}" required>
+            </label>
+            <textarea id="update-description" rows="8" cols="40" placeholder="{{description}}" required></textarea>
+            <button type="submit" id="update-button">Update Book</button>
+          </form> -->
+
         <section id="index-main" class="container">
           <section id="language">
             <button class="lang" name="Dutch">Dutch</button>
@@ -62,6 +121,7 @@
     <script src="js/models/flashcard.js" type="text/javascript"></script>
     <script src="js/views/index-view.js" type="text/javascript"></script>
     <script src="js/views/card-view.js" type="text/javascript"></script>
+    <script src="js/views/admin-view.js" type="text/javascript"></script>
     <script src="js/controller/routes.js" type="text/javascript"></script>
   </body>
 </html>

@@ -8,7 +8,7 @@ const bodyparser = require('body-parser').urlencoded({extended: true});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const CLIENT_URL = process.env.CLIENT_URL;
+const CLIENT_URL = 'http://localhost:3000';
 const DATABASE_URL = 'postgres://localhost:5432/flashcards';
 
 app.use(express.static('./public'));
