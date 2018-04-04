@@ -9,10 +9,10 @@ var app = app || {};
   indexView.initIndex = () => {
     $('.container').hide();
     $('.lang').css({backgroundImage: ''});
+    $('#to-cards').html('');
     $('#login input').val('');
 
     if (localStorage.user) {
-      console.log(localStorage.user);
       indexView.verifiedUser(JSON.parse(localStorage.user));
     } else {
       $('#login').fadeIn(1000);
@@ -38,9 +38,14 @@ var app = app || {};
     localStorage.setItem('user', JSON.stringify(user));
     $('#verified').html(`<h1>Welcome Back ${user.username}!</h1>`).fadeIn(1000);
     if (user.username === 'kris') {
-      if ($('nav li').last()[0].textContent !== 'Admin') {
-        let $admin = $('<li></li>').html(`<a href="/admin">Admin</a>`);
+      if ($('nav li').last()[0].textContent === 'Profile') {
+        let $admin = $('<li></li>').html('<a href="/admin">Admin</a>');
         $('nav ul').append($admin);
+      }
+    } else {
+      if ($('nav li').last()[0].textContent === 'Profile') {
+        let $logout = $('<li></li>').html('<a href="#">Logout</a>');
+        $('nav ul').append($logout);
       }
     }
   };
