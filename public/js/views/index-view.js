@@ -42,11 +42,10 @@ var app = app || {};
         let $admin = $('<li></li>').html('<a href="/admin">Admin</a>');
         $('nav ul').append($admin);
       }
-    } else {
-      if ($('nav li').last()[0].textContent === 'Profile') {
-        let $logout = $('<li></li>').html('<a href="#">Logout</a>');
-        $('nav ul').append($logout);
-      }
+    }
+    if ($('nav li').last()[0].textContent != 'Logout') {
+      let $logout = $('<li></li>').html('<a href="#">Logout</a>');
+      $('nav ul').append($logout);
     }
   };
 
