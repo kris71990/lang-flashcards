@@ -4,11 +4,12 @@ var app = app || {};
 
 (module => {
   const indexView = {};
-  let counter = 0;
+  let counter;
 
   indexView.initIndex = () => {
     $('.container').hide();
     $('.lang').css({backgroundImage: ''});
+    counter = 0;
     $('#to-cards').html('');
     $('#login input').val('');
 
@@ -40,17 +41,26 @@ var app = app || {};
     if (user.username === 'kris') {
       if ($('nav li').last()[0].textContent === 'Profile') {
         let $admin = $('<li></li>').html('<a href="/admin">Admin</a>');
+        $admin.addClass('userButtons');
         $('nav ul').append($admin);
       }
     }
-    if ($('nav li').last()[0].textContent != 'Logout') {
-      let $logout = $('<li></li>').html('<a href="#">Logout</a>');
+    if ($('nav li').last()[0].textContent !== 'Logout') {
+      let $logout = $('<li></li>').html('<a href="/">Logout</a>');
+      $logout.addClass('userButtons');
       $('nav ul').append($logout);
+      $('nav ul li:last').on('click', indexView.handleLogout);
     }
   };
 
   indexView.notVerified = () => {
     $('#verified').html('<h2>Username/password incorrect, try again</h2>').fadeIn(200);
+  };
+
+  indexView.handleLogout = () => {
+    $('nav ul li:last').off('click', indexView.handleLogout);
+    $('.userButtons').remove();
+    localStorage.clear();
   };
 
   indexView.selectLanguage = e => {
