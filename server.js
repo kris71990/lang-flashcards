@@ -8,8 +8,10 @@ const pg = require('pg');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const CLIENT_URL = 'http://localhost:3000';
-const DATABASE_URL = 'postgres://localhost:5432/flashcards';
+const CLIENT_URL = process.env.CLIENT_URL;
+// const DATABASE_URL = 'postgres://localhost:5432/flashcards';
+const DATABASE_URL = 'postgres://xdlwfbuvfabacr:9b69503bb8d67fbb9712976a0e2348f18319f30e64d1354401a30a3b7f6781c5@ec2-54-83-19-244.compute-1.amazonaws.com:5432/d6ov3srav0c1n2';
+
 
 app.use(express.static('./public'));
 app.use(cors());
