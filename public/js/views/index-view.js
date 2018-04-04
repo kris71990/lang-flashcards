@@ -9,7 +9,15 @@ var app = app || {};
   indexView.initIndex = () => {
     $('.container').hide();
     $('.lang').css({backgroundImage: ''});
-    $('#login').fadeIn(1000);
+    $('#login input').val('');
+
+    if (localStorage.user) {
+      console.log(localStorage.user);
+      indexView.verifiedUser(JSON.parse(localStorage.user));
+    } else {
+      $('#login').fadeIn(1000);
+    }
+
     $('#index-header').fadeIn(1000);
     $('#index-main').fadeIn(1000);
     $('#language').off('click', indexView.selectLanguage);
@@ -27,7 +35,14 @@ var app = app || {};
 
   indexView.verifiedUser = user => {
     $('#login').hide();
+    localStorage.setItem('user', JSON.stringify(user));
     $('#verified').html(`<h1>Welcome Back ${user.username}!</h1>`).fadeIn(1000);
+    if (user.username === 'kris') {
+      if ($('nav li').last()[0].textContent !== 'Admin') {
+        let $admin = $('<li></li>').html(`<a href="/admin">Admin</a>`);
+        $('nav ul').append($admin);
+      }
+    }
   };
 
   indexView.notVerified = () => {
