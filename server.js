@@ -3,7 +3,7 @@
 const express = require('express');
 const cors = require('cors');
 const pg = require('pg');
-const bodyparser = require('body-parser').urlencoded({extended: true});
+// const bodyparser = require('body-parser').urlencoded({extended: true});
 // const superagent = require('superagent');
 
 const app = express();
