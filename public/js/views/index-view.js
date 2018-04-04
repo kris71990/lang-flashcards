@@ -81,19 +81,23 @@ var app = app || {};
     if ($chosen[0].name === 'Dutch') {
       $chosen.css({
         backgroundImage: 'url(img/netherlands.png)',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        opacity: 0.2
       });
     } else if ($chosen[0].name === 'French') {
       $chosen.css({
         backgroundImage: 'url(img/france.png)',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        opacity: 0.2
       });
     } else if ($chosen[0].name === 'German') {
       $chosen.css({
         backgroundImage: 'url(img/germany.png)',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        opacity: 0.2
       });
     }
+    $chosen.animate({opacity: 1}, {duration: 1000});
 
     for (let x = 0; x < langs.length; x++) {
       if (langs[x].id !== 'chosen') {
