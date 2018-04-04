@@ -4,12 +4,21 @@ var app = app || {};
 
 (module => {
   const indexView = {};
-  let counter = 0;
+  let counter;
 
   indexView.initIndex = () => {
     $('.container').hide();
     $('.lang').css({backgroundImage: ''});
-    $('#login').fadeIn(1000);
+    counter = 0;
+    $('#to-cards').html('');
+    $('#login input').val('');
+
+    if (localStorage.user) {
+      indexView.verifiedUser(JSON.parse(localStorage.user));
+    } else {
+      $('#login').fadeIn(1000);
+    }
+
     $('#index-header').fadeIn(1000);
     $('#index-main').fadeIn(1000);
     $('#language').off('click', indexView.selectLanguage);
@@ -27,11 +36,31 @@ var app = app || {};
 
   indexView.verifiedUser = user => {
     $('#login').hide();
+    localStorage.setItem('user', JSON.stringify(user));
     $('#verified').html(`<h1>Welcome Back ${user.username}!</h1>`).fadeIn(1000);
+    if (user.username === 'kris') {
+      if ($('nav li').last()[0].textContent === 'Profile') {
+        let $admin = $('<li></li>').html('<a href="/admin">Admin</a>');
+        $admin.addClass('userButtons');
+        $('nav ul').append($admin);
+      }
+    }
+    if ($('nav li').last()[0].textContent !== 'Logout') {
+      let $logout = $('<li></li>').html('<a href="/">Logout</a>');
+      $logout.addClass('userButtons');
+      $('nav ul').append($logout);
+      $('nav ul li:last').on('click', indexView.handleLogout);
+    }
   };
 
   indexView.notVerified = () => {
     $('#verified').html('<h2>Username/password incorrect, try again</h2>').fadeIn(200);
+  };
+
+  indexView.handleLogout = () => {
+    $('nav ul li:last').off('click', indexView.handleLogout);
+    $('.userButtons').remove();
+    localStorage.clear();
   };
 
   indexView.selectLanguage = e => {
@@ -52,19 +81,23 @@ var app = app || {};
     if ($chosen[0].name === 'Dutch') {
       $chosen.css({
         backgroundImage: 'url(img/netherlands.png)',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        opacity: 0.2
       });
     } else if ($chosen[0].name === 'French') {
       $chosen.css({
         backgroundImage: 'url(img/france.png)',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        opacity: 0.2
       });
     } else if ($chosen[0].name === 'German') {
       $chosen.css({
         backgroundImage: 'url(img/germany.png)',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        opacity: 0.2
       });
     }
+    $chosen.animate({opacity: 1}, {duration: 1000});
 
     for (let x = 0; x < langs.length; x++) {
       if (langs[x].id !== 'chosen') {
