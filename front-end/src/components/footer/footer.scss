@@ -1,0 +1,23 @@
+footer {
+  text-align: center;
+  height: 80px;
+  border: 10px ridge grey;
+  background-color: #5693F2;
+  color: white;
+  text-shadow: 2px 2px black;
+  font-family: 'Aladin', cursive;
+  font-style: italic;
+  font-size: 1.3em;
+
+  p {
+    height: 80px;
+    line-height: 80px;
+    font-size: 1.2em;
+    color: white;
+  }
+
+  span {
+    font-size: 1.5em;
+    color: white;
+  }
+}
