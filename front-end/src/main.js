@@ -4,7 +4,10 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
 import App from './components/app';
+import './style/main.scss';
+
+// const store = createStore();
 
 const container = document.createElement('div');
 document.body.appendChild(container);
-reactDomRender(<h1>Test</h1>, container);
+reactDomRender(<App/>, container);
