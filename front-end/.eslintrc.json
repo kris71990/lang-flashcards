@@ -24,6 +24,7 @@
     "operator-linebreak": "off",
     "prefer-destructuring": "off",
     "prefer-template":"off",
-    "no-unneeded-ternary": "off"
+    "no-unneeded-ternary": "off",
+    "max-len": "off"
   }
 }

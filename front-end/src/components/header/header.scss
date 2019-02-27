@@ -1,4 +1,5 @@
-.header {
+header {
+  height: auto;
   position: relative;
   border: 10px ridge grey;
   background-color: #5693F2;
@@ -7,7 +8,6 @@
     margin: 2% 0 2% 0;
     padding-left: 15%;
     width: 60%;
-    float: left;
     font-family: 'Niconne', cursive;
     font-size: 250%;
     letter-spacing: 0.2em;
@@ -20,7 +20,6 @@
     padding-left: 20%;
     margin-bottom: 2%;
     width: 60%;
-    float: left;
     font-family: 'Aladin', cursive;
     font-size: 130%;
     letter-spacing: 0.1em;
@@ -34,7 +33,6 @@
     position: absolute;
     top: 10%;
     right: 0;
-    float: right;
 
     ul {
       list-style: none;

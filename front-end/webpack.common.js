@@ -19,6 +19,9 @@ webpackConfig.output = {
 webpackConfig.plugins = [
   new HtmlWebpackPlugin({
     title: 'Language Cards',
+    filename: 'index.html',
+    template: 'index.html',
+    inject: true,
   }),
   new MiniCssPlugin({
     filename: '[name].[hash].css',

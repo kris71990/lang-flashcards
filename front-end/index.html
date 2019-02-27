@@ -1,101 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <title>Language Flashcards</title>
-    <link href="https://fonts.googleapis.com/css?family=Boogaloo" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Aladin|Niconne" rel="stylesheet">
-    <!-- <link href="css/normalize.css" type="text/css" rel="stylesheet"> -->
-    <link href="css/reset.css" type="text/css" rel="stylesheet">
-    <link href="css/base.css" type="text/css" rel="stylesheet">
-    <link href="css/index.css" type="text/css" rel="stylesheet">
-    <link href="css/cards.css" type="text/css" rel="stylesheet">
-    <link href="css/admin.css" type="text/css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width", initial-scale="1">
+    <link href="https://fonts.googleapis.com/css?family=Aladin|Boogaloo|Niconne" rel="stylesheet">
   </head>
   <body>
-    <!-- <header>
-      <h1>Language Learner</h1>
-      <p>Learn a New Language Today!</p>
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/cards">Cards</a></li>
-          <li><a href="#">Profile</a></li>
-        </ul>
-      </nav>
-    </header> -->
-    <div id="wrapper">
-      <div id="sub-header">
-        <section id="login" class="container"> 
-          <h1>Log in to track your progress</h1>
-          <form>
-            <label>Username:
-              <input type="text" id="username">
-            </label>
-            <label>Password:
-              <input type="password" id="password">
-            </label>
-            <button type="submit">Login</button>
-          </form>
-        </section>
-        <section id="verified" class="container"></section>
-        <section id="index-header" class="container">
-          <h4>Choose a language and your desired direction of translation to practice your vocabulary skills with these flashcards.</h4>
-          <h4>Or, try and learn a new language!</h4>
-        </section>
-  
-        <section id="cards-header" class="container"> 
-          <h1></h1>
-          <p>Click on card to reveal translation</p>
-        </section>
-      </div>
-      <main>
-        <section id="add-vocab" class="container">
-          <form id="vocab-form">
-            <legend>Add Words</legend>
-            <fieldset>
-              <span>1</span>
-              <div>
-                <label>English</label> 
-                <input type="text" class="english" placeholder="boy">
-              </div>
-              <div>
-                <label>Dutch</label>
-                <input type="text" class="dutch" placeholder="jongen">
-              </div>
-              <div>
-                <label>French</label>
-                <input type="text" class="french" placeholder="garcon">
-              </div>
-              <div>
-                <label>German</label>
-                <input type="text" class="german" placeholder="junge">
-              </div>
-              <div>
-                <label>Type of word</label>
-                <input type="text" class="type" placeholder="people">
-              </div>
-            </fieldset>
-            <button type="click" id="add-inputs">Add field</button>
-            <button type="submit" id="add-button">Add Words to Database</button>
-          </form>
-        </section>
-
-        <section id="index-main" class="container">
-          <section id="language">
-            <button class="lang" name="Dutch">Dutch</button>
-            <button class="lang" name="German">German</button>
-            <button class="lang" name="French">French</button>
-          </section>
-          <div id="to-cards"></div>
-        </section>
-  
-        <section id="cards-main" class="container">
-          <section id="card"></section>
-          <section id="translation"></section>
-          <section id="buttons"></section>
-        </section>
-      </main>
-    </div>
+    <div id="app"></div>
   </body>
 </html>
