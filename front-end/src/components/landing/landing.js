@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import autoBind from '../../utils/autobind';
-import * as languageActions from '../../actions/language';
+import languageSelect from '../../actions/language';
 
 import './landing.scss';
 
@@ -34,7 +34,7 @@ class Landing extends React.Component {
     if (this.state.language) {
       return this.props.setLanguage(this.state.language); 
     }
-    return null;
+    return this.props.setLanguage('');
   }
 
   render() {
@@ -79,7 +79,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setLanguage: lang => dispatch(languageActions.languageSelect(lang)),
+  setLanguage: lang => dispatch(languageSelect(lang)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

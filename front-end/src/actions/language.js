@@ -3,4 +3,4 @@ const languageSelect = language => ({
   payload: language,
 });
 
-export { languageSelect };
+export default languageSelect;
