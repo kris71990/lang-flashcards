@@ -15,7 +15,7 @@ const Word = (sequelize, DataTypes) => sequelize.define('word', {
   },
   wordLocal: {
     type: DataTypes.STRING,
-    unique: true,
+    unique: false,
     allowNull: false,
   },
   wordEnglish: {
