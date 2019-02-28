@@ -6,6 +6,8 @@ import HttpError from 'http-errors';
 
 import logger from './logger';
 import models from '../models/index';
+import languageRouter from '../routes/language-router';
+import wordRouter from '../routes/word-router';
 import errorMiddleware from './error-middleware';
 
 const CLIENT_URL = process.env.CLIENT_URL;
@@ -15,7 +17,8 @@ let server = null;
 
 app.use(cors({ credentials: true, origin: CLIENT_URL }));
 
-// import routers here
+app.use(languageRouter);
+app.use(wordRouter);
 
 app.all('*', (request, response) => {
   logger.log(logger.INFO, '404 - not found (catch-all)');

@@ -2,7 +2,8 @@
 
 const Language = (sequelize, DataTypes) => sequelize.define('language', {
   languageId: {
-    type: DataTypes.STRING,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV1,
     unique: true,
     allowNull: false,
     primaryKey: true,
