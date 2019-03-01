@@ -59,20 +59,27 @@ class Landing extends React.Component {
           <section>
             {
               languages ?
-                languages.map((choice) => {
-                  return (
-                    <div id={choice.languageName}
-                    className={ languageSelection === choice.languageName ? `selected-${languageSelection}` : null } key={choice.languageId}>
-                      { 
-                        choice.languageName.charAt(0).toUpperCase() + choice.languageName.slice(1) 
-                      }
-                    </div>
-                  );
-                })
-                : null
+                <section>
+                  {
+                    languages.map((choice) => {
+                      return (
+                        <div id={choice.languageName}
+                        className={ languageSelection === choice.languageName ? `selected-${languageSelection}` : null } key={choice.languageId}>
+                          { 
+                            choice.languageName.charAt(0).toUpperCase() + choice.languageName.slice(1) 
+                          }
+                        </div>
+                      );
+                    })
+                  }
+                </section>
+                : 
+                <h2>Server not responding.</h2>
             }
           </section>
-          <button onClick={ this.handleChoice }>Show Cards</button>
+          {
+            languages ? <button onClick={ this.handleChoice }>Show Cards</button> : null
+          }
         </div>
       </section>
     );
