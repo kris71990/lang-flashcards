@@ -15,7 +15,7 @@ wordRouter.post('/word', jsonParser, (request, response, next) => {
 
   if (!request.body || 
     (!request.body.wordEnglish || !request.body.wordLocal || !request.body.languageId)) {
-    return new HttpError(400, 'Bad Request');
+    return next(new HttpError(400, 'Bad Request'));
   }
 
   return models.word.findOrCreate({
@@ -42,7 +42,7 @@ wordRouter.post('/word', jsonParser, (request, response, next) => {
 wordRouter.get('/words/:language', (request, response, next) => {
   logger.log(logger.INFO, 'Processing a get on /words');
 
-  if (!request.params.language) return new HttpError(400, 'Bad Request');
+  if (!request.params.language) return next(new HttpError(400, 'Bad Request'));
 
   return models.word.findAll({
     where: {
@@ -51,7 +51,7 @@ wordRouter.get('/words/:language', (request, response, next) => {
   })
     .then((words) => {
       logger.log(logger.INFO, `Returning all words for ${request.params.language}`);
-      return response.json({ words });
+      return response.status(200).json({ words });
     })
     .catch(next);
 });

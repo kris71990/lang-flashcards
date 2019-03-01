@@ -12,14 +12,14 @@ const languageRouter = new Router();
 languageRouter.post('/language', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /language');
 
-  if (!request.body || !request.body.languageName) return new HttpError(400, 'Bad request');
+  if (!request.body || !request.body.languageName) return next(new HttpError(400, 'Bad request'));
 
   return models.language.create({
     ...request.body,
   })
     .then((language) => {
       logger.log(logger.INFO, 'Language created.');
-      return response.json({ language });
+      return response.status(201).json({ language });
     })
     .catch(next);
 });
