@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import autoBind from '../../utils/autobind';
-import languageSelect from '../../actions/language';
+import * as languageActions from '../../actions/language';
+
+import * as routes from '../../utils/routes';
 
 import './landing.scss';
 
@@ -16,6 +18,10 @@ class Landing extends React.Component {
     super(props);
     this.state = defaultState;
     autoBind.call(this, Landing);
+  }
+
+  componentDidMount() {
+    return this.props.languagesFetch();
   }
 
   handleChange(e) {
@@ -32,7 +38,10 @@ class Landing extends React.Component {
 
   handleChoice() {
     if (this.state.language) {
-      return this.props.setLanguage(this.state.language); 
+      return this.props.setLanguage(this.state.language)
+        .then(() => {
+          return this.props.history.push(routes.CARDS_ROUTE);
+        });
     }
     return this.props.setLanguage('');
   }
@@ -70,6 +79,8 @@ class Landing extends React.Component {
 Landing.propTypes = {
   selected: PropTypes.string,
   setLanguage: PropTypes.func,
+  languagesFetch: PropTypes.func,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
@@ -79,7 +90,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setLanguage: lang => dispatch(languageSelect(lang)),
+  languagesFetch: () => dispatch(languageActions.languagesFetchRequest()),
+  setLanguage: lang => dispatch(languageActions.languageSelect(lang)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);
