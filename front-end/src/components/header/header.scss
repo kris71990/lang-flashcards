@@ -1,0 +1,61 @@
+header {
+  height: auto;
+  position: relative;
+  border: 10px ridge grey;
+  background-color: #5693F2;
+
+  h1 {
+    margin: 2% 0 2% 0;
+    padding-left: 15%;
+    width: 60%;
+    font-family: 'Niconne', cursive;
+    font-size: 250%;
+    letter-spacing: 0.2em;
+    font-style: italic;
+    color: white;
+    text-shadow: 2px 2px black;
+  }
+
+  p {
+    padding-left: 20%;
+    margin-bottom: 2%;
+    width: 60%;
+    font-family: 'Aladin', cursive;
+    font-size: 130%;
+    letter-spacing: 0.1em;
+    font-style: italic;
+    color: white;
+    text-shadow: 2px 2px black;
+  }
+
+  nav {
+    width: 20%;
+    position: absolute;
+    top: 10%;
+    right: 0;
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      text-align: center;
+
+      li {
+        font-family: 'Aladin', cursive;
+        width: 50%;
+        margin: 1% 1%;
+        border: 2px solid green;
+        background-color: azure;
+        border-radius: 20px;
+
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+
+        a:hover {
+          color: #5693F2;
+        }
+      }
+    }
+  }
+}
