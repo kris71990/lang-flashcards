@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import autoBind from '../../utils/autobind';
 import * as languageActions from '../../actions/language';
 
-import * as routes from '../../utils/routes';
+// import * as routes from '../../utils/routes';
 
 import './landing.scss';
 
 const defaultState = {
-  language: '',
+  languageSelection: '',
 };
 
 class Landing extends React.Component {
@@ -21,33 +21,31 @@ class Landing extends React.Component {
   }
 
   componentDidMount() {
-    return this.props.languagesFetch();
+    this.props.languagesFetch();
   }
 
   handleChange(e) {
     if (e.target) {
       this.setState({
-        language: e.target.id,
+        languageSelection: e.target.id,
       });
     } else {
       this.setState({
-        language: '',
+        languageSelection: '',
       });
     }
   }
 
   handleChoice() {
-    if (this.state.language) {
-      return this.props.setLanguage(this.state.language)
-        .then(() => {
-          return this.props.history.push(routes.CARDS_ROUTE);
-        });
+    if (this.state.languageSelection) {
+      return this.props.setLanguage(this.state.languageSelection);
     }
     return this.props.setLanguage('');
   }
 
   render() {
-    const { language } = this.state;
+    const { languageSelection } = this.state;
+    const { languages } = this.props.language;
 
     return (
       <section>
@@ -59,15 +57,20 @@ class Landing extends React.Component {
         </div>
         <div id="lang-choices" onClick={ this.handleChange }>
           <section>
-            <div id="dutch"
-              className={ language === 'dutch' ? 'selected-dutch' : null }>Dutch
-            </div>
-            <div id="german"
-              className={ language === 'german' ? 'selected-germ' : null }>German
-            </div>
-            <div id="french"
-              className={ language === 'french' ? 'selected-fren' : null }>French
-            </div>
+            {
+              languages ?
+                languages.map((choice) => {
+                  return (
+                    <div id={choice.languageName}
+                    className={ languageSelection === choice.languageName ? `selected-${languageSelection}` : null } key={choice.languageId}>
+                      { 
+                        choice.languageName.charAt(0).toUpperCase() + choice.languageName.slice(1) 
+                      }
+                    </div>
+                  );
+                })
+                : null
+            }
           </section>
           <button onClick={ this.handleChoice }>Show Cards</button>
         </div>
@@ -77,7 +80,8 @@ class Landing extends React.Component {
 }
 
 Landing.propTypes = {
-  selected: PropTypes.string,
+  languageSelection: PropTypes.string,
+  language: PropTypes.object,
   setLanguage: PropTypes.func,
   languagesFetch: PropTypes.func,
   history: PropTypes.object,

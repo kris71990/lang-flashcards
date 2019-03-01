@@ -34,29 +34,33 @@
       border: 2px solid black;
     }
 
+    div:hover {
+      background-color: black;
+      color: white;
+      border: 2px solid red;
+    }
+
     .selected-dutch {
       background-image: url('../../assets/netherlands.png');
       background-repeat: 'no-repeat';
       opacity: 0.2;
     }
 
-    .selected-germ {
+    .selected-german {
       background-image: url('../../assets/germany.png');
       background-repeat: 'no-repeat';
       opacity: 0.2;
     }
 
-    .selected-fren {
+    .selected-french {
       background-image: url('../../assets/france.png');
       background-repeat: 'no-repeat';
       opacity: 0.2;
     }
-  
-    div:hover {
-      background-color: black;
-      color: white;
-      border: 2px solid red;
+
+    div[class^="selected"] {
+      color: black;
+      border: 2px solid black;
     }
   }
-
 }

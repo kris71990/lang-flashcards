@@ -1,11 +1,13 @@
-export default (state = {}, { type, payload }) => {
+export default (state = { languages: null, languageSelection: null }, { type, payload }) => {
   switch (type) {
     case 'LANGUAGES_SET':
-      state.languages = payload;
-      return state;
+      return Object.assign({}, state, {
+        languages: payload,
+      });
     case 'LANGUAGE_SELECT':
-      state.languageSelection = payload;
-      return state;
+      return Object.assign({}, state, {
+        languageSelection: payload,
+      });
     default:
       return state;
   }

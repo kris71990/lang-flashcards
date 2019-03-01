@@ -24,4 +24,15 @@ languageRouter.post('/language', jsonParser, (request, response, next) => {
     .catch(next);
 });
 
+languageRouter.get('/languages/all', (request, response, next) => {
+  logger.log(logger.INFO, 'Processing a get on /languages/all');
+
+  return models.language.findAll()
+    .then((languages) => {
+      logger.log(logger.INFO, 'Returning all existing languages');
+      return response.status(200).json(languages);
+    })
+    .catch(next);
+});
+
 export default languageRouter;
