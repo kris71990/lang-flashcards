@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - "10"
+services:
+- postgresql
+before_script:
+- psql -c "CREATE DATABASE flashcardstest;" -U postgres
+script: cd backend && npm install && npm test
