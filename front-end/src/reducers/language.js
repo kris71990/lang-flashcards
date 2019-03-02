@@ -1,12 +1,19 @@
-export default (state = { languages: null, languageSelection: null }, { type, payload }) => {
+const defaultState = {
+  languages: null,
+  languageSelection: null,
+  translationDirection: null,
+};
+
+export default (state = defaultState, { type, payload }) => {
   switch (type) {
     case 'LANGUAGES_SET':
       return Object.assign({}, state, {
         languages: payload,
       });
     case 'LANGUAGE_SELECT':
+      const { languageSelection, translationDirection } = payload;
       return Object.assign({}, state, {
-        languageSelection: payload,
+        languageSelection, translationDirection,
       });
     case 'LANGUAGE_ADD':
       return Object.assign({}, state, {

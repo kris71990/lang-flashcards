@@ -50,7 +50,8 @@ class Landing extends React.Component {
 
   handleChoice() {
     if (this.state.languageSelection) {
-      return this.props.setLanguage(this.state.languageSelection);
+      const { languageSelection, translationDirection } = this.state;
+      return this.props.setLanguage({ languageSelection, translationDirection });
     }
     return this.props.setLanguage('');
   }
@@ -61,10 +62,6 @@ class Landing extends React.Component {
     });
   }
 
-  handleTranslationDirection() {
-
-  }
-
   handleCreateLanguage(lang) {
     this.props.createLanguage(lang)
       .then(() => {
@@ -73,7 +70,7 @@ class Landing extends React.Component {
   }
 
   render() {
-    const { languageSelection, toggleMenu } = this.state;
+    const { languageSelection, translationDirection, toggleMenu } = this.state;
     const { languages } = this.props.language;
 
     let currentLangs;
@@ -115,10 +112,10 @@ class Landing extends React.Component {
           </section>
           { formattedLangSelection ? 
               <div id="translation-direction" onClick={ this.handleChange }>
-                <button id="native-english">
+                <button id="native-english" className={ translationDirection === 'native-english' ? 'selected' : null }>
                   { formattedLangSelection } - English
                 </button>
-                <button id="english-native">
+                <button id="english-native" className={ translationDirection === 'english-native' ? 'selected' : null }>
                   English - { formattedLangSelection }
                 </button>
               </div>

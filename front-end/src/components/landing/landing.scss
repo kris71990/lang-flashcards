@@ -49,23 +49,23 @@
     .selected-dutch {
       background-image: url('../../assets/netherlands.png');
       background-repeat: 'no-repeat';
-      opacity: 0.2;
+      opacity: 0.3;
     }
 
     .selected-german {
       background-image: url('../../assets/germany.png');
       background-repeat: 'no-repeat';
-      opacity: 0.2;
+      opacity: 0.3;
     }
 
     .selected-french {
       background-image: url('../../assets/france.png');
       background-repeat: 'no-repeat';
-      opacity: 0.2;
+      opacity: 0.3;
     }
 
     #langs div[class^="selected"] {
-      opacity: 0.2;
+      opacity: 0.3;
       background-color: rgb(114, 114, 114);
       color: black;
       border: 2px solid black;
@@ -80,6 +80,16 @@
 
   button:focus {
     outline: 0;
+  }
+
+  #translation-direction {
+    .selected {
+      opacity: 0.3;
+      background-color: rgb(114, 114, 114);
+      color: black;
+      font-weight: bold;
+      border: 2px solid black;
+    }
   }
 
   #directives > button:last-child {
