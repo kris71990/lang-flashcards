@@ -64,7 +64,9 @@
       opacity: 0.2;
     }
 
-    div[class^="selected"] {
+    #langs div[class^="selected"] {
+      opacity: 0.2;
+      background-color: rgb(114, 114, 114);
       color: black;
       border: 2px solid black;
     }

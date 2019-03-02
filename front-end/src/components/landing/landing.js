@@ -12,6 +12,7 @@ import './landing.scss';
 
 const defaultState = {
   languageSelection: '',
+  translationDirection: '',
   toggleMenu: false,
 };
 
@@ -27,13 +28,22 @@ class Landing extends React.Component {
   }
 
   handleChange(e) {
-    if (e.target) {
+    if (e.currentTarget.id === 'langs' && e.target.id === 'langs') {
+      this.setState({
+        languageSelection: '',
+        translationDirection: '',
+      });
+    } else if (e.currentTarget.id === 'langs') {
       this.setState({
         languageSelection: e.target.id,
       });
+    } else if (e.currentTarget.id === 'translation-direction' && e.target.id !== 'translation-direction') {
+      this.setState({
+        translationDirection: e.target.id,
+      });
     } else {
       this.setState({
-        languageSelection: '',
+        translationDirection: '',
       });
     }
   }
@@ -51,6 +61,10 @@ class Landing extends React.Component {
     });
   }
 
+  handleTranslationDirection() {
+
+  }
+
   handleCreateLanguage(lang) {
     this.props.createLanguage(lang)
       .then(() => {
@@ -62,8 +76,12 @@ class Landing extends React.Component {
     const { languageSelection, toggleMenu } = this.state;
     const { languages } = this.props.language;
 
-    let current;
-    if (languages) current = languages.map(lang => lang.languageName);
+    let currentLangs;
+    let formattedLangSelection;
+    if (languages) currentLangs = languages.map(lang => lang.languageName);
+    if (languageSelection) {
+      formattedLangSelection = `${languageSelection.charAt(0).toUpperCase()}${languageSelection.slice(1)}`;
+    }
 
     return (
       <section>
@@ -73,11 +91,11 @@ class Landing extends React.Component {
           </h4>
           <h4>Or, try and learn a new language!</h4>
         </div>
-        <div id="lang-choices" onClick={ this.handleChange }>
+        <div id="lang-choices">
           <section>
             {
               languages ?
-                <section id="langs">
+                <section id="langs" onClick={ this.handleChange }>
                   {
                     languages.map((choice) => {
                       return (
@@ -95,6 +113,17 @@ class Landing extends React.Component {
                 <h2>Server not responding.</h2>
             }
           </section>
+          { formattedLangSelection ? 
+              <div id="translation-direction" onClick={ this.handleChange }>
+                <button id="native-english">
+                  { formattedLangSelection } - English
+                </button>
+                <button id="english-native">
+                  English - { formattedLangSelection }
+                </button>
+              </div>
+            : null
+          }
           <div id="directives">
             <button onClick={ this.handleToggle }>
               { toggleMenu ?
@@ -104,7 +133,7 @@ class Landing extends React.Component {
             </button>
             { toggleMenu ? 
               <LanguageMenu 
-                currentLangs={ current } 
+                currentLangs={ currentLangs } 
                 onComplete={ this.handleCreateLanguage }
               />
               : null
