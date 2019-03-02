@@ -8,6 +8,10 @@ export default (state = { languages: null, languageSelection: null }, { type, pa
       return Object.assign({}, state, {
         languageSelection: payload,
       });
+    case 'LANGUAGE_ADD':
+      return Object.assign({}, state, {
+        languages: [...state.languages, payload],
+      });
     default:
       return state;
   }

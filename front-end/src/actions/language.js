@@ -10,6 +10,11 @@ const languagesFetch = languages => ({
   payload: languages,
 });
 
+const languageAdd = language => ({
+  type: 'LANGUAGE_ADD',
+  payload: language,
+});
+
 const languagesFetchRequest = () => (store) => {
   return superagent.get(`${API_URL}/languages/all`)
     .then((response) => {
@@ -17,8 +22,17 @@ const languagesFetchRequest = () => (store) => {
     });
 };
 
+const languageCreateRequest = lang => (store) => {
+  return superagent.post(`${API_URL}/language`)
+    .send({ languageName: lang })
+    .then((response) => {
+      return store.dispatch(languageAdd(response.body.language));
+    });
+};
+
 export { 
   languageSelect,
   languagesFetch,
   languagesFetchRequest,
+  languageCreateRequest,
 };

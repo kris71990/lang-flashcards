@@ -5,12 +5,14 @@ import PropTypes from 'prop-types';
 import autoBind from '../../utils/autobind';
 import * as languageActions from '../../actions/language';
 
+import LanguageMenu from '../language-menu/language-menu';
 // import * as routes from '../../utils/routes';
 
 import './landing.scss';
 
 const defaultState = {
   languageSelection: '',
+  toggleMenu: false,
 };
 
 class Landing extends React.Component {
@@ -43,9 +45,25 @@ class Landing extends React.Component {
     return this.props.setLanguage('');
   }
 
+  handleToggle() {
+    return this.setState({
+      toggleMenu: !this.state.toggleMenu,
+    });
+  }
+
+  handleCreateLanguage(lang) {
+    this.props.createLanguage(lang)
+      .then(() => {
+        console.log('language created');
+      });
+  }
+
   render() {
-    const { languageSelection } = this.state;
+    const { languageSelection, toggleMenu } = this.state;
     const { languages } = this.props.language;
+
+    let current;
+    if (languages) current = languages.map(lang => lang.languageName);
 
     return (
       <section>
@@ -59,7 +77,7 @@ class Landing extends React.Component {
           <section>
             {
               languages ?
-                <section>
+                <section id="langs">
                   {
                     languages.map((choice) => {
                       return (
@@ -77,9 +95,25 @@ class Landing extends React.Component {
                 <h2>Server not responding.</h2>
             }
           </section>
-          {
-            languages ? <button onClick={ this.handleChoice }>Show Cards</button> : null
-          }
+          <div id="directives">
+            <button onClick={ this.handleToggle }>
+              { toggleMenu ?
+                  <span>Hide</span>
+                : <span>More...</span>
+              }
+            </button>
+            { toggleMenu ? 
+              <LanguageMenu 
+                currentLangs={ current } 
+                onComplete={ this.handleCreateLanguage }
+              />
+              : null
+            }
+            { languages ? 
+              <button onClick={ this.handleChoice }>Show Cards</button> 
+              : null
+            }
+          </div>
         </div>
       </section>
     );
@@ -87,8 +121,8 @@ class Landing extends React.Component {
 }
 
 Landing.propTypes = {
-  languageSelection: PropTypes.string,
   language: PropTypes.object,
+  createLanguage: PropTypes.func,
   setLanguage: PropTypes.func,
   languagesFetch: PropTypes.func,
   history: PropTypes.object,
@@ -103,6 +137,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   languagesFetch: () => dispatch(languageActions.languagesFetchRequest()),
   setLanguage: lang => dispatch(languageActions.languageSelect(lang)),
+  createLanguage: lang => dispatch(languageActions.languageCreateRequest(lang)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);
