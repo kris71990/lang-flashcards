@@ -6,6 +6,7 @@ import autoBind from '../../utils/autobind';
 import * as languageActions from '../../actions/language';
 
 import LanguageMenu from '../language-menu/language-menu';
+import LanguagePanel from '../language-panel/language-panel';
 // import * as routes from '../../utils/routes';
 
 import './landing.scss';
@@ -89,6 +90,12 @@ class Landing extends React.Component {
           <h4>Or, try and learn a new language!</h4>
         </div>
         <div id="lang-choices">
+        {/* {
+          languages ? 
+            <LanguagePanel 
+              languages={ languages } languageSelection={ languageSelection }
+            /> : null
+        } */}
           <section>
             {
               languages ?
