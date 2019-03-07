@@ -11,9 +11,8 @@ export default (state = defaultState, { type, payload }) => {
         languages: payload,
       });
     case 'LANGUAGE_SELECT':
-      const { languageSelection, translationDirection } = payload;
       return Object.assign({}, state, {
-        languageSelection, translationDirection,
+        languageSelection: payload,
       });
     case 'LANGUAGE_ADD':
       return Object.assign({}, state, {

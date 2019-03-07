@@ -28,26 +28,26 @@ class Landing extends React.Component {
     this.props.languagesFetch();
   }
 
-  handleChange(e) {
-    if (e.currentTarget.id === 'langs' && e.target.id === 'langs') {
-      this.setState({
-        languageSelection: '',
-        translationDirection: '',
-      });
-    } else if (e.currentTarget.id === 'langs') {
-      this.setState({
-        languageSelection: e.target.id,
-      });
-    } else if (e.currentTarget.id === 'translation-direction' && e.target.id !== 'translation-direction') {
-      this.setState({
-        translationDirection: e.target.id,
-      });
-    } else {
-      this.setState({
-        translationDirection: '',
-      });
-    }
-  }
+  // handleChange(e) {
+  //   if (e.currentTarget.id === 'langs' && e.target.id === 'langs') {
+  //     this.setState({
+  //       languageSelection: '',
+  //       translationDirection: '',
+  //     });
+  //   } else if (e.currentTarget.id === 'langs') {
+  //     this.setState({
+  //       languageSelection: e.target.id,
+  //     });
+  //   } else if (e.currentTarget.id === 'translation-direction' && e.target.id !== 'translation-direction') {
+  //     this.setState({
+  //       translationDirection: e.target.id,
+  //     });
+  //   } else {
+  //     this.setState({
+  //       translationDirection: '',
+  //     });
+  //   }
+  // }
 
   handleChoice() {
     if (this.state.languageSelection) {
@@ -90,33 +90,13 @@ class Landing extends React.Component {
           <h4>Or, try and learn a new language!</h4>
         </div>
         <div id="lang-choices">
-        {/* {
+          { 
           languages ? 
             <LanguagePanel 
-              languages={ languages } languageSelection={ languageSelection }
-            /> : null
-        } */}
-          <section>
-            {
-              languages ?
-                <section id="langs" onClick={ this.handleChange }>
-                  {
-                    languages.map((choice) => {
-                      return (
-                        <div id={choice.languageName}
-                        className={ languageSelection === choice.languageName ? `selected-${languageSelection}` : null } key={choice.languageId}>
-                          { 
-                            choice.languageName.charAt(0).toUpperCase() + choice.languageName.slice(1) 
-                          }
-                        </div>
-                      );
-                    })
-                  }
-                </section>
-                : 
-                <h2>Server not responding.</h2>
-            }
-          </section>
+              languages={ languages } 
+              setLanguage={ this.props.setLanguage }/> 
+            : null 
+          }
           { formattedLangSelection ? 
               <div id="translation-direction" onClick={ this.handleChange }>
                 <button id="native-english" className={ translationDirection === 'native-english' ? 'selected' : null }>
