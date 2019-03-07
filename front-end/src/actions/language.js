@@ -5,6 +5,11 @@ const languageSelect = language => ({
   payload: language,
 });
 
+const languageTransDirSet = dir => ({
+  type: 'LANGUAGE_DIR_SET',
+  payload: dir,
+});
+
 const languagesFetch = languages => ({
   type: 'LANGUAGES_SET',
   payload: languages,

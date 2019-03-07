@@ -6,7 +6,8 @@ import autoBind from '../../utils/autobind';
 import * as languageActions from '../../actions/language';
 
 import LanguageMenu from '../language-menu/language-menu';
-import LanguagePanel from '../language-panel/language-panel';
+import LanguageChoicePanel from '../language-panel/language-panel';
+import TranslationChoice from '../translation-choice/translation-choice';
 // import * as routes from '../../utils/routes';
 
 import './landing.scss';
@@ -92,12 +93,19 @@ class Landing extends React.Component {
         <div id="lang-choices">
           { 
           languages ? 
-            <LanguagePanel 
+            <LanguageChoicePanel 
               languages={ languages } 
               setLanguage={ this.props.setLanguage }/> 
             : null 
           }
-          { formattedLangSelection ? 
+          {
+            formattedLangSelection ?
+              <TranslationChoice
+                formattedLangSelection={ formattedLangSelection }
+              />
+              : null
+          }
+          {/* { formattedLangSelection ? 
               <div id="translation-direction" onClick={ this.handleChange }>
                 <button id="native-english" className={ translationDirection === 'native-english' ? 'selected' : null }>
                   { formattedLangSelection } - English
@@ -107,7 +115,7 @@ class Landing extends React.Component {
                 </button>
               </div>
             : null
-          }
+          } */}
           <div id="directives">
             <button onClick={ this.handleToggle }>
               { toggleMenu ?
@@ -150,6 +158,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   languagesFetch: () => dispatch(languageActions.languagesFetchRequest()),
   setLanguage: lang => dispatch(languageActions.languageSelect(lang)),
+  setTransDir: dir => dispatch(languageActions.languageTransDirSet(dir)),
   createLanguage: lang => dispatch(languageActions.languageCreateRequest(lang)),
 });
 
