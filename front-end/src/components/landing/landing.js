@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 
 import autoBind from '../../utils/autobind';
 import * as languageActions from '../../actions/language';
+import * as wordActions from '../../actions/words';
 
 import LanguageMenu from '../language-menu/language-menu';
 import LanguageChoicePanel from '../language-panel/language-panel';
 import TranslationChoice from '../translation-choice/translation-choice';
-// import * as routes from '../../utils/routes';
+import * as routes from '../../utils/routes';
 
 import './landing.scss';
 
@@ -28,11 +29,19 @@ class Landing extends React.Component {
   }
 
   handleChoice() {
-    const { languageSelection, translationDirection } = this.props.language;
+    const { 
+      languageSelection, 
+      languageSelectionCode, 
+      translationDirection,
+    } = this.props.language;
+
     if (languageSelection && translationDirection) {
-      console.log('success');
-    } else console.log('fail');
-    // return this.props.setLanguage('');
+      return this.props.wordsFetch({ languageSelection, translationDirection, languageSelectionCode })
+        .then(() => {
+          this.props.history.push(routes.CARDS_ROUTE);
+        });
+    }
+    return this.props.setLanguage();
   }
 
   handleToggle() {
@@ -114,6 +123,7 @@ Landing.propTypes = {
   setLanguage: PropTypes.func,
   setTransDir: PropTypes.func,
   languagesFetch: PropTypes.func,
+  wordsFetch: PropTypes.func,
   history: PropTypes.object,
 };
 
@@ -128,6 +138,7 @@ const mapDispatchToProps = dispatch => ({
   setLanguage: lang => dispatch(languageActions.languageSelect(lang)),
   setTransDir: dir => dispatch(languageActions.languageTransDirSet(dir)),
   createLanguage: lang => dispatch(languageActions.languageCreateRequest(lang)),
+  wordsFetch: lang => dispatch(wordActions.wordsFetchRequest(lang)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

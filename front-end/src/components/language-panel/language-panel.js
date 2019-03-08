@@ -10,6 +10,7 @@ class LanguagePanel extends React.Component {
     autoBind.call(this, LanguagePanel);
     this.state = {
       languageSelection: '',
+      languageCode: null,
     };
   }
 
@@ -18,11 +19,14 @@ class LanguagePanel extends React.Component {
       this.props.setLanguage('');
       this.setState({
         languageSelection: '',
+        languageCode: null,
       });
     } else {
-      this.props.setLanguage(e.target.id);
+      const langData = e.target.id.split('-id:');
+      this.props.setLanguage({ lang: langData[0], id: langData[1] });
       this.setState({
-        languageSelection: e.target.id,
+        languageSelection: langData[0],
+        languageCode: langData[1],
       });
     }
   }
@@ -36,7 +40,7 @@ class LanguagePanel extends React.Component {
         {
           languages.map((choice) => {
             return (
-              <div id={choice.languageName}
+              <div id={`${choice.languageName}-id:${choice.languageId}`}
               className={ languageSelection === choice.languageName ? `selected-${languageSelection}` : null } key={choice.languageId}>
                 { 
                   choice.languageName.charAt(0).toUpperCase() + choice.languageName.slice(1) 
