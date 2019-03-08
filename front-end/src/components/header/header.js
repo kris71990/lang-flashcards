@@ -8,8 +8,8 @@ class Header extends React.Component {
   render() {
     return (
       <header className="header">
-        <h1>Language Learner</h1>
-        <p>Learn a New Language Today!</p>
+        <h1><Link to={routes.ROOT_ROUTE}>Language Learner</Link></h1>
+        <p><Link to={routes.ROOT_ROUTE}>Learn a New Language Today!</Link></p>
         <nav>
           <ul>
             <li><Link to={routes.ROOT_ROUTE}>Home</Link></li>
