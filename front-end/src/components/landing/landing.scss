@@ -19,44 +19,26 @@
   section {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
 
-    div {
-      width: 50%;
-      margin: 20px auto;
-      background-color: azure;
-      width: 218px;
-      height: 145px;
-      margin: 20px;
-      border-radius: 20px;
-      text-align: center;
-      line-height: 145px;
-      font-size: 1.4em;
-      border: 2px solid black;
-    }
-
-    .selected-dutch {
-      background-image: url('../../assets/netherlands.png');
-      background-repeat: 'no-repeat';
-      opacity: 0.2;
-    }
-
-    .selected-germ {
-      background-image: url('../../assets/germany.png');
-      background-repeat: 'no-repeat';
-      opacity: 0.2;
-    }
-
-    .selected-fren {
-      background-image: url('../../assets/france.png');
-      background-repeat: 'no-repeat';
-      opacity: 0.2;
-    }
-  
-    div:hover {
-      background-color: black;
-      color: white;
-      border: 2px solid red;
+    h2 {
+      color: red;
     }
   }
 
+  button {
+    margin: 2%;
+    padding: 1% 2%;
+    border-radius: 10px;
+  }
+
+  button:focus {
+    outline: 0;
+  }
+
+  #directives > button:last-child {
+    display: block;
+    margin: 0 auto;
+  }
 }

@@ -3,12 +3,18 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import autoBind from '../../utils/autobind';
-import languageSelect from '../../actions/language';
+import * as languageActions from '../../actions/language';
+import * as wordActions from '../../actions/words';
+
+import LanguageMenu from '../language-menu/language-menu';
+import LanguageChoicePanel from '../language-panel/language-panel';
+import TranslationChoice from '../translation-choice/translation-choice';
+import * as routes from '../../utils/routes';
 
 import './landing.scss';
 
 const defaultState = {
-  language: '',
+  toggleMenu: false,
 };
 
 class Landing extends React.Component {
@@ -18,27 +24,49 @@ class Landing extends React.Component {
     autoBind.call(this, Landing);
   }
 
-  handleChange(e) {
-    if (e.target) {
-      this.setState({
-        language: e.target.id,
-      });
-    } else {
-      this.setState({
-        language: '',
-      });
-    }
+  componentDidMount() {
+    this.props.languagesFetch();
   }
 
   handleChoice() {
-    if (this.state.language) {
-      return this.props.setLanguage(this.state.language); 
+    const { 
+      languageSelection, 
+      languageSelectionCode, 
+      translationDirection,
+    } = this.props.language;
+
+    if (languageSelection && translationDirection) {
+      return this.props.wordsFetch({ languageSelection, translationDirection, languageSelectionCode })
+        .then(() => {
+          this.props.history.push(routes.CARDS_ROUTE);
+        });
     }
-    return this.props.setLanguage('');
+    return this.props.setLanguage();
+  }
+
+  handleToggle() {
+    return this.setState({
+      toggleMenu: !this.state.toggleMenu,
+    });
+  }
+
+  handleCreateLanguage(lang) {
+    this.props.createLanguage(lang)
+      .then(() => {
+        console.log('language created');
+      });
   }
 
   render() {
-    const { language } = this.state;
+    const { toggleMenu } = this.state;
+    const { languages, languageSelection } = this.props.language;
+
+    let currentLangs;
+    let formattedLangSelection;
+    if (languages) currentLangs = languages.map(lang => lang.languageName);
+    if (languageSelection) {
+      formattedLangSelection = `${languageSelection.charAt(0).toUpperCase()}${languageSelection.slice(1)}`;
+    }
 
     return (
       <section>
@@ -48,19 +76,41 @@ class Landing extends React.Component {
           </h4>
           <h4>Or, try and learn a new language!</h4>
         </div>
-        <div id="lang-choices" onClick={ this.handleChange }>
-          <section>
-            <div id="dutch"
-              className={ language === 'dutch' ? 'selected-dutch' : null }>Dutch
-            </div>
-            <div id="german"
-              className={ language === 'german' ? 'selected-germ' : null }>German
-            </div>
-            <div id="french"
-              className={ language === 'french' ? 'selected-fren' : null }>French
-            </div>
-          </section>
-          <button onClick={ this.handleChoice }>Show Cards</button>
+        <div id="lang-choices">
+          { 
+            languages ? 
+              <LanguageChoicePanel 
+                languages={ languages } 
+                setLanguage={ this.props.setLanguage }/> 
+              : <h2>Server not responding.</h2>
+          }
+          {
+            formattedLangSelection ?
+              <TranslationChoice
+                formattedLangSelection={ formattedLangSelection }
+                setTransDir={ this.props.setTransDir }
+              />
+              : null
+          }
+          <div id="directives">
+            <button onClick={ this.handleToggle }>
+              { toggleMenu ?
+                  <span>Hide</span>
+                : <span>More...</span>
+              }
+            </button>
+            { toggleMenu ? 
+              <LanguageMenu 
+                currentLangs={ currentLangs } 
+                onComplete={ this.handleCreateLanguage }
+              />
+              : null
+            }
+            { languages ? 
+              <button onClick={ this.handleChoice }>Show Cards</button> 
+              : null
+            }
+          </div>
         </div>
       </section>
     );
@@ -68,8 +118,13 @@ class Landing extends React.Component {
 }
 
 Landing.propTypes = {
-  selected: PropTypes.string,
+  language: PropTypes.object,
+  createLanguage: PropTypes.func,
   setLanguage: PropTypes.func,
+  setTransDir: PropTypes.func,
+  languagesFetch: PropTypes.func,
+  wordsFetch: PropTypes.func,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
@@ -79,7 +134,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setLanguage: lang => dispatch(languageSelect(lang)),
+  languagesFetch: () => dispatch(languageActions.languagesFetchRequest()),
+  setLanguage: lang => dispatch(languageActions.languageSelect(lang)),
+  setTransDir: dir => dispatch(languageActions.languageTransDirSet(dir)),
+  createLanguage: lang => dispatch(languageActions.languageCreateRequest(lang)),
+  wordsFetch: lang => dispatch(wordActions.wordsFetchRequest(lang)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

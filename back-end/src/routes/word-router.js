@@ -51,7 +51,7 @@ wordRouter.get('/words/:language', (request, response, next) => {
   })
     .then((words) => {
       logger.log(logger.INFO, `Returning all words for ${request.params.language}`);
-      return response.status(200).json({ words });
+      return response.status(200).json(words);
     })
     .catch(next);
 });

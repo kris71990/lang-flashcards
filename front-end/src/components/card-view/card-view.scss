@@ -1,0 +1,11 @@
+#card-container {
+  width: 100%;
+  text-align: center;
+  #card {
+    width: 50%;
+    height: 300px;
+    margin: 0 auto;
+    border: 5px solid black;
+    background-color: grey;
+  }
+}
