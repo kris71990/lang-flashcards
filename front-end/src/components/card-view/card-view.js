@@ -53,21 +53,20 @@ class CardView extends React.Component {
 
     return (
       <div>
-        {
-          wordsToCards ?
-            <div id="card-container">
-              <h1>Your { this.handleFormat('language') } flashcards ({ totalWords ? totalWords : '0'})</h1>
-              <h3>{ this.handleFormat('trans') }</h3>
-              <div id="card">
-                {
-                  langData.translationDirection === 'native-english' ?
-                    <p>{ wordsToCards[cardNumber].wordLocal }</p>
-                    : <p>{ wordsToCards[cardNumber].wordEnglish }</p>
-                }
-              </div>
-              <button onClick={ this.handleRandomCard }>Next</button>
+        { wordsToCards ?
+          <div id="card-container">
+            <h1>Your <span>{ this.handleFormat('language') } </span> flashcards ({ totalWords ? totalWords : '0'})</h1>
+            <h3>{ this.handleFormat('trans') }</h3>
+            <div id="card">
+              {
+                langData.translationDirection === 'native-english' ?
+                  <p>{ wordsToCards[cardNumber].wordLocal }</p>
+                  : <p>{ wordsToCards[cardNumber].wordEnglish }</p>
+              }
             </div>
-            : <h1>fuck</h1>
+            <button onClick={ this.handleRandomCard }>Next</button>
+          </div>
+          : <h1>fuck</h1>
         }
       </div>
     );
@@ -90,8 +89,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CardView);
+export default connect(mapStateToProps, null)(CardView);

@@ -14,6 +14,10 @@ export default (state = defaultState, { type, payload }) => {
       return Object.assign({}, state, {
         words, languageSelection, translationDirection, languageSelectionCode,
       });
+    case 'WORD_ADD':
+      return Object.assign({}, state, {
+        words: [...words, payload],
+      });
     default:
       return state;
   }
