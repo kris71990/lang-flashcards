@@ -31,10 +31,10 @@ wordRouter.post('/word', jsonParser, (request, response, next) => {
       const [word, status] = wordRes;
       if (!status) {
         logger.log(logger.INFO, 'Word already exists, returning existing word');
-        return response.status(200).json({ word });
+        return response.status(200).json(word);
       }
       logger.log(logger.INFO, 'Word created.');
-      return response.status(201).json({ word });
+      return response.status(201).json(word);
     })
     .catch(next);
 });

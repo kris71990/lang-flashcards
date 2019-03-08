@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import autoBind from '../../utils/autobind';
+import * as routes from '../../utils/routes';
 
 import './card-view.scss';
 
@@ -40,6 +41,10 @@ class CardView extends React.Component {
     });
   }
 
+  handleLoadForm() {
+    return this.props.history.push(routes.CARD_FORM_ROUTE);
+  }
+
   render() {
     const { langData } = this.props;
     const { cardNumber } = this.state;
@@ -64,7 +69,8 @@ class CardView extends React.Component {
                   : <p>{ wordsToCards[cardNumber].wordEnglish }</p>
               }
             </div>
-            <button onClick={ this.handleRandomCard }>Next</button>
+            <button onClick={ this.handleRandomCard }>Next Card</button>
+            <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
           </div>
           : <h1>fuck</h1>
         }
@@ -76,6 +82,7 @@ class CardView extends React.Component {
 CardView.propTypes = {
   words: PropTypes.array,
   langData: PropTypes.object,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {

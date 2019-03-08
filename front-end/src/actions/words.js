@@ -23,8 +23,9 @@ const wordsFetchRequest = langData => (store) => {
     });
 };
 
-const wordPostRequest = word => (store) => {
-  const { wordEnglish, wordLocal, languageId } = word;
+const wordPostRequest = (word, languageId) => (store) => {
+  console.log(word, languageId);
+  const { wordEnglish, wordLocal } = word;
   return superagent.post(`${API_URL}/word`)
     .send({ wordEnglish, wordLocal, languageId })
     .then((response) => {

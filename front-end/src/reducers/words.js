@@ -15,8 +15,10 @@ export default (state = defaultState, { type, payload }) => {
         words, languageSelection, translationDirection, languageSelectionCode,
       });
     case 'WORD_ADD':
+      const ids = state.words.map(w => w.wordId);
+      if (ids.includes(payload.wordId)) return state;
       return Object.assign({}, state, {
-        words: [...words, payload],
+        words: [...state.words, payload],
       });
     default:
       return state;
