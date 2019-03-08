@@ -99,11 +99,10 @@ describe('Word Router Tests', () => {
             .then(() => {
               return superagent.get(`${API_URL}/words/${languageMock.languageId}`)
                 .then((response) => {
-                  const { words } = response.body;
                   expect(response.status).toEqual(200);
-                  expect(words).toBeInstanceOf(Array);
-                  expect(words).toHaveLength(5);
-                  expect(words[1].languageId).toEqual(languageMock.languageId);
+                  expect(response.body).toBeInstanceOf(Array);
+                  expect(response.body).toHaveLength(5);
+                  expect(response.body[1].languageId).toEqual(languageMock.languageId);
                 });
             });
         });
@@ -122,8 +121,8 @@ describe('Word Router Tests', () => {
           return superagent.get(`${API_URL}/words/${languageMock.languageId}`)
             .then((response) => {
               expect(response.status).toEqual(200);
-              expect(response.body.words).toBeInstanceOf(Array);
-              expect(response.body.words).toHaveLength(0);
+              expect(response.body).toBeInstanceOf(Array);
+              expect(response.body).toHaveLength(0);
             });
         });
     });
