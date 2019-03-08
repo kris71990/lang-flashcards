@@ -10,6 +10,10 @@ export default (state = defaultState, { type, payload }) => {
       return Object.assign({}, state, {
         languages: payload,
       });
+    case 'LANGUAGE_DIR_SET':
+      return Object.assign({}, state, {
+        translationDirection: payload,
+      });
     case 'LANGUAGE_SELECT':
       return Object.assign({}, state, {
         languageSelection: payload,

@@ -32,25 +32,18 @@ class LanguagePanel extends React.Component {
     const { languageSelection } = this.state;
 
     return (
-      <section>
+      <section id="langs" onClick={ this.handleChange }>
         {
-          languages ?
-            <section id="langs" onClick={ this.handleChange }>
-              {
-                languages.map((choice) => {
-                  return (
-                    <div id={choice.languageName}
-                    className={ languageSelection === choice.languageName ? `selected-${languageSelection}` : null } key={choice.languageId}>
-                      { 
-                        choice.languageName.charAt(0).toUpperCase() + choice.languageName.slice(1) 
-                      }
-                    </div>
-                  );
-                })
-              }
-            </section>
-            : 
-            <h2>Server not responding.</h2>
+          languages.map((choice) => {
+            return (
+              <div id={choice.languageName}
+              className={ languageSelection === choice.languageName ? `selected-${languageSelection}` : null } key={choice.languageId}>
+                { 
+                  choice.languageName.charAt(0).toUpperCase() + choice.languageName.slice(1) 
+                }
+              </div>
+            );
+          })
         }
       </section>
     );

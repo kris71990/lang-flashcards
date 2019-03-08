@@ -13,8 +13,6 @@ import TranslationChoice from '../translation-choice/translation-choice';
 import './landing.scss';
 
 const defaultState = {
-  languageSelection: '',
-  translationDirection: '',
   toggleMenu: false,
 };
 
@@ -29,33 +27,12 @@ class Landing extends React.Component {
     this.props.languagesFetch();
   }
 
-  // handleChange(e) {
-  //   if (e.currentTarget.id === 'langs' && e.target.id === 'langs') {
-  //     this.setState({
-  //       languageSelection: '',
-  //       translationDirection: '',
-  //     });
-  //   } else if (e.currentTarget.id === 'langs') {
-  //     this.setState({
-  //       languageSelection: e.target.id,
-  //     });
-  //   } else if (e.currentTarget.id === 'translation-direction' && e.target.id !== 'translation-direction') {
-  //     this.setState({
-  //       translationDirection: e.target.id,
-  //     });
-  //   } else {
-  //     this.setState({
-  //       translationDirection: '',
-  //     });
-  //   }
-  // }
-
   handleChoice() {
-    if (this.state.languageSelection) {
-      const { languageSelection, translationDirection } = this.state;
-      return this.props.setLanguage({ languageSelection, translationDirection });
-    }
-    return this.props.setLanguage('');
+    const { languageSelection, translationDirection } = this.props.language;
+    if (languageSelection && translationDirection) {
+      console.log('success');
+    } else console.log('fail');
+    // return this.props.setLanguage('');
   }
 
   handleToggle() {
@@ -72,8 +49,8 @@ class Landing extends React.Component {
   }
 
   render() {
-    const { languageSelection, translationDirection, toggleMenu } = this.state;
-    const { languages } = this.props.language;
+    const { toggleMenu } = this.state;
+    const { languages, languageSelection } = this.props.language;
 
     let currentLangs;
     let formattedLangSelection;
@@ -92,30 +69,20 @@ class Landing extends React.Component {
         </div>
         <div id="lang-choices">
           { 
-          languages ? 
-            <LanguageChoicePanel 
-              languages={ languages } 
-              setLanguage={ this.props.setLanguage }/> 
-            : null 
+            languages ? 
+              <LanguageChoicePanel 
+                languages={ languages } 
+                setLanguage={ this.props.setLanguage }/> 
+              : <h2>Server not responding.</h2>
           }
           {
             formattedLangSelection ?
               <TranslationChoice
                 formattedLangSelection={ formattedLangSelection }
+                setTransDir={ this.props.setTransDir }
               />
               : null
           }
-          {/* { formattedLangSelection ? 
-              <div id="translation-direction" onClick={ this.handleChange }>
-                <button id="native-english" className={ translationDirection === 'native-english' ? 'selected' : null }>
-                  { formattedLangSelection } - English
-                </button>
-                <button id="english-native" className={ translationDirection === 'english-native' ? 'selected' : null }>
-                  English - { formattedLangSelection }
-                </button>
-              </div>
-            : null
-          } */}
           <div id="directives">
             <button onClick={ this.handleToggle }>
               { toggleMenu ?
@@ -145,6 +112,7 @@ Landing.propTypes = {
   language: PropTypes.object,
   createLanguage: PropTypes.func,
   setLanguage: PropTypes.func,
+  setTransDir: PropTypes.func,
   languagesFetch: PropTypes.func,
   history: PropTypes.object,
 };

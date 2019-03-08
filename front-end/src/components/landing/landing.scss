@@ -25,51 +25,6 @@
     h2 {
       color: red;
     }
-
-    #langs div {
-      width: 50%;
-      margin: 20px auto;
-      background-color: azure;
-      width: 218px;
-      height: 145px;
-      margin: 20px;
-      border-radius: 20px;
-      text-align: center;
-      line-height: 145px;
-      font-size: 1.4em;
-      border: 2px solid black;
-    }
-
-    #langs div:hover {
-      background-color: black;
-      color: white;
-      border: 2px solid red;
-    }
-
-    .selected-dutch {
-      background-image: url('../../assets/netherlands.png');
-      background-repeat: 'no-repeat';
-      opacity: 0.3;
-    }
-
-    .selected-german {
-      background-image: url('../../assets/germany.png');
-      background-repeat: 'no-repeat';
-      opacity: 0.3;
-    }
-
-    .selected-french {
-      background-image: url('../../assets/france.png');
-      background-repeat: 'no-repeat';
-      opacity: 0.3;
-    }
-
-    #langs div[class^="selected"] {
-      opacity: 0.3;
-      background-color: rgb(114, 114, 114);
-      color: black;
-      border: 2px solid black;
-    }
   }
 
   button {
@@ -80,16 +35,6 @@
 
   button:focus {
     outline: 0;
-  }
-
-  #translation-direction {
-    .selected {
-      opacity: 0.3;
-      background-color: rgb(114, 114, 114);
-      color: black;
-      font-weight: bold;
-      border: 2px solid black;
-    }
   }
 
   #directives > button:last-child {
