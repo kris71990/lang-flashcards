@@ -20,6 +20,10 @@ export default (state = defaultState, { type, payload }) => {
       return Object.assign({}, state, {
         words: [...state.words, payload],
       });
+    case 'BULK_ADD':
+      return Object.assign({}, state, {
+        words: payload,
+      });
     default:
       return state;
   }

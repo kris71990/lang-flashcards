@@ -23,12 +23,11 @@ describe('Word Router Tests', () => {
               languageId: languageMock.languageId,
             })
             .then((response) => {
-              const { word } = response.body;
               expect(response.status).toEqual(201);
-              expect(word.wordEnglish).toEqual('girl');
-              expect(word.wordLocal).toEqual('madchen');
-              expect(word.languageId).toEqual(languageMock.languageId);
-              expect(word.wordId).toBeTruthy();
+              expect(response.body.wordEnglish).toEqual('girl');
+              expect(response.body.wordLocal).toEqual('madchen');
+              expect(response.body.languageId).toEqual(languageMock.languageId);
+              expect(response.body.wordId).toBeTruthy();
             });
         });
     });

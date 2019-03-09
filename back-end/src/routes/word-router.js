@@ -39,6 +39,33 @@ wordRouter.post('/word', jsonParser, (request, response, next) => {
     .catch(next);
 });
 
+wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
+  logger.log(logger.INFO, 'Processing a post on /words/bulk');
+
+  const { wordsEnglish, wordsLocal, languageId } = request.body;
+  const wordsToPost = wordsEnglish.map((english, i) => {
+    return {
+      wordEnglish: english,
+      wordLocal: wordsLocal[i],
+      languageId,
+    };
+  });
+
+  return models.word.bulkCreate(wordsToPost)
+    .then(() => {
+      return models.word.findAll({
+        where: {
+          languageId,
+        },
+      })
+        .then((words) => {
+          logger.log(logger.INFO, 'Returning all words');
+          return response.status(201).json(words);
+        })
+        .catch(next);
+    });
+});
+
 wordRouter.get('/words/:language', (request, response, next) => {
   logger.log(logger.INFO, 'Processing a get on /words');
 
