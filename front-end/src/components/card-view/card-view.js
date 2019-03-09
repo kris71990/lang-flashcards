@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import autoBind from '../../utils/autobind';
+import * as routes from '../../utils/routes';
 
 import './card-view.scss';
 
@@ -40,6 +41,10 @@ class CardView extends React.Component {
     });
   }
 
+  handleLoadForm() {
+    return this.props.history.push(routes.CARD_FORM_ROUTE);
+  }
+
   render() {
     const { langData } = this.props;
     const { cardNumber } = this.state;
@@ -53,21 +58,21 @@ class CardView extends React.Component {
 
     return (
       <div>
-        {
-          wordsToCards ?
-            <div id="card-container">
-              <h1>Your { this.handleFormat('language') } flashcards ({ totalWords ? totalWords : '0'})</h1>
-              <h3>{ this.handleFormat('trans') }</h3>
-              <div id="card">
-                {
-                  langData.translationDirection === 'native-english' ?
-                    <p>{ wordsToCards[cardNumber].wordLocal }</p>
-                    : <p>{ wordsToCards[cardNumber].wordEnglish }</p>
-                }
-              </div>
-              <button onClick={ this.handleRandomCard }>Next</button>
+        { wordsToCards ?
+          <div id="card-container">
+            <h1>Your <span>{ this.handleFormat('language') } </span> flashcards ({ totalWords ? totalWords : '0'})</h1>
+            <h3>{ this.handleFormat('trans') }</h3>
+            <div id="card">
+              {
+                langData.translationDirection === 'native-english' ?
+                  <p>{ wordsToCards[cardNumber].wordLocal }</p>
+                  : <p>{ wordsToCards[cardNumber].wordEnglish }</p>
+              }
             </div>
-            : <h1>fuck</h1>
+            <button onClick={ this.handleRandomCard }>Next Card</button>
+            <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
+          </div>
+          : <h1>fuck</h1>
         }
       </div>
     );
@@ -77,6 +82,7 @@ class CardView extends React.Component {
 CardView.propTypes = {
   words: PropTypes.array,
   langData: PropTypes.object,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
@@ -90,8 +96,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CardView);
+export default connect(mapStateToProps, null)(CardView);
