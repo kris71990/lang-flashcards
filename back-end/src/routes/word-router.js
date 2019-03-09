@@ -43,6 +43,11 @@ wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /words/bulk');
 
   const { wordsEnglish, wordsLocal, languageId } = request.body;
+
+  if (!(wordsEnglish instanceof Array || wordsLocal instanceof Array)) return next(new HttpError(400, 'Word format error'));
+  if ((wordsEnglish.length !== wordsLocal.length) || (wordsEnglish.length < 1 || wordsLocal.length < 1)) return next(new HttpError(400, 'Word organization error'));
+  if (!languageId) return next(new HttpError(400, 'No language specified'));
+
   const wordsToPost = wordsEnglish.map((english, i) => {
     return {
       wordEnglish: english,

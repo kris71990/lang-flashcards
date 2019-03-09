@@ -90,6 +90,62 @@ describe('Word Router Tests', () => {
     });
   });
 
+  describe('POST /words/bulk', () => {
+    test('POST words in bulk returns all words in language', () => {
+      const wordsEnglish = ['man', 'woman', 'girl'];
+      const wordsLocal = ['mann', 'frau', 'madchen'];
+      return mockLanguage('German')
+        .then((languageMock) => {
+          return superagent.post(`${API_URL}/words/bulk`)
+            .send({ wordsEnglish, wordsLocal, languageId: languageMock.languageId })
+            .then((response) => {
+              expect(response.status).toEqual(201);
+              expect(response.body).toBeInstanceOf(Array);
+              expect(response.body).toHaveLength(3);
+              expect(response.body[0].wordId).toBeTruthy();
+              expect(response.body[1].wordId).toBeTruthy();
+              expect(response.body[2].wordId).toBeTruthy();
+            });
+        });
+    });
+
+    test('POST words with no language id returns bad request', () => {
+      const wordsEnglish = ['man', 'woman', 'girl'];
+      const wordsLocal = ['mann', 'frau', 'madchen'];
+      return superagent.post(`${API_URL}/words/bulk`)
+        .send({ wordsEnglish, wordsLocal })
+        .catch((error) => {
+          expect(error.status).toEqual(400);
+        });
+    });
+
+    test('POST unequal number of words returns bad request', () => {
+      const wordsEnglish = ['man', 'woman'];
+      const wordsLocal = ['mann', 'frau', 'madchen'];
+      return mockLanguage('German')
+        .then((languageMock) => {
+          return superagent.post(`${API_URL}/words/bulk`)
+            .send({ wordsEnglish, wordsLocal, languageId: languageMock.languageId })
+            .catch((error) => {
+              expect(error.status).toEqual(400);
+            });
+        });
+    }); 
+
+    test('POST with wrong type of word data returns bad request', () => {
+      const wordsEnglish = 'man';
+      const wordsLocal = 'mann';
+      return mockLanguage('German')
+        .then((languageMock) => {
+          return superagent.post(`${API_URL}/words/bulk`)
+            .send({ wordsEnglish, wordsLocal, languageId: languageMock.languageId })
+            .catch((error) => {
+              expect(error.status).toEqual(400);
+            });
+        });
+    });
+  });
+
   describe('GET /words/:language', () => {
     test('GET words with languageId should return all words associated with that language', () => {
       return mockLanguage('Dutch')
