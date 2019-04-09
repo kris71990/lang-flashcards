@@ -43,7 +43,7 @@ wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /words/bulk');
 
   const { 
-    wordsEnglish, wordsLocal, wordTypes, languageId, 
+    wordsEnglish, wordsLocal, wordTypes, category, languageId, 
   } = request.body;
 
   if (!(wordsEnglish instanceof Array || wordsLocal instanceof Array 
@@ -58,6 +58,7 @@ wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
       wordEnglish: english,
       wordLocal: wordsLocal[i],
       typeOfWord: wordTypes[i],
+      category: category[i],
       languageId,
     };
   });

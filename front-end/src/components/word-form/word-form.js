@@ -12,6 +12,7 @@ const defaultState = {
   wordEnglish: [],
   wordLocal: [],
   typeOfWord: [],
+  categoryOfWord: [],
   totalFields: 1,
 };
 
@@ -45,6 +46,7 @@ class WordForm extends React.Component {
         wordsEnglish: this.state.wordEnglish,
         wordsLocal: this.state.wordLocal,
         wordTypes: this.state.typeOfWord,
+        category: this.state.categoryOfWord,
         languageId: this.props.words.languageSelectionCode,
       })
         .then(() => {
@@ -56,6 +58,7 @@ class WordForm extends React.Component {
       wordEnglish: this.state.wordEnglish[0],
       wordLocal: this.state.wordLocal[0],
       typeOfWord: this.state.typeOfWord[0],
+      category: this.state.categoryOfWord[0],
       languageId: this.props.words.languageSelectionCode,
     })
       .then(() => {
@@ -115,15 +118,20 @@ class WordForm extends React.Component {
                       <option value="proper">Proper Noun</option>
                       <option value="other">Other</option>
                     </select>
-                    {/* <label>Type of Word</label> 
-                    <input 
-                      type="text" 
-                      className={ languageSelection }
-                      name="wordLocal"
+                    <label>Category</label> 
+                    <select
+                      className="category-select"
+                      name="categoryOfWord"
                       index={i}
-                      placeholder="ex. jongen"
+                      value={ this.state.value }
                       onChange={ this.handleChange }
-                    /> */}
+                    >
+                      <option value="empty">Select</option>
+                      <option value="greeting">Greeting</option>
+                      <option value="object">Object</option>
+                      <option value="cooking">Cooking</option>
+                      <option value="outdoors">Outdoors</option>
+                    </select>
                   </div>
                 );
               })

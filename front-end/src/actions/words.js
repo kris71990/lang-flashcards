@@ -30,12 +30,12 @@ const wordsFetchRequest = langData => (store) => {
 
 const wordPostRequest = word => (store) => {
   const { 
-    wordEnglish, wordLocal, typeOfWord, languageId,
+    wordEnglish, wordLocal, typeOfWord, category, languageId,
   } = word;
 
   return superagent.post(`${API_URL}/word`)
     .send({ 
-      wordEnglish, wordLocal, typeOfWord, languageId, 
+      wordEnglish, wordLocal, typeOfWord, category, languageId, 
     })
     .then((response) => {
       return store.dispatch(wordAdd(response.body));
