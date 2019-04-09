@@ -6,9 +6,12 @@ import autoBind from '../../utils/autobind';
 import * as wordActions from '../../actions/words';
 import * as routes from '../../utils/routes';
 
+import './word-form.scss';
+
 const defaultState = {
   wordEnglish: [],
   wordLocal: [],
+  typeOfWord: [],
   totalFields: 1,
 };
 
@@ -61,6 +64,7 @@ class WordForm extends React.Component {
 
   render() {
     const { languageSelection } = this.props.words;
+    const { totalFields } = this.state;
     let formattedLang;
     if (languageSelection) {
       formattedLang = `${languageSelection.charAt(0).toUpperCase()}${languageSelection.slice(1)}`;
@@ -72,7 +76,7 @@ class WordForm extends React.Component {
           <fieldset>
             <legend>Add Vocabulary ({ formattedLang })</legend>
             {
-              [...Array(this.state.totalFields)].map((e, i) => {
+              [...Array(totalFields)].map((e, i) => {
                 return (
                   <div key={i}>
                     <label>English</label> 
@@ -93,12 +97,37 @@ class WordForm extends React.Component {
                       placeholder="ex. jongen"
                       onChange={ this.handleChange }
                     />
+                    <label>Part of Speech</label> 
+                    <select
+                      className="wordType-select"
+                      name="typeOfWord"
+                      index={i}
+                      value={ this.state.value }
+                      onChange={ this.handleChange }
+                    >
+                      <option value="empty">Select</option>
+                      <option value="noun">Noun</option>
+                      <option value="verb">Verb</option>
+                      <option value="pronoun">Pronoun</option>
+                      <option value="adjective">Adjective</option>
+                      <option value="proper">Proper Noun</option>
+                      <option value="other">Other</option>
+                    </select>
+                    {/* <label>Type of Word</label> 
+                    <input 
+                      type="text" 
+                      className={ languageSelection }
+                      name="wordLocal"
+                      index={i}
+                      placeholder="ex. jongen"
+                      onChange={ this.handleChange }
+                    /> */}
                   </div>
                 );
               })
             }
           </fieldset>
-          <button type="submit">Add Words</button>
+          <button type="submit">Add { totalFields > 1 ? 'Words' : 'Word' }</button>
         </form>
         <button onClick={ this.handleAddField }>Add field</button>
       </div>

@@ -58,8 +58,8 @@ class CardView extends React.Component {
 
     return (
       <div>
-        { wordsToCards ?
-          <div id="card-container">
+        { wordsToCards.length > 0 ?
+          <div className="card-container">
             <h1>Your <span>{ this.handleFormat('language') } </span> flashcards ({ totalWords ? totalWords : '0'})</h1>
             <h3>{ this.handleFormat('trans') }</h3>
             <div id="card">
@@ -72,7 +72,12 @@ class CardView extends React.Component {
             <button onClick={ this.handleRandomCard }>Next Card</button>
             <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
           </div>
-          : <h1>fuck</h1>
+          : 
+          <div className="card-container">
+            <h2>There are currently no flashcards to study in { this.handleFormat('language') }.</h2>
+            <h3>Add some words!</h3>
+            <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
+          </div>
         }
       </div>
     );
