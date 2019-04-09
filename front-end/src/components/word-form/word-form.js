@@ -44,6 +44,7 @@ class WordForm extends React.Component {
       return this.props.bulkAddWords({
         wordsEnglish: this.state.wordEnglish,
         wordsLocal: this.state.wordLocal,
+        wordTypes: this.state.typeOfWord,
         languageId: this.props.words.languageSelectionCode,
       })
         .then(() => {
@@ -54,6 +55,7 @@ class WordForm extends React.Component {
     return this.props.addWord({
       wordEnglish: this.state.wordEnglish[0],
       wordLocal: this.state.wordLocal[0],
+      typeOfWord: this.state.typeOfWord[0],
       languageId: this.props.words.languageSelectionCode,
     })
       .then(() => {

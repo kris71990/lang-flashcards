@@ -29,9 +29,14 @@ const wordsFetchRequest = langData => (store) => {
 };
 
 const wordPostRequest = word => (store) => {
-  const { wordEnglish, wordLocal, languageId } = word;
+  const { 
+    wordEnglish, wordLocal, typeOfWord, languageId,
+  } = word;
+
   return superagent.post(`${API_URL}/word`)
-    .send({ wordEnglish, wordLocal, languageId })
+    .send({ 
+      wordEnglish, wordLocal, typeOfWord, languageId, 
+    })
     .then((response) => {
       return store.dispatch(wordAdd(response.body));
     });
