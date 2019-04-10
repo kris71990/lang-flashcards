@@ -13,6 +13,8 @@ const Op = models.Sequelize.Op;
 wordRouter.post('/word', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /word');
 
+  console.log(request.body);
+
   if (!request.body || 
     (!request.body.wordEnglish || !request.body.wordLocal || 
       !request.body.typeOfWord || !request.body.category || !request.body.languageId)) {
@@ -34,7 +36,7 @@ wordRouter.post('/word', jsonParser, (request, response, next) => {
         logger.log(logger.INFO, 'Word already exists, returning existing word');
         return response.status(200).json(word);
       }
-
+      // *TODO--TODO--TODO*
       // update word count on language model
       logger.log(logger.INFO, 'Word created.');
       return response.status(201).json(word);

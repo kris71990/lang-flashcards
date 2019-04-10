@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import autoBind from '../../utils/autobind';
 import * as routes from '../../utils/routes';
 
+import * as wordActions from '../../actions/words';
+
 import './card-view.scss';
 
 class CardView extends React.Component {
@@ -14,6 +16,22 @@ class CardView extends React.Component {
       cardNumber: 0,
     };
     autoBind.call(this, CardView);
+  }
+
+  componentDidMount() {
+    let { langData } = this.props;
+    if (!langData.languageId) {
+      langData = JSON.parse(localStorage.getItem('words'));
+      return this.props.wordsFetch({ 
+        languageSelection: langData.languageSelection, 
+        translationDirection: langData.translationDirection, 
+        languageSelectionCode: langData.languageSelectionCode, 
+      })
+        .then(() => {
+          console.log('Words retrieved');
+        });
+    } 
+    return null;
   }
 
   handleFormat(type) {
@@ -97,7 +115,12 @@ class CardView extends React.Component {
 CardView.propTypes = {
   langData: PropTypes.object,
   history: PropTypes.object,
+  wordsFetch: PropTypes.func,
 };
+
+const mapDispatchToProps = dispatch => ({
+  wordsFetch: lang => dispatch(wordActions.wordsFetchRequest(lang)),
+});
 
 const mapStateToProps = (state) => {
   return {
@@ -110,4 +133,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(CardView);
+export default connect(mapStateToProps, mapDispatchToProps)(CardView);

@@ -51,13 +51,18 @@ class WordForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+
+    let { words } = this.props;
+    if (!words.languageSelectionCode) words = JSON.parse(localStorage.getItem('words'));
+    const languageSelectionCode = words.languageSelectionCode;
+
     if (this.state.wordEnglish.length > 1 && this.state.wordLocal.length > 1) {
       return this.props.bulkAddWords({
         wordsEnglish: this.state.wordEnglish,
         wordsLocal: this.state.wordLocal,
         wordTypes: this.state.typeOfWord,
         category: this.state.categoryOfWord,
-        languageId: this.props.words.languageSelectionCode,
+        languageId: languageSelectionCode,
       })
         .then(() => {
           this.setState(defaultState);
@@ -69,7 +74,7 @@ class WordForm extends React.Component {
       wordLocal: this.state.wordLocal[0],
       typeOfWord: this.state.typeOfWord[0],
       category: this.state.categoryOfWord[0],
-      languageId: this.props.words.languageSelectionCode,
+      languageId: languageSelectionCode,
     })
       .then(() => {
         this.setState(defaultState);
@@ -80,7 +85,6 @@ class WordForm extends React.Component {
   render() {
     let { words } = this.props;
     if (!words.languageSelectionCode) words = JSON.parse(localStorage.getItem('words'));
-    console.log(words);
     const languageSelection = words.languageSelection;
     const { totalFields } = this.state;
     let formattedLang;
