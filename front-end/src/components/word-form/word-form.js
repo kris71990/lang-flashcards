@@ -34,9 +34,19 @@ class WordForm extends React.Component {
   }
 
   handleAddField() {
-    this.setState({
-      totalFields: this.state.totalFields + 1,
-    });
+    if (this.state.totalFields < 10) {
+      this.setState({
+        totalFields: this.state.totalFields + 1,
+      });
+    }
+  }
+
+  handleRemoveField() {
+    if (this.state.totalFields > 1) {
+      this.setState({
+        totalFields: this.state.totalFields - 1,
+      });
+    }
   }
 
   handleSubmit(e) {
@@ -78,14 +88,13 @@ class WordForm extends React.Component {
       formattedLang = `${languageSelection.charAt(0).toUpperCase()}${languageSelection.slice(1)}`;
     }
 
-    // ...Array(totalFields)
     return (
       <div id="vocab-container">
         <form id="vocab-form" onSubmit={ this.handleSubmit }>
           <fieldset>
             <legend>Add Vocabulary ({ formattedLang })</legend>
             {
-              [1, 2, 3, 4].map((e, i) => {
+              [...Array(totalFields)].map((e, i) => {
                 return (
                   <div key={i}>
                     <label>English</label> 
@@ -141,9 +150,10 @@ class WordForm extends React.Component {
               })
             }
           </fieldset>
+          <button onClick={ this.handleAddField }>Add field</button>
+          <button onClick={ this.handleRemoveField }>Remove field</button>
           <button type="submit">Add { totalFields > 1 ? 'Words' : 'Word' }</button>
         </form>
-        <button onClick={ this.handleAddField }>Add field</button>
       </div>
     );
   }
