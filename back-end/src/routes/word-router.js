@@ -14,7 +14,8 @@ wordRouter.post('/word', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /word');
 
   if (!request.body || 
-    (!request.body.wordEnglish || !request.body.wordLocal || !request.body.languageId)) {
+    (!request.body.wordEnglish || !request.body.wordLocal || 
+      !request.body.typeOfWord || !request.body.category || !request.body.languageId)) {
     return next(new HttpError(400, 'Bad Request'));
   }
 
@@ -33,6 +34,8 @@ wordRouter.post('/word', jsonParser, (request, response, next) => {
         logger.log(logger.INFO, 'Word already exists, returning existing word');
         return response.status(200).json(word);
       }
+
+      // update word count on language model
       logger.log(logger.INFO, 'Word created.');
       return response.status(201).json(word);
     })

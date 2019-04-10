@@ -12,10 +12,17 @@ const languageRouter = new Router();
 languageRouter.post('/language', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /language');
 
+  let initialization;
   if (!request.body || !request.body.languageName) return next(new HttpError(400, 'Bad request'));
+  if (!request.body.wordCount) {
+    initialization = 0;
+  } else {
+    initialization = request.body.wordCount;
+  }
 
   return models.language.create({
-    ...request.body,
+    languageName: request.body.languageName,
+    wordCount: initialization,
   })
     .then((language) => {
       logger.log(logger.INFO, 'Language created.');
