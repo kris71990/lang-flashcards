@@ -17,7 +17,15 @@ class CardView extends React.Component {
   }
 
   handleFormat(type) {
-    const formatLang = `${this.props.langData.lang.charAt(0).toUpperCase()}${this.props.langData.lang.slice(1)}`;
+    let { langData } = this.props;
+    let formatLang;
+
+    if (!langData.langId) {
+      langData = JSON.parse(localStorage.getItem('words'));
+      formatLang = `${langData.languageSelection.charAt(0).toUpperCase()}${langData.languageSelection.slice(1)}`;
+    } else {
+      formatLang = `${langData.lang.charAt(0).toUpperCase()}${langData.lang.slice(1)}`;
+    }
 
     switch (type) {
       case 'language':
@@ -35,7 +43,7 @@ class CardView extends React.Component {
   }
 
   handleRandomCard() {
-    const rand = Math.floor(Math.random() * this.props.words.length);
+    const rand = Math.floor(Math.random() * this.props.langData.words.length);
     this.setState({
       cardNumber: rand,
     });
@@ -46,13 +54,15 @@ class CardView extends React.Component {
   }
 
   render() {
-    const { langData } = this.props;
+    let { langData } = this.props;
+    if (!langData.langId) langData = JSON.parse(localStorage.getItem('words'));
+    
     const { cardNumber } = this.state;
     let wordsToCards;
     let totalWords;
 
-    if (langData && this.props.words) {
-      wordsToCards = this.props.words;
+    if (langData && langData.words) {
+      wordsToCards = langData.words;
       totalWords = wordsToCards.length;
     }
 
@@ -85,18 +95,17 @@ class CardView extends React.Component {
 }
 
 CardView.propTypes = {
-  words: PropTypes.array,
   langData: PropTypes.object,
   history: PropTypes.object,
 };
 
 const mapStateToProps = (state) => {
   return {
-    words: state.words.words,
     langData: {
       lang: state.words.languageSelection,
       langId: state.words.languageSelectionCode,
       translationDirection: state.words.translationDirection,
+      words: state.words.words,
     },
   };
 };

@@ -68,20 +68,24 @@ class WordForm extends React.Component {
   }
 
   render() {
-    const { languageSelection } = this.props.words;
+    let { words } = this.props;
+    if (!words.languageSelectionCode) words = JSON.parse(localStorage.getItem('words'));
+    console.log(words);
+    const languageSelection = words.languageSelection;
     const { totalFields } = this.state;
     let formattedLang;
     if (languageSelection) {
       formattedLang = `${languageSelection.charAt(0).toUpperCase()}${languageSelection.slice(1)}`;
     }
 
+    // ...Array(totalFields)
     return (
       <div id="vocab-container">
         <form id="vocab-form" onSubmit={ this.handleSubmit }>
           <fieldset>
             <legend>Add Vocabulary ({ formattedLang })</legend>
             {
-              [...Array(totalFields)].map((e, i) => {
+              [1, 2, 3, 4].map((e, i) => {
                 return (
                   <div key={i}>
                     <label>English</label> 
@@ -112,10 +116,10 @@ class WordForm extends React.Component {
                     >
                       <option value="empty">Select</option>
                       <option value="noun">Noun</option>
+                      <option value="proper">Proper Noun</option>
                       <option value="verb">Verb</option>
                       <option value="pronoun">Pronoun</option>
                       <option value="adjective">Adjective</option>
-                      <option value="proper">Proper Noun</option>
                       <option value="other">Other</option>
                     </select>
                     <label>Category</label> 
