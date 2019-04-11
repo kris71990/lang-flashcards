@@ -30,7 +30,9 @@ class WordForm extends React.Component {
     const { name } = e.target;
     let { value } = e.target;
 
+    // select menu reassigned from value to default selection assigns value to null
     if (value === '') value = null;
+
     const i = e.target.attributes.index.value;
     const prevState = this.state[name].slice();
     prevState[i] = value;
@@ -42,6 +44,7 @@ class WordForm extends React.Component {
     });
   }
 
+  // cannot create more than 10 words at a time
   handleAddField() {
     if (this.state.totalFields < 10) {
       this.setState({
@@ -50,6 +53,7 @@ class WordForm extends React.Component {
     }
   }
 
+  // cannot create fewer than 1 word for obvious reasons
   handleRemoveField() {
     if (this.state.totalFields > 1) {
       this.setState({
@@ -58,6 +62,8 @@ class WordForm extends React.Component {
     }
   }
 
+  // lots of error handling to insure creation data is valid before being sent to server, especially 
+  // when creating in bulk.
   handleSubmit(e) {
     e.preventDefault();
 
@@ -114,6 +120,8 @@ class WordForm extends React.Component {
 
   render() {
     let { words } = this.props;
+
+    // get words from local storage to keep app alive on page refresh
     if (!words.languageSelectionCode) words = JSON.parse(localStorage.getItem('words'));
     const languageSelection = words.languageSelection;
     const { totalFields } = this.state;
