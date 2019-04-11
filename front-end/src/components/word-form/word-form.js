@@ -86,7 +86,7 @@ class WordForm extends React.Component {
     }
 
     // if no fields are null, check that there are data for multiple words, and that all data is filled out. If so, post in bulk and return to cards view
-    if ((wordEnglish.length > 1 && wordLocal.length > 1 && categoryOfWord.length > 1 && typeOfWord > 1) 
+    if ((wordEnglish.length > 1 && wordLocal.length > 1 && categoryOfWord.length > 1 && typeOfWord.length > 1) 
       && (wordEnglish.length === wordLocal.length && wordLocal.length === categoryOfWord.length && categoryOfWord.length === typeOfWord.length)) {
       return this.props.bulkAddWords({
         wordsEnglish: this.state.wordEnglish,

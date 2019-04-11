@@ -62,25 +62,39 @@ wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
   if ((wordsEnglish.length !== wordsLocal.length) || (wordsEnglish.length < 1 || wordsLocal.length < 1)) return next(new HttpError(400, 'Word organization error'));
   if (!languageId) return next(new HttpError(400, 'No language specified'));
 
-  const wordsToPost = wordsEnglish.map((english, i) => {
+  // remove duplicates
+  const wordsEngReduced = []; 
+  const wordsLocReduced = [];
+  const wordTypesReduced = [];
+  const categoryReduced = [];
+  wordsEnglish.forEach((y, i) => {
+    if (!wordsEngReduced.includes(y)) {
+      wordsEngReduced.push(y);
+      wordsLocReduced.push(wordsLocal[i]);
+      wordTypesReduced.push(wordTypes[i]);
+      categoryReduced.push(category[i]);
+    }
+  });
+
+  const wordsToPost = wordsEngReduced.map((english, i) => {
     return {
       wordEnglish: english,
-      wordLocal: wordsLocal[i],
-      typeOfWord: wordTypes[i],
-      category: category[i],
+      wordLocal: wordsLocReduced[i],
+      typeOfWord: wordTypesReduced[i],
+      category: categoryReduced[i],
       languageId,
     };
   });
 
   return models.word.bulkCreate(wordsToPost)
-    .then(() => {
+    .then((wordsCreated) => {
       return models.word.findAll({
         where: {
           languageId,
         },
       })
         .then((words) => {
-          logger.log(logger.INFO, 'Returning all words');
+          logger.log(logger.INFO, `Created ${wordsCreated.length} new words and returning all words (${words.length})`);
           return response.status(201).json(words);
         })
         .catch(next);
@@ -98,7 +112,7 @@ wordRouter.get('/words/:language', (request, response, next) => {
     },
   })
     .then((words) => {
-      logger.log(logger.INFO, `Returning all words for ${request.params.language}`);
+      logger.log(logger.INFO, `Returning all words (${words.length}) for ${request.params.language}`);
       return response.status(200).json(words);
     })
     .catch(next);
