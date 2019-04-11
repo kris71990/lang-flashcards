@@ -19,8 +19,12 @@
     div {
       padding: 10px;
       
-      input, label {
+      input, label, span {
         padding: 10px;
+      }
+      
+      span {
+        color: red;
       }
     }
 
@@ -28,8 +32,12 @@
       margin: 2%;
     }
 
-    button:nth-last-of-type(1) {
+    button {
       float: right;
     }
+  }
+
+  button {
+    float: left;
   }
 }

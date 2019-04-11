@@ -14,6 +14,9 @@ const defaultState = {
   typeOfWord: [],
   categoryOfWord: [],
   totalFields: 1,
+  wordError: 'Error',
+  wordDirty: false,
+  wordDirtyIndex: undefined,
 };
 
 class WordForm extends React.Component {
@@ -24,12 +27,18 @@ class WordForm extends React.Component {
   }
 
   handleChange(e) {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    let { value } = e.target;
+
+    if (value === '') value = null;
     const i = e.target.attributes.index.value;
     const prevState = this.state[name].slice();
     prevState[i] = value;
+
     this.setState({
       [name]: prevState,
+      wordDirty: false,
+      wordDirtyIndex: undefined,
     });
   }
 
@@ -53,10 +62,26 @@ class WordForm extends React.Component {
     e.preventDefault();
 
     let { words } = this.props;
+    const { 
+      wordEnglish, wordLocal, typeOfWord, categoryOfWord, 
+    } = this.state;
+
     if (!words.languageSelectionCode) words = JSON.parse(localStorage.getItem('words'));
     const languageSelectionCode = words.languageSelectionCode;
 
-    if (this.state.wordEnglish.length > 1 && this.state.wordLocal.length > 1) {
+    // loop through word arrays and make sure no fields are null, break if error
+    for (let i = 0; i < wordEnglish.length; i++) {
+      if (!wordEnglish[i] || !wordLocal[i] || !typeOfWord[i] || !categoryOfWord[i]) {
+        return this.setState({ 
+          wordDirty: true,
+          wordDirtyIndex: i,
+        });
+      }
+    }
+
+    // if no fields are null, check that there are data for multiple words, and that all data is filled out. If so, post in bulk and return to cards view
+    if ((wordEnglish.length > 1 && wordLocal.length > 1 && categoryOfWord.length > 1 && typeOfWord > 1) 
+      && (wordEnglish.length === wordLocal.length && wordLocal.length === categoryOfWord.length && categoryOfWord.length === typeOfWord.length)) {
       return this.props.bulkAddWords({
         wordsEnglish: this.state.wordEnglish,
         wordsLocal: this.state.wordLocal,
@@ -69,17 +94,22 @@ class WordForm extends React.Component {
           this.props.history.push(routes.CARDS_ROUTE);
         });
     } 
-    return this.props.addWord({
-      wordEnglish: this.state.wordEnglish[0],
-      wordLocal: this.state.wordLocal[0],
-      typeOfWord: this.state.typeOfWord[0],
-      category: this.state.categoryOfWord[0],
-      languageId: languageSelectionCode,
-    })
-      .then(() => {
-        this.setState(defaultState);
-        this.props.history.push(routes.CARDS_ROUTE);
-      });
+    
+    // if data exists only for one word, post a single word and return to cards view
+    if (wordEnglish.length === wordLocal.length && wordLocal.length === categoryOfWord.length && categoryOfWord.length === typeOfWord.length) {
+      return this.props.addWord({
+        wordEnglish: this.state.wordEnglish[0],
+        wordLocal: this.state.wordLocal[0],
+        typeOfWord: this.state.typeOfWord[0],
+        category: this.state.categoryOfWord[0],
+        languageId: languageSelectionCode,
+      })
+        .then(() => {
+          this.setState(defaultState);
+          this.props.history.push(routes.CARDS_ROUTE);
+        });
+    }
+    return this.setState({ wordDirty: true });
   }
 
   render() {
@@ -127,7 +157,7 @@ class WordForm extends React.Component {
                       value={ this.state.value }
                       onChange={ this.handleChange }
                     >
-                      <option value="empty">Select</option>
+                      <option value="">Select</option>
                       <option value="noun">Noun</option>
                       <option value="proper">Proper Noun</option>
                       <option value="verb">Verb</option>
@@ -143,21 +173,27 @@ class WordForm extends React.Component {
                       value={ this.state.value }
                       onChange={ this.handleChange }
                     >
-                      <option value="empty">Select</option>
+                      <option value="">Select</option>
                       <option value="greeting">Greeting</option>
                       <option value="object">Object</option>
                       <option value="cooking">Cooking</option>
                       <option value="outdoors">Outdoors</option>
                     </select>
+                    <span>
+                      { this.state.wordDirty && this.state.wordDirtyIndex === i 
+                        ? this.state.wordError : null
+                      }
+                    </span>
                   </div>
                 );
               })
             }
+            <p>{ this.state.wordDirty && this.state.wordDirtyIndex === undefined ? this.state.wordError : null }</p>
           </fieldset>
-          <button onClick={ this.handleAddField }>Add field</button>
-          <button onClick={ this.handleRemoveField }>Remove field</button>
           <button type="submit">Add { totalFields > 1 ? 'Words' : 'Word' }</button>
         </form>
+        <button onClick={ this.handleAddField }>Add field</button>
+        <button onClick={ this.handleRemoveField }>Remove field</button>
       </div>
     );
   }
