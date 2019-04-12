@@ -88,16 +88,22 @@ wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
 
   return models.word.bulkCreate(wordsToPost)
     .then((wordsCreated) => {
-      return models.word.findAll({
-        where: {
-          languageId,
-        },
+      return models.language.increment('wordCount', {
+        where: { languageId },
+        by: wordsCreated.length,
       })
-        .then((words) => {
-          logger.log(logger.INFO, `Created ${wordsCreated.length} new words and returning all words (${words.length})`);
-          return response.status(201).json(words);
-        })
-        .catch(next);
+        .then(() => {
+          return models.word.findAll({
+            where: {
+              languageId,
+            },
+          })
+            .then((words) => {
+              logger.log(logger.INFO, `Created ${wordsCreated.length} new words and returning all words (${words.length})`);
+              return response.status(201).json(words);
+            })
+            .catch(next);
+        });
     });
 });
 
@@ -112,7 +118,7 @@ wordRouter.get('/words/:language', (request, response, next) => {
     },
   })
     .then((words) => {
-      logger.log(logger.INFO, `Returning all words (${words.length}) for ${request.params.language}`);
+      logger.log(logger.INFO, `Returning all words (${words.length}) for ${request.query.languageSelection} (id - ${request.params.language})`);
       return response.status(200).json(words);
     })
     .catch(next);
