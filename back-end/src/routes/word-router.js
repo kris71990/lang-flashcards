@@ -1,5 +1,11 @@
 'use strict';
 
+/* Word Router
+  - POST /word
+  - POST /words/bulk
+  - GET /words/:language
+*/
+
 import { Router } from 'express';
 import { json } from 'body-parser';
 import HttpError from 'http-errors';
@@ -10,6 +16,7 @@ const jsonParser = json();
 const wordRouter = new Router();
 const Op = models.Sequelize.Op;
 
+// Creates a single word in one language
 wordRouter.post('/word', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /word');
 
@@ -19,6 +26,8 @@ wordRouter.post('/word', jsonParser, (request, response, next) => {
     return next(new HttpError(400, 'Bad Request'));
   }
 
+  // If word exists, return existing word without creating duplicate
+  // If it doesn't exist, create and return new word
   return models.word.findOrCreate({
     where: {
       languageId: request.body.languageId,
@@ -48,6 +57,7 @@ wordRouter.post('/word', jsonParser, (request, response, next) => {
     .catch(next);
 });
 
+// Creation of mulitple words at a time in one language
 wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /words/bulk');
 
@@ -55,8 +65,10 @@ wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
     wordsEnglish, wordsLocal, wordTypes, category, languageId, 
   } = request.body;
 
+  // validation of request data
+  // must be arrays, array lengths must equal eachother and be greater than one to post in bulk
   if (!(wordsEnglish instanceof Array || wordsLocal instanceof Array 
-    || wordTypes instanceof Array)) {
+    || wordTypes instanceof Array || category instanceof Array)) {
     return next(new HttpError(400, 'Word format error'));
   }
   if ((wordsEnglish.length !== wordsLocal.length) || (wordsEnglish.length < 1 || wordsLocal.length < 1)) return next(new HttpError(400, 'Word organization error'));
@@ -86,6 +98,9 @@ wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
     };
   });
 
+  // Create words
+  // Increment word count in the language model by the number of words being created
+  // Find and return all words in the language
   return models.word.bulkCreate(wordsToPost)
     .then((wordsCreated) => {
       return models.language.increment('wordCount', {
@@ -107,6 +122,7 @@ wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
     });
 });
 
+// Return all words in one language
 wordRouter.get('/words/:language', (request, response, next) => {
   logger.log(logger.INFO, 'Processing a get on /words');
 

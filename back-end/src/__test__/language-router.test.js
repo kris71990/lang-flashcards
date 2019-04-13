@@ -1,5 +1,14 @@
 'use strict';
 
+/* Language Router
+  - POST /language
+    - 201 - successful creation
+    - 409 - error on duplicate
+    - 400 - error on missing language data (languageName)
+  - GET /languages/all
+    - 200 - successful return of all existing languages
+*/
+
 import superagent from 'superagent';
 import { startServer, stopServer } from '../lib/server';
 import { mockLanguage, removeMocks } from './lib/language-mock';

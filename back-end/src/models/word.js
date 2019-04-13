@@ -1,10 +1,5 @@
 'use strict';
 
-/* TODO - Update models
-make word type and category mandatory
-word count per language on language model
-*/
-
 const Word = (sequelize, DataTypes) => sequelize.define('word', {
   languageId: {
     type: DataTypes.UUID,

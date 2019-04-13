@@ -1,5 +1,19 @@
 'use strict';
 
+/* Word Router
+  - POST /word
+    - 201 - successful creation of word 
+    - 200 - if duplicate word is posted, successful return of existing word (no duplicate creation)
+    - 400 - bad request if no languageId, local word, english word, category, or word type
+  - POST /words/bulk
+    - 201 - successful creation of multiple words
+    - 400 - bad request if unequal array lengths, no languageId, or data are not arrays
+  - GET /words/:language
+    - 201 - successful return of all words in a language
+    - 200 - successful return of empty array if no words exist in a language
+    - 400 - error if bad languageId
+*/
+
 import superagent from 'superagent';
 import { startServer, stopServer } from '../lib/server';
 import { mockLanguage, removeMocks } from './lib/language-mock';
@@ -134,6 +148,7 @@ describe('Word Router Tests', () => {
       const wordsLocal = ['mann', 'frau', 'madchen'];
       const wordTypes = ['noun', 'noun', 'noun'];
       const category = ['person', 'person', 'person'];
+
       return mockLanguage('German')
         .then((languageMock) => {
           return superagent.post(`${API_URL}/words/bulk`)
@@ -154,8 +169,13 @@ describe('Word Router Tests', () => {
     test('POST words with no language id returns bad request', () => {
       const wordsEnglish = ['man', 'woman', 'girl'];
       const wordsLocal = ['mann', 'frau', 'madchen'];
+      const wordTypes = ['noun', 'noun', 'noun'];
+      const category = ['person', 'person', 'person'];
+
       return superagent.post(`${API_URL}/words/bulk`)
-        .send({ wordsEnglish, wordsLocal })
+        .send({ 
+          wordsEnglish, wordsLocal, wordTypes, category, 
+        })
         .catch((error) => {
           expect(error.status).toEqual(400);
         });
@@ -164,10 +184,15 @@ describe('Word Router Tests', () => {
     test('POST unequal number of words returns bad request', () => {
       const wordsEnglish = ['man', 'woman'];
       const wordsLocal = ['mann', 'frau', 'madchen'];
+      const wordTypes = ['noun', 'noun', 'noun'];
+      const category = ['person', 'person', 'person'];
+
       return mockLanguage('German')
         .then((languageMock) => {
           return superagent.post(`${API_URL}/words/bulk`)
-            .send({ wordsEnglish, wordsLocal, languageId: languageMock.languageId })
+            .send({ 
+              wordsEnglish, wordsLocal, wordTypes, category, languageId: languageMock.languageId, 
+            })
             .catch((error) => {
               expect(error.status).toEqual(400);
             });
