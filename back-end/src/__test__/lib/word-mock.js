@@ -3,9 +3,9 @@
 import faker from 'faker';
 import models from '../../models/index';
 
-const mockWord = (wordLocal, wordEnglish, languageId) => {
+const mockWord = (wordLocal, wordEnglish, typeOfWord, category, languageId) => {
   return models.word.create({
-    wordLocal, wordEnglish, languageId,
+    wordLocal, wordEnglish, typeOfWord, category, languageId,
   });
 };
 
@@ -15,6 +15,8 @@ const mockWordsBulk = (quantity, languageId) => {
     words.push({
       wordEnglish: faker.random.word(),
       wordLocal: faker.random.word(),
+      category: faker.random.word(),
+      typeOfWord: faker.random.word(),
       languageId,
     });
   }

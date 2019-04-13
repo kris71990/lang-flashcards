@@ -1,5 +1,19 @@
 'use strict';
 
+/* Word Router
+  - POST /word
+    - 201 - successful creation of word 
+    - 200 - if duplicate word is posted, successful return of existing word (no duplicate creation)
+    - 400 - bad request if no languageId, local word, english word, category, or word type
+  - POST /words/bulk
+    - 201 - successful creation of multiple words
+    - 400 - bad request if unequal array lengths, no languageId, or data are not arrays
+  - GET /words/:language
+    - 201 - successful return of all words in a language
+    - 200 - successful return of empty array if no words exist in a language
+    - 400 - error if bad languageId
+*/
+
 import superagent from 'superagent';
 import { startServer, stopServer } from '../lib/server';
 import { mockLanguage, removeMocks } from './lib/language-mock';
@@ -20,12 +34,16 @@ describe('Word Router Tests', () => {
             .send({
               wordEnglish: 'girl',
               wordLocal: 'madchen',
+              typeOfWord: 'noun',
+              category: 'person',
               languageId: languageMock.languageId,
             })
             .then((response) => {
               expect(response.status).toEqual(201);
               expect(response.body.wordEnglish).toEqual('girl');
               expect(response.body.wordLocal).toEqual('madchen');
+              expect(response.body.typeOfWord).toEqual('noun');
+              expect(response.body.category).toEqual('person');
               expect(response.body.languageId).toEqual(languageMock.languageId);
               expect(response.body.wordId).toBeTruthy();
             });
@@ -35,12 +53,14 @@ describe('Word Router Tests', () => {
     test('POST same word in language will return existing version of word', () => {
       return mockLanguage('German')
         .then((languageMock) => {
-          return mockWord('madchen', 'girl', languageMock.languageId)
+          return mockWord('madchen', 'girl', 'noun', 'person', languageMock.languageId)
             .then((wordMock) => {
               return superagent.post(`${API_URL}/word`)
                 .send({
                   wordEnglish: wordMock.wordEnglish,
                   wordLocal: wordMock.wordLocal,
+                  typeOfWord: wordMock.typeOfWord,
+                  category: wordMock.category,
                   languageId: languageMock.languageId,
                 })
                 .then((response) => {
@@ -88,16 +108,53 @@ describe('Word Router Tests', () => {
             });
         });
     });
+
+    test('POST word with missing word type returns bad request (400)', () => {
+      return mockLanguage('German')
+        .then((languageMock) => {
+          return superagent.post(`${API_URL}/word`)
+            .send({
+              wordLocal: 'madchen',
+              wordEnglish: 'girl',
+              category: 'person',
+              languageId: languageMock.languageId,
+            })
+            .catch((error) => {
+              expect(error.status).toEqual(400);
+            });
+        });
+    });
+
+    test('POST word with missing category returns bad request (400)', () => {
+      return mockLanguage('German')
+        .then((languageMock) => {
+          return superagent.post(`${API_URL}/word`)
+            .send({
+              wordLocal: 'madchen',
+              wordEnglish: 'girl',
+              typeOfWord: 'noun',
+              languageId: languageMock.languageId,
+            })
+            .catch((error) => {
+              expect(error.status).toEqual(400);
+            });
+        });
+    });
   });
 
   describe('POST /words/bulk', () => {
     test('POST words in bulk returns all words in language', () => {
       const wordsEnglish = ['man', 'woman', 'girl'];
       const wordsLocal = ['mann', 'frau', 'madchen'];
+      const wordTypes = ['noun', 'noun', 'noun'];
+      const category = ['person', 'person', 'person'];
+
       return mockLanguage('German')
         .then((languageMock) => {
           return superagent.post(`${API_URL}/words/bulk`)
-            .send({ wordsEnglish, wordsLocal, languageId: languageMock.languageId })
+            .send({ 
+              wordsEnglish, wordsLocal, wordTypes, category, languageId: languageMock.languageId, 
+            })
             .then((response) => {
               expect(response.status).toEqual(201);
               expect(response.body).toBeInstanceOf(Array);
@@ -112,8 +169,13 @@ describe('Word Router Tests', () => {
     test('POST words with no language id returns bad request', () => {
       const wordsEnglish = ['man', 'woman', 'girl'];
       const wordsLocal = ['mann', 'frau', 'madchen'];
+      const wordTypes = ['noun', 'noun', 'noun'];
+      const category = ['person', 'person', 'person'];
+
       return superagent.post(`${API_URL}/words/bulk`)
-        .send({ wordsEnglish, wordsLocal })
+        .send({ 
+          wordsEnglish, wordsLocal, wordTypes, category, 
+        })
         .catch((error) => {
           expect(error.status).toEqual(400);
         });
@@ -122,10 +184,15 @@ describe('Word Router Tests', () => {
     test('POST unequal number of words returns bad request', () => {
       const wordsEnglish = ['man', 'woman'];
       const wordsLocal = ['mann', 'frau', 'madchen'];
+      const wordTypes = ['noun', 'noun', 'noun'];
+      const category = ['person', 'person', 'person'];
+
       return mockLanguage('German')
         .then((languageMock) => {
           return superagent.post(`${API_URL}/words/bulk`)
-            .send({ wordsEnglish, wordsLocal, languageId: languageMock.languageId })
+            .send({ 
+              wordsEnglish, wordsLocal, wordTypes, category, languageId: languageMock.languageId, 
+            })
             .catch((error) => {
               expect(error.status).toEqual(400);
             });

@@ -1,14 +1,41 @@
 #intro {
   text-align: center;
-  padding-top: 5%;
+  padding-top: 3%;
 
-  h4 {
+  h2 {
     line-height: 1.5em;
-    font-family: 'Aladin', cursive;
-    font-style: italic;
     font-size: 1.2em;
-    letter-spacing: 0.05em;
+    font-style: italic;
+
+    span:first-child {
+      font-style: normal;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    #hide {
+      position: fixed;
+      right: 10%;
+      font-style: normal;
+      font-size: 0.8em;
+      font-weight: normal;
+      background-color: white;
+      padding: 1px 5px;
+    }
+
+    #hide:hover {
+      cursor: pointer;
+    }
+
+    #add-toggle:hover {
+      cursor: pointer;
+    }
   }
+}
+
+#add-menu {
+  position: absolute;
+  right: 10%;
 }
 
 #lang-choices {
@@ -28,17 +55,12 @@
   }
 
   button {
-    margin: 2%;
+    margin: 2% auto;
     padding: 1% 2%;
     border-radius: 10px;
   }
 
   button:focus {
     outline: 0;
-  }
-
-  #directives > button:last-child {
-    display: block;
-    margin: 0 auto;
   }
 }

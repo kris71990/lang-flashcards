@@ -1,3 +1,10 @@
 #language-add {
-  display: inline;
+  width: 120%;
+  display: inline-block;
+
+  button {
+    padding: 3% 5%;
+    margin-left: 5%;
+    border-radius: 5px;
+  }
 }

@@ -13,6 +13,10 @@ const Language = (sequelize, DataTypes) => sequelize.define('language', {
     unique: true,
     allowNull: false,
   },
+  wordCount: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   totalSpeakers: {
     type: DataTypes.STRING,
     allowNull: true,

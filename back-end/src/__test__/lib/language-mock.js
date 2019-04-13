@@ -4,7 +4,7 @@ import models from '../../models/index';
 
 const mockLanguage = (languageName) => {
   return models.language.create({
-    languageName,
+    languageName, wordCount: 0,
   });
 };
 
