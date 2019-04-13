@@ -40,11 +40,14 @@ class LanguagePanel extends React.Component {
         {
           languages.map((choice) => {
             return (
-              <div id={`${choice.languageName}-id:${choice.languageId}`}
-              className={ languageSelection === choice.languageName ? `selected-${languageSelection}` : null } key={choice.languageId}>
-                { 
-                  choice.languageName.charAt(0).toUpperCase() + choice.languageName.slice(1) 
-                }
+              <div key={choice.languageId}>
+                <div id={`${choice.languageName}-id:${choice.languageId}`}
+                className={ languageSelection === choice.languageName ? `selected-${languageSelection}` : null }>
+                  { 
+                    choice.languageName.charAt(0).toUpperCase() + choice.languageName.slice(1)
+                  }
+                </div>
+                <span>{choice.wordCount}</span>
               </div>
             );
           })

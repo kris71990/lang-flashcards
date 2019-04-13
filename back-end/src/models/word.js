@@ -26,12 +26,12 @@ const Word = (sequelize, DataTypes) => sequelize.define('word', {
   category: {
     type: DataTypes.STRING,
     unique: false,
-    allowNull: true,
+    allowNull: false,
   },
   typeOfWord: {
     type: DataTypes.STRING,
     unique: false,
-    allowNull: true,
+    allowNull: false,
   },
   variations: {
     type: DataTypes.ARRAY(DataTypes.TEXT),

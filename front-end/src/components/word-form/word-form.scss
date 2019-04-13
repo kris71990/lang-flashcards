@@ -1,0 +1,43 @@
+#vocab-container {
+  margin: 3% auto;
+  width: 70%;
+
+  #vocab-form {
+    text-align: left;
+
+    fieldset {
+      border: 1px dashed black;
+      background-color: #E0E0E0;
+    }
+
+    legend {
+      background-color: white;
+      border: 1px dashed black;
+      padding: 10px 20px;
+    }
+    
+    div {
+      padding: 10px;
+      
+      input, label, span {
+        padding: 10px;
+      }
+      
+      span {
+        color: red;
+      }
+    }
+
+    button {
+      margin: 2%;
+    }
+
+    button {
+      float: right;
+    }
+  }
+
+  button {
+    float: left;
+  }
+}

@@ -71,10 +71,25 @@ class Landing extends React.Component {
     return (
       <section>
         <div id="intro">
-          <h4>
-            Choose a language and your desired direction of translation to practice your vocabulary skills with these flashcards.
-          </h4>
-          <h4>Or, try and learn a new language!</h4>
+          <h2>Choose a language 
+            <span>OR</span> 
+            <span id="add-toggle" onClick={ this.handleToggle }>Add a new language</span>
+            { toggleMenu ?
+              <span id="hide" onClick={ this.handleToggle }>Hide Menu</span>
+              : null
+            }
+          </h2>
+        </div>
+        <div id="add-menu">
+          { toggleMenu ? 
+            <div>
+              <LanguageMenu 
+                currentLangs={ currentLangs } 
+                onComplete={ this.handleCreateLanguage }
+              />
+            </div>
+            : null
+          }
         </div>
         <div id="lang-choices">
           { 
@@ -92,20 +107,7 @@ class Landing extends React.Component {
               />
               : null
           }
-          <div id="directives">
-            <button onClick={ this.handleToggle }>
-              { toggleMenu ?
-                  <span>Hide</span>
-                : <span>More...</span>
-              }
-            </button>
-            { toggleMenu ? 
-              <LanguageMenu 
-                currentLangs={ currentLangs } 
-                onComplete={ this.handleCreateLanguage }
-              />
-              : null
-            }
+          <div id="show-cards">
             { languages ? 
               <button onClick={ this.handleChoice }>Show Cards</button> 
               : null
