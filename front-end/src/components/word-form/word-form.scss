@@ -22,6 +22,10 @@
       input, label, span {
         padding: 10px;
       }
+
+      label {
+        display: inline-block;
+      }
       
       span {
         color: red;

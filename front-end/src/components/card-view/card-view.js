@@ -19,13 +19,16 @@ class CardView extends React.Component {
   }
 
   componentDidMount() {
-    let { langData } = this.props;
+    let { langData, baseLangData } = this.props;
     if (!langData.languageId) {
       langData = JSON.parse(localStorage.getItem('words'));
+      baseLangData = JSON.parse(localStorage.getItem('language'));
       return this.props.wordsFetch({ 
         languageSelection: langData.languageSelection, 
         translationDirection: langData.translationDirection, 
         languageSelectionCode: langData.languageSelectionCode, 
+        languageSelectionLocal: baseLangData.languageSelectionLocal,
+        languageSelectionTransliteration: baseLangData.languageSelectionTransliteration,
       })
         .then(() => {
           console.log('Words retrieved');
@@ -35,7 +38,8 @@ class CardView extends React.Component {
   }
 
   handleFormat(type) {
-    let { langData } = this.props;
+    let { langData, baseLangData } = this.props;
+    const { languageSelectionLocal } = this.props.baseLangData;
     let formatLang;
 
     if (!langData.langId) {
@@ -47,7 +51,7 @@ class CardView extends React.Component {
 
     switch (type) {
       case 'language':
-        return formatLang;
+        return `${formatLang} (${languageSelectionLocal})`;
       case 'trans':
         switch (this.props.langData.translationDirection) {
           case 'native-english':
@@ -72,8 +76,9 @@ class CardView extends React.Component {
   }
 
   render() {
-    let { langData } = this.props;
+    let { langData, baseLangData } = this.props;
     if (!langData.langId) langData = JSON.parse(localStorage.getItem('words'));
+    if (!baseLangData.languageName) baseLangData = JSON.parse(localStorage.getItem('language'));
     
     const { cardNumber } = this.state;
     let wordsToCards;
@@ -86,7 +91,7 @@ class CardView extends React.Component {
 
     return (
       <div>
-        { wordsToCards.length > 0 ?
+        { wordsToCards ? wordsToCards.length > 0 ?
           <div className="card-container">
             <h1>Your <span>{ this.handleFormat('language') } </span> flashcards ({ totalWords ? totalWords : '0'})</h1>
             <h3>{ this.handleFormat('trans') }</h3>
@@ -106,6 +111,8 @@ class CardView extends React.Component {
             <h3>Add some words!</h3>
             <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
           </div>
+          :
+          <div>Server error</div>
         }
       </div>
     );
@@ -114,6 +121,7 @@ class CardView extends React.Component {
 
 CardView.propTypes = {
   langData: PropTypes.object,
+  baseLangData: PropTypes.object,
   history: PropTypes.object,
   wordsFetch: PropTypes.func,
 };
@@ -130,6 +138,7 @@ const mapStateToProps = (state) => {
       translationDirection: state.words.translationDirection,
       words: state.words.words,
     },
+    baseLangData: state.language,
   };
 };
 

@@ -11,6 +11,7 @@ import LanguageChoicePanel from '../language-panel/language-panel';
 import TranslationChoice from '../translation-choice/translation-choice';
 import * as routes from '../../utils/routes';
 
+import * as supportedLanguages from '../../utils/supported-langs';
 import './landing.scss';
 
 const defaultState = {
@@ -33,10 +34,14 @@ class Landing extends React.Component {
       languageSelection, 
       languageSelectionCode, 
       translationDirection,
+      languageSelectionTransliteration,
+      languageSelectionLocal,
     } = this.props.language;
 
     if (languageSelection && translationDirection) {
-      return this.props.wordsFetch({ languageSelection, translationDirection, languageSelectionCode })
+      return this.props.wordsFetch({ 
+        languageSelection, translationDirection, languageSelectionCode, languageSelectionLocal, languageSelectionTransliteration,
+      })
         .then(() => {
           this.props.history.push(routes.CARDS_ROUTE);
         });
@@ -64,7 +69,9 @@ class Landing extends React.Component {
 
   render() {
     const { toggleMenu } = this.state;
-    const { languages, languageSelection, translationDirection } = this.props.language;
+    const { 
+      languages, languageSelection, translationDirection, 
+    } = this.props.language;
 
     let currentLangs;
     let formattedLangSelection;

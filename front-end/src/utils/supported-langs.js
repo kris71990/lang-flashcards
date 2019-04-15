@@ -1,7 +1,7 @@
 export const supportedLanguages = { // eslint-disable-line
-  afrikaans: false,
+  afrikaans: { transliteration: false, localName: null },
   arabic: true,
-  mandarin: true,
+  mandarin: { transliteration: true, localName: '中文' },
   cantonese: true,
   czech: false,
   danish: false,
@@ -9,7 +9,7 @@ export const supportedLanguages = { // eslint-disable-line
   finnish: false,
   french: false,
   german: false,
-  greek: true,
+  greek: { transliteration: true, localName: 'ελληνικά' },
   hebrew: true,
   hindi: true,
   hungarian: false,

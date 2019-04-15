@@ -209,6 +209,7 @@ class WordForm extends React.Component {
 
 WordForm.propTypes = {
   words: PropTypes.object,
+  language: PropTypes.object,
   addWord: PropTypes.func,
   bulkAddWords: PropTypes.func,
   history: PropTypes.object,
@@ -217,6 +218,7 @@ WordForm.propTypes = {
 const mapStateToProps = (state) => {
   return {
     words: state.words,
+    language: state.language,
   };
 };
 

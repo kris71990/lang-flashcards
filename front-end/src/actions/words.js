@@ -16,7 +16,10 @@ const wordsBulkAdd = words => ({
 });
 
 const wordsFetchRequest = langData => (store) => {
-  const { languageSelection, languageSelectionCode, translationDirection } = langData;
+  const { 
+    languageSelection, languageSelectionCode, translationDirection, languageSelectionLocal, languageSelectionTransliteration, 
+  } = langData;
+  console.log(langData);
   return superagent.get(`${API_URL}/words/${languageSelectionCode}`)
     .query(langData)
     .then((response) => {
@@ -25,6 +28,8 @@ const wordsFetchRequest = langData => (store) => {
         languageSelection,
         languageSelectionCode,
         translationDirection,
+        languageSelectionLocal,
+        languageSelectionTransliteration,
       }));
     });
 };
