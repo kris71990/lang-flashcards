@@ -23,7 +23,7 @@ describe('Language Router Tests', () => {
   describe('POST /language', () => {
     test('POST should return new language (201)', () => {
       return superagent.post(`${API_URL}/language`)
-        .send({ languageName: 'Dutch' })
+        .send({ languageName: 'Dutch', transliteration: false })
         .then((response) => {
           const { language } = response.body;
           expect(response.status).toEqual(201);
@@ -39,7 +39,7 @@ describe('Language Router Tests', () => {
           return superagent.post(`${API_URL}/language`)
             .send({
               languageName: languageMock.languageName,
-              wordCount: 0,
+              transliteration: false,
             })
             .catch((error) => {
               expect(error.status).toEqual(409);
