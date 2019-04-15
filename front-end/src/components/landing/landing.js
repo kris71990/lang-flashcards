@@ -41,6 +41,11 @@ class Landing extends React.Component {
           this.props.history.push(routes.CARDS_ROUTE);
         });
     }
+    
+    // if (!languageSelection) {
+    //   return this.setState({ showCardsDirty: true });
+    // }
+
     return this.props.setLanguage();
   }
 
@@ -59,7 +64,7 @@ class Landing extends React.Component {
 
   render() {
     const { toggleMenu } = this.state;
-    const { languages, languageSelection } = this.props.language;
+    const { languages, languageSelection, translationDirection } = this.props.language;
 
     let currentLangs;
     let formattedLangSelection;
@@ -108,7 +113,7 @@ class Landing extends React.Component {
               : null
           }
           <div id="show-cards">
-            { languages ? 
+            { languageSelection && translationDirection ? 
               <button onClick={ this.handleChoice }>Show Cards</button> 
               : null
             }

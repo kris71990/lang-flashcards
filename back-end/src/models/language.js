@@ -17,6 +17,10 @@ const Language = (sequelize, DataTypes) => sequelize.define('language', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  transliteration: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
   totalSpeakers: {
     type: DataTypes.STRING,
     allowNull: true,

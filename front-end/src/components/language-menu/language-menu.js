@@ -8,6 +8,7 @@ import './language-menu.scss';
 
 const defaultState = {
   selectedLanguage: null,
+  transliteration: null,
 };
 
 class LanguageMenu extends React.Component {
@@ -18,18 +19,20 @@ class LanguageMenu extends React.Component {
   }
 
   handleChange(e) {
+    const transliteration = supportedLanguages.supportedLanguages[e.target.value];
     this.setState({
       selectedLanguage: e.target.value,
+      transliteration,
     });
   }
 
   handleAdd() {
-    this.props.onComplete(this.state.selectedLanguage);
+    this.props.onComplete(this.state);
     this.setState(defaultState);
   }
 
   render() {
-    const languageList = supportedLanguages.supportedLanguages;
+    const languageList = Object.keys(supportedLanguages.supportedLanguages);
     const { currentLangs } = this.props;
     const availableLangs = languageList.filter((lang) => {
       if (!currentLangs.includes(lang)) return lang;

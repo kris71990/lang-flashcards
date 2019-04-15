@@ -28,8 +28,9 @@ const languagesFetchRequest = () => (store) => {
 };
 
 const languageCreateRequest = lang => (store) => {
+  const { selectedLanguage, transliteration } = lang;
   return superagent.post(`${API_URL}/language`)
-    .send({ languageName: lang, wordCount: 0 })
+    .send({ languageName: selectedLanguage, transliteration, wordCount: 0 })
     .then((response) => {
       return store.dispatch(languageAdd(response.body.language));
     });
