@@ -11,7 +11,6 @@ import LanguageChoicePanel from '../language-panel/language-panel';
 import TranslationChoice from '../translation-choice/translation-choice';
 import * as routes from '../../utils/routes';
 
-import * as supportedLanguages from '../../utils/supported-langs';
 import './landing.scss';
 
 const defaultState = {
@@ -46,10 +45,6 @@ class Landing extends React.Component {
           this.props.history.push(routes.CARDS_ROUTE);
         });
     }
-    
-    // if (!languageSelection) {
-    //   return this.setState({ showCardsDirty: true });
-    // }
 
     return this.props.setLanguage();
   }
