@@ -14,6 +14,7 @@ class CardView extends React.Component {
     super(props);
     this.state = {
       cardNumber: 0,
+      answer: false,
     };
     autoBind.call(this, CardView);
   }
@@ -23,6 +24,7 @@ class CardView extends React.Component {
     if (!langData.languageId) {
       langData = JSON.parse(localStorage.getItem('words'));
       baseLangData = JSON.parse(localStorage.getItem('language'));
+
       return this.props.wordsFetch({ 
         languageSelection: langData.languageSelection, 
         translationDirection: langData.translationDirection, 
@@ -38,7 +40,7 @@ class CardView extends React.Component {
   }
 
   handleFormat(type) {
-    let { langData, baseLangData } = this.props;
+    let { langData } = this.props;
     const { languageSelectionLocal } = this.props.baseLangData;
     let formatLang;
 
@@ -66,8 +68,16 @@ class CardView extends React.Component {
 
   handleRandomCard() {
     const rand = Math.floor(Math.random() * this.props.langData.words.length);
-    this.setState({
+    return this.setState({
       cardNumber: rand,
+      answer: false,
+    });
+  }
+
+  handleFlipCard() {
+    const flip = !this.state.answer;
+    return this.setState({
+      answer: flip,
     });
   }
 
@@ -80,7 +90,7 @@ class CardView extends React.Component {
     if (!langData.langId) langData = JSON.parse(localStorage.getItem('words'));
     if (!baseLangData.languageName) baseLangData = JSON.parse(localStorage.getItem('language'));
     
-    const { cardNumber } = this.state;
+    const { cardNumber, answer } = this.state;
     let wordsToCards;
     let totalWords;
 
@@ -89,19 +99,35 @@ class CardView extends React.Component {
       totalWords = wordsToCards.length;
     }
 
+    let cardJSX;
+    if (wordsToCards && wordsToCards.length > 0) {
+      switch (langData.translationDirection) {
+        case 'native-english':
+          if (!answer) {
+            cardJSX = <p>{ wordsToCards[cardNumber].wordLocal }</p>;
+          } else {
+            cardJSX = <p>{ wordsToCards[cardNumber].wordEnglish }</p>;
+          }
+          break;
+        case 'english-native':
+          if (!answer) {
+            cardJSX = <p>{ wordsToCards[cardNumber].wordEnglish }</p>;
+          } else {
+            cardJSX = <p>{ wordsToCards[cardNumber].wordLocal }</p>;
+          }
+          break;
+        default: 
+          cardJSX = <p>Card Error</p>;
+      }
+    }
+
     return (
       <div>
-        { wordsToCards ? wordsToCards.length > 0 ?
+        { wordsToCards && wordsToCards.length > 0 ?
           <div className="card-container">
-            <h1>Your <span>{ this.handleFormat('language') } </span> flashcards ({ totalWords ? totalWords : '0'})</h1>
+            <h1>Your <span>{ this.handleFormat('language') }</span> flashcards ({ totalWords ? totalWords : '0'})</h1>
             <h3>{ this.handleFormat('trans') }</h3>
-            <div id="card">
-              {
-                langData.translationDirection === 'native-english' ?
-                  <p>{ wordsToCards[cardNumber].wordLocal }</p>
-                  : <p>{ wordsToCards[cardNumber].wordEnglish }</p>
-              }
-            </div>
+            <div onClick={ this.handleFlipCard } id="card">{ cardJSX }</div>
             <button onClick={ this.handleRandomCard }>Next Card</button>
             <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
           </div>
@@ -111,8 +137,6 @@ class CardView extends React.Component {
             <h3>Add some words!</h3>
             <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
           </div>
-          :
-          <div>Server error</div>
         }
       </div>
     );

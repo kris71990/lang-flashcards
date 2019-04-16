@@ -16,7 +16,10 @@ class LanguagePanel extends React.Component {
   }
 
   handleChange(e) {
-    if (e.currentTarget.id === e.target.id) {
+    e.stopPropagation();
+    const trans = supportedLanguages.supportedLanguages;
+
+    if (!e.target.id || e.target.id === 'langs') {
       this.props.setLanguage('');
       this.setState({
         languageSelection: '',
@@ -24,13 +27,13 @@ class LanguagePanel extends React.Component {
       });
     } else {
       const langData = e.target.id.split('-id:');
-      const trans = supportedLanguages.supportedLanguages[langData[0]].transliteration;
-      const { localName } = supportedLanguages.supportedLanguages[langData[0]];
+      const translit = trans[langData[0]].transliteration;
+      const name = trans[langData[0]].localName;
       this.props.setLanguage({ 
         lang: langData[0], 
         id: langData[1], 
-        transliteration: trans,
-        localName, 
+        transliteration: translit,
+        localName: name, 
       });
       this.setState({
         languageSelection: langData[0],
@@ -40,7 +43,8 @@ class LanguagePanel extends React.Component {
   }
 
   render() {
-    const { languages } = this.props;
+    let { languages } = this.props;
+    languages = languages.sort((a, b) => b.wordCount - a.wordCount); 
     const { languageSelection } = this.state;
     const supportedLangs = supportedLanguages.supportedLanguages;
 
@@ -50,8 +54,10 @@ class LanguagePanel extends React.Component {
           languages.map((choice) => {
             return (
               <div key={choice.languageId}>
-                <div id={`${choice.languageName}-id:${choice.languageId}`}
-                className={ languageSelection === choice.languageName ? `selected-${languageSelection}` : null }>
+                <div 
+                  id={`${choice.languageName}-id:${choice.languageId}`}
+                  className={ languageSelection === choice.languageName ? `selected-${languageSelection}` : null }
+                >
                   <h2>
                   { 
                     `${choice.languageName.charAt(0).toUpperCase()}${choice.languageName.slice(1)}`
