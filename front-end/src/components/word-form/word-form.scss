@@ -1,6 +1,6 @@
 #vocab-container {
   margin: 3% auto;
-  width: 70%;
+  width: 85%;
 
   #vocab-form {
     text-align: left;
@@ -18,6 +18,7 @@
     
     div {
       padding: 10px;
+      display: inline-block;
       
       input, label, span {
         padding: 10px;

@@ -11,6 +11,7 @@ import './word-form.scss';
 const defaultState = {
   wordEnglish: [],
   wordLocal: [],
+  transliteration: [],
   typeOfWord: [],
   categoryOfWord: [],
   totalFields: 1,
@@ -93,6 +94,7 @@ class WordForm extends React.Component {
         wordsLocal: this.state.wordLocal,
         wordTypes: this.state.typeOfWord,
         category: this.state.categoryOfWord,
+        transliteration: this.state.transliteration,
         languageId: languageSelectionCode,
       })
         .then(() => {
@@ -108,6 +110,7 @@ class WordForm extends React.Component {
         wordLocal: this.state.wordLocal[0],
         typeOfWord: this.state.typeOfWord[0],
         category: this.state.categoryOfWord[0],
+        transliteration: this.state.transliteration,
         languageId: languageSelectionCode,
       })
         .then(() => {
@@ -119,10 +122,11 @@ class WordForm extends React.Component {
   }
 
   render() {
-    let { words } = this.props;
+    let { words, language } = this.props;
 
     // get words from local storage to keep app alive on page refresh
     if (!words.languageSelectionCode) words = JSON.parse(localStorage.getItem('words'));
+    if (!language.languageSelectionCode) language = JSON.parse(localStorage.getItem('language'));
     const languageSelection = words.languageSelection;
     const { totalFields } = this.state;
     let formattedLang;
@@ -157,6 +161,20 @@ class WordForm extends React.Component {
                       placeholder="ex. jongen"
                       onChange={ this.handleChange }
                     />
+                    { language.languageSelectionTransliteration ?
+                      <div>
+                        <label>Latinization</label> 
+                        <input 
+                          type="text" 
+                          className="transliteration" 
+                          name="transliteration"
+                          index={`${i}`}
+                          placeholder="ex. ni hao"
+                          onChange={ this.handleChange }
+                        />
+                      </div>
+                      : null
+                    }
                     <label>Part of Speech</label> 
                     <select
                       className="wordType-select"

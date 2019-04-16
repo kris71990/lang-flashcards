@@ -19,7 +19,7 @@ class LanguageMenu extends React.Component {
   }
 
   handleChange(e) {
-    const transliteration = supportedLanguages.supportedLanguages[e.target.value];
+    const { transliteration } = supportedLanguages.supportedLanguages[e.target.value];
     this.setState({
       selectedLanguage: e.target.value,
       transliteration,
