@@ -8,7 +8,6 @@
   border: 2px solid black;
 
   h2 {
-    color: black;
     display: block;
     line-height: 0;
     margin-top: 90px;
@@ -21,32 +20,46 @@
   }
 }
 
-#langs div div:hover {
-  background-color: black;
-  color: white;
-}
-
 .selected-dutch {
   background-image: url('../../assets/netherlands.png');
-  background-repeat: 'no-repeat';
-  opacity: 0.3;
+  background-repeat: no-repeat;
 }
 
 .selected-german {
   background-image: url('../../assets/germany.png');
-  background-repeat: 'no-repeat';
-  opacity: 0.3;
+  background-repeat: no-repeat;
 }
 
 .selected-french {
   background-image: url('../../assets/france.png');
-  background-repeat: 'no-repeat';
-  opacity: 0.3;
+  background-repeat: no-repeat;
+}
+
+.selected-greek {
+  background-image: url('../../assets/greece.png');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.selected-mandarin {
+  background-image: url('../../assets/china.png');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.selected-finnish {
+  background-image: url('../../assets/finland.png');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #langs div[class^="selected"] {
-  opacity: 0.3;
-  background-color: rgb(114, 114, 114);
-  color: black;
+  opacity: 0.5;
+  background-color: #727272;
   border: 2px solid black;
+}
+
+#langs div div:not([class^="selected"]):hover {
+  background-color: #CBCCCE;
+  opacity: 0.5;
 }

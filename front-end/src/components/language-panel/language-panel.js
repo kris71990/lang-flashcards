@@ -16,7 +16,6 @@ class LanguagePanel extends React.Component {
   }
 
   handleChange(e) {
-    e.stopPropagation();
     const trans = supportedLanguages.supportedLanguages;
 
     if (!e.target.id || e.target.id === 'langs') {
