@@ -22,40 +22,129 @@
 
 .selected-dutch {
   background-image: url('../../assets/netherlands.png');
-  background-repeat: no-repeat;
 }
 
 .selected-german {
   background-image: url('../../assets/germany.png');
-  background-repeat: no-repeat;
 }
 
 .selected-french {
   background-image: url('../../assets/france.png');
-  background-repeat: no-repeat;
 }
 
 .selected-greek {
   background-image: url('../../assets/greece.png');
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .selected-mandarin {
   background-image: url('../../assets/china.png');
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .selected-finnish {
   background-image: url('../../assets/finland.png');
-  background-repeat: no-repeat;
-  background-position: center;
+}
+
+.selected-afrikaans {
+  background-image: url('../../assets/afrikaans.png');
+}
+
+.selected-arabic {
+  background-image: url('../../assets/arabic.png');
+}
+
+.selected-khmer {
+  background-image: url('../../assets/cambodia.png');
+}
+
+.selected-cantonese {
+  background-image: url('../../assets/cantonese.png');
+}
+
+.selected-czech {
+  background-image: url('../../assets/czech.png');
+}
+
+.selected-danish {
+  background-image: url('../../assets/denmark.png');
+}
+
+.selected-hebrew {
+  background-image: url('../../assets/hebrew.png');
+}
+
+.selected-hungarian {
+  background-image: url('../../assets/hungary.png');
+}
+
+.selected-hindi {
+  background-image: url('../../assets/india.png');
+}
+
+.selected-italian {
+  background-image: url('../../assets/italy.png');
+}
+
+.selected-japanese {
+  background-image: url('../../assets/japan.png');
+}
+
+.selected-korean {
+  background-image: url('../../assets/korea.png');
+}
+
+.selected-lao {
+  background-image: url('../../assets/laos.png');
+}
+
+.selected-burmese {
+  background-image: url('../../assets/myanmar.png');
+}
+
+.selected-norwegian {
+  background-image: url('../../assets/norway.png');
+}
+
+.selected-urdu {
+  background-image: url('../../assets/pakistan.png');
+}
+
+.selected-polish {
+  background-image: url('../../assets/poland.png');
+}
+
+.selected-portuguese {
+  background-image: url('../../assets/portugal.png');
+}
+
+.selected-russian {
+  background-image: url('../../assets/russia.png');
+}
+
+.selected-spanish {
+  background-image: url('../../assets/spain.png');
+}
+
+.selected-swedish {
+  background-image: url('../../assets/sweden.png');
+}
+
+.selected-thai {
+  background-image: url('../../assets/thai.png');
+}
+
+.selected-turkish {
+  background-image: url('../../assets/turkey.png');
+}
+
+.selected-vietnamese {
+  background-image: url('../../assets/vietnam.png');
 }
 
 #langs div[class^="selected"] {
   opacity: 0.5;
   background-color: #727272;
+  background-repeat: no-repeat;
+  background-position: center;
   border: 2px solid black;
 }
 
