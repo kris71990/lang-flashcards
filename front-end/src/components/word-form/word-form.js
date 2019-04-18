@@ -200,10 +200,19 @@ class WordForm extends React.Component {
                       onChange={ this.handleChange }
                     >
                       <option value="">Select</option>
+                      <option value="animal">Animal</option>
+                      <option value="education">Education</option>
+                      <option value="food">Food</option>
                       <option value="greeting">Greeting</option>
+                      <option value="money">Money</option>
+                      <option value="number">Number</option>
                       <option value="object">Object</option>
-                      <option value="cooking">Cooking</option>
                       <option value="outdoors">Outdoors</option>
+                      <option value="person">Person</option>
+                      <option value="sport">Sport</option>
+                      <option value="time">Time</option>
+                      <option value="transportation">Transportation</option>
+                      <option value="other">Other</option>
                     </select>
                     <span>
                       { this.state.wordDirty && this.state.wordDirtyIndex === i 
