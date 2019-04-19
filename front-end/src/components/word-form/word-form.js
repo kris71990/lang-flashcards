@@ -138,7 +138,7 @@ class WordForm extends React.Component {
       <div id="vocab-container">
         <form id="vocab-form" onSubmit={ this.handleSubmit }>
           <fieldset>
-            <legend>Add Vocabulary ({ formattedLang })</legend>
+            <legend>Add Vocabulary ({ formattedLang }) <img src={ require(`../../assets/${language.languageSelection}.png`) }></img></legend>
             {
               [...Array(totalFields)].map((e, i) => {
                 return (
