@@ -1,6 +1,7 @@
 #vocab-container {
   margin: 3% auto;
   width: 85%;
+  font-family: 'Boogaloo', cursive;
 
   #vocab-form {
     text-align: left;
@@ -34,15 +35,24 @@
     }
 
     button {
-      margin: 2%;
-    }
-
-    button {
       float: right;
     }
   }
 
   button {
+    margin: 2%;
+    border-radius: 5px;
+    background-color: #B7C8DE;
+    padding: 8px 20px;
+    font-family: Arial, Helvetica, sans-serif;
     float: left;
+  }
+
+  button:hover {
+    background-color: #7894B8;
+  }
+
+  button:focus {
+    outline: none;
   }
 }

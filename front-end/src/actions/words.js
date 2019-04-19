@@ -54,7 +54,5 @@ const wordsBulkPostRequest = words => (store) => {
 };
 
 export {
-  wordsFetchRequest,
-  wordPostRequest,
-  wordsBulkPostRequest,
+  wordsFetchRequest, wordPostRequest, wordsBulkPostRequest,
 };

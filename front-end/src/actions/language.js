@@ -42,9 +42,5 @@ const languageCreateRequest = lang => (store) => {
 };
 
 export { 
-  languageSelect,
-  languagesFetch,
-  languagesFetchRequest,
-  languageCreateRequest,
-  languageTransDirSet,
+  languageSelect, languagesFetch, languagesFetchRequest, languageCreateRequest, languageTransDirSet,
 };

@@ -143,7 +143,7 @@ class WordForm extends React.Component {
               [...Array(totalFields)].map((e, i) => {
                 return (
                   <div key={i}>
-                    <label>English</label> 
+                    <label>English:</label> 
                     <input 
                       type="text" 
                       className="english" 
@@ -152,7 +152,7 @@ class WordForm extends React.Component {
                       placeholder="ex. boy"
                       onChange={ this.handleChange }
                     />
-                    <label>{ formattedLang }</label> 
+                    <label>{ formattedLang }:</label> 
                     <input 
                       type="text" 
                       className={ languageSelection }
@@ -163,7 +163,7 @@ class WordForm extends React.Component {
                     />
                     { language.languageSelectionTransliteration ?
                       <div>
-                        <label>Latinization</label> 
+                        <label>Latinization:</label> 
                         <input 
                           type="text" 
                           className="transliteration" 

@@ -56,7 +56,12 @@ class CardView extends React.Component {
 
     switch (type) {
       case 'language':
+        if (!languageSelectionLocal) {
+          return formatLang;
+        }
         return `${formatLang} (${languageSelectionLocal})`;
+      case 'language-simple':
+        return formatLang;
       case 'trans':
         switch (this.props.langData.translationDirection) {
           case 'native-english':
@@ -147,11 +152,12 @@ class CardView extends React.Component {
         {
           baseLangData.languageSelection ? 
             <div className="lang-info-box">
-              <h1>{ this.handleFormat('language') } at a glance...</h1>
-              <h3>Known locally as: { baseLangData.languageSelectionLocal }</h3>
-              <p>Native Speakers: { baseLangData.totalSpeakers }</p>
-              <p>Official Language in: { baseLangData.spokenIn.join(', ') }</p>
-              <p>Family: { baseLangData.family.join(' -> ')}</p>
+              <img src={ require(`../../assets/${baseLangData.languageSelection}.png`)}></img>
+              <h1>{ this.handleFormat('language-simple') } at a glance...</h1>
+              <h3><span>Known locally as: </span>{ baseLangData.languageSelectionLocal }</h3>
+              <p><span>Native Speakers: </span>{ baseLangData.totalSpeakers }</p>
+              <p><span>Official Language in: </span> { baseLangData.spokenIn.join(', ') }</p>
+              <p><span>Family: </span>{ baseLangData.family.join(' -> ')}</p>
             </div>
             : null
         }
