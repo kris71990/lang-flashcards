@@ -17,29 +17,31 @@ class LanguagePanel extends React.Component {
 
   handleChange(e) {
     const trans = supportedLanguages.supportedLanguages;
+    let parseId = e.target.id.split('-id:');
+    const parseParentId = e.nativeEvent.target.parentNode.id.split('-id:');
 
-    if (!e.target.id || e.target.id === 'langs') {
+    if ((!parseId[0] && !parseParentId[0]) || (parseId[0] === 'langs' || (parseParentId[0] === 'langs' && !parseId[0]))) {
       this.props.setLanguage('');
       this.setState({
         languageSelection: '',
         languageCode: null,
       });
     } else {
-      const langData = e.target.id.split('-id:');
-      const translit = trans[langData[0]].transliteration;
-      const name = trans[langData[0]].localName;
+      if (!parseId[0]) parseId = parseParentId;
+      const translit = trans[parseId[0]].transliteration;
+      const name = trans[parseId[0]].localName;
       this.props.setLanguage({ 
-        lang: langData[0], 
-        id: langData[1], 
+        lang: parseId[0], 
+        id: parseId[1], 
         transliteration: translit,
         localName: name, 
-        spokenIn: trans[langData[0]].spokenIn,
-        family: trans[langData[0]].family,
-        totalSpeakers: trans[langData[0]].totalSpeakers,
+        spokenIn: trans[parseId[0]].spokenIn,
+        family: trans[parseId[0]].family,
+        totalSpeakers: trans[parseId[0]].totalSpeakers,
       });
       this.setState({
-        languageSelection: langData[0],
-        languageCode: langData[1],
+        languageSelection: parseId[0],
+        languageCode: parseId[1],
       });
     }
   }
