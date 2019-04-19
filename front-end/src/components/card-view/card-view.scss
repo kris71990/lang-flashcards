@@ -7,11 +7,12 @@
   }
 }
 
-.card-container {
-  width: 100%;
+.card-box {
+  width: 65%;
   text-align: center;
   font-family: 'Boogaloo', cursive;
-
+  vertical-align: top;
+  
   h1 {
     font-size: 2.5em;
 
@@ -21,7 +22,7 @@
   }
 
   #card {
-    width: 50%;
+    width: 75%;
     height: auto;
     margin: 2% auto;
     border: 6px ridge #466FA2;
@@ -49,4 +50,23 @@
   button:focus {
     outline: none;
   }
+}
+
+.lang-info-box {
+  width: 30%;
+  padding: 20px;
+  text-align: right;
+  font-family: 'Boogaloo', cursive;
+
+  h1, h3 {
+    padding: 10px
+  }
+
+  p {
+    padding: 5px;
+  }
+}
+
+.card-box, .lang-info-box {
+  display: inline-block;
 }

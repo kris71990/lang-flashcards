@@ -110,7 +110,7 @@ class WordForm extends React.Component {
         wordLocal: this.state.wordLocal[0],
         typeOfWord: this.state.typeOfWord[0],
         category: this.state.categoryOfWord[0],
-        transliteration: this.state.transliteration,
+        transliteration: this.state.transliteration[0],
         languageId: languageSelectionCode,
       })
         .then(() => {

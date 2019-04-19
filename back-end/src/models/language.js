@@ -26,7 +26,7 @@ const Language = (sequelize, DataTypes) => sequelize.define('language', {
     allowNull: true,
   },
   family: {
-    type: DataTypes.STRING,
+    type: DataTypes.ARRAY(DataTypes.TEXT),
     allowNull: true,
   },
   spokenIn: {

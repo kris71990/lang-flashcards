@@ -31,6 +31,9 @@ class CardView extends React.Component {
         languageSelectionCode: langData.languageSelectionCode, 
         languageSelectionLocal: baseLangData.languageSelectionLocal,
         languageSelectionTransliteration: baseLangData.languageSelectionTransliteration,
+        spokenIn: baseLangData.spokenIn,
+        family: baseLangData.family,
+        totalSpeakers: baseLangData.totalSpeakers,
       })
         .then(() => {
           console.log('Words retrieved');
@@ -88,7 +91,7 @@ class CardView extends React.Component {
   render() {
     let { langData, baseLangData } = this.props;
     if (!langData.langId) langData = JSON.parse(localStorage.getItem('words'));
-    if (!baseLangData.languageName) baseLangData = JSON.parse(localStorage.getItem('language'));
+    if (!baseLangData.spokenIn) baseLangData = JSON.parse(localStorage.getItem('language'));
     
     const { cardNumber, answer } = this.state;
     let wordsToCards;
@@ -104,13 +107,6 @@ class CardView extends React.Component {
       switch (langData.translationDirection) {
         case 'native-english':
           if (!answer) {
-            // if (wordsToCards[cardNumber].transliteration) {
-            //   cardJSX =
-            //     <div>
-            //       <p>{ wordsToCards[cardNumber].wordLocal }</p>
-            //       <p>{ wordsToCards[cardNumber].transliteration }</p>
-            //     </div>;
-            // } else {
             cardJSX = <p>{ wordsToCards[cardNumber].wordLocal }</p>;
             // }
           } else {
@@ -121,13 +117,6 @@ class CardView extends React.Component {
           if (!answer) {
             cardJSX = <p>{ wordsToCards[cardNumber].wordEnglish }</p>;
           } else {
-          // if (wordsToCards[cardNumber].transliteration) {
-          //   cardJSX =
-          //     <div>
-          //       <p>{ wordsToCards[cardNumber].wordLocal }</p>
-          //       <p>{ wordsToCards[cardNumber].transliteration }</p>
-          //     </div>;
-          // } else {
             cardJSX = <p>{ wordsToCards[cardNumber].wordLocal }</p>;
           }
           break;
@@ -139,7 +128,7 @@ class CardView extends React.Component {
     return (
       <div>
         { wordsToCards && wordsToCards.length > 0 ?
-          <div className="card-container">
+          <div className="card-box">
             <h1>Your <span>{ this.handleFormat('language') }</span> flashcards ({ totalWords ? totalWords : '0'})</h1>
             <h3>{ this.handleFormat('trans') }</h3>
             <div onClick={ this.handleFlipCard } id="card">
@@ -149,11 +138,22 @@ class CardView extends React.Component {
             <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
           </div>
           : 
-          <div className="card-container">
+          <div className="card-box">
             <h2>There are currently no flashcards to study in { this.handleFormat('language') }.</h2>
             <h3>Add some words!</h3>
             <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
           </div>
+        }
+        {
+          baseLangData.languageSelection ? 
+            <div className="lang-info-box">
+              <h1>{ this.handleFormat('language') } at a glance...</h1>
+              <h3>Known locally as: { baseLangData.languageSelectionLocal }</h3>
+              <p>Native Speakers: { baseLangData.totalSpeakers }</p>
+              <p>Official Language in: { baseLangData.spokenIn.join(', ') }</p>
+              <p>Family: { baseLangData.family.join(' -> ')}</p>
+            </div>
+            : null
         }
       </div>
     );

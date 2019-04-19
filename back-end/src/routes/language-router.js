@@ -20,7 +20,9 @@ languageRouter.post('/language', jsonParser, (request, response, next) => {
   
   if (!request.body || !request.body.languageName) return next(new HttpError(400, 'Bad request'));
 
-  const { languageName, transliteration, wordCount } = request.body;
+  const { 
+    languageName, transliteration, wordCount, spokenIn, family, totalSpeakers, 
+  } = request.body;
 
   let initialization;
   if (!wordCount) {
@@ -32,6 +34,9 @@ languageRouter.post('/language', jsonParser, (request, response, next) => {
   return models.language.create({
     languageName,
     transliteration,
+    spokenIn,
+    family,
+    totalSpeakers,
     wordCount: initialization,
   })
     .then((language) => {

@@ -33,6 +33,9 @@ class LanguagePanel extends React.Component {
         id: langData[1], 
         transliteration: translit,
         localName: name, 
+        spokenIn: trans[langData[0]].spokenIn,
+        family: trans[langData[0]].family,
+        totalSpeakers: trans[langData[0]].totalSpeakers,
       });
       this.setState({
         languageSelection: langData[0],

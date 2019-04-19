@@ -35,11 +35,14 @@ class Landing extends React.Component {
       translationDirection,
       languageSelectionTransliteration,
       languageSelectionLocal,
+      spokenIn,
+      family,
+      totalSpeakers,
     } = this.props.language;
 
     if (languageSelection && translationDirection) {
       return this.props.wordsFetch({ 
-        languageSelection, translationDirection, languageSelectionCode, languageSelectionLocal, languageSelectionTransliteration,
+        languageSelection, translationDirection, languageSelectionCode, languageSelectionLocal, languageSelectionTransliteration, spokenIn, family, totalSpeakers,
       })
         .then(() => {
           this.props.history.push(routes.CARDS_ROUTE);

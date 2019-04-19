@@ -5,6 +5,10 @@ const defaultState = {
   translationDirection: null,
   languageSelectionLocal: null,
   languageSelectionTransliteration: null,
+  spokenIn: null,
+  family: null,
+  totalSpeakers: null,
+  wordCount: null,
 };
 
 export default (state = defaultState, { type, payload }) => {
@@ -24,21 +28,28 @@ export default (state = defaultState, { type, payload }) => {
         translationDirection, 
         languageSelectionLocal: payload.languageSelectionLocal, 
         languageSelectionTransliteration: payload.languageSelectionTransliteration,
+        family: payload.family,
+        spokenIn: payload.spokenIn,
+        totalSpeakers: payload.totalSpeakers,
       });
     case 'LANGUAGE_DIR_SET':
       return Object.assign({}, state, {
         translationDirection: payload,
       });
     case 'LANGUAGE_SELECT':
-      const { lang, id } = payload;
-      let languageSelectionLocal;
-      if (payload.transliteration) languageSelectionLocal = payload.localName;
+      const { 
+        lang, id, spokenIn, totalSpeakers, family, 
+      } = payload;
+      const languageSelectionLocal = payload.localName;
 
       return Object.assign({}, state, {
         languageSelection: lang,
         languageSelectionCode: id,
         languageSelectionTransliteration: payload.transliteration,
         languageSelectionLocal,
+        spokenIn,
+        totalSpeakers,
+        family,
       });
     case 'LANGUAGE_ADD':
       return Object.assign({}, state, {
