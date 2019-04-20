@@ -26,6 +26,7 @@
     "prefer-template":"off",
     "no-unneeded-ternary": "off",
     "max-len": "off",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "import/no-dynamic-require": "off"
   }
 }

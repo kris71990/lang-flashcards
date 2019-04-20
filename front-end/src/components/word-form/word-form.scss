@@ -1,26 +1,40 @@
 #vocab-container {
   margin: 3% auto;
-  width: 70%;
+  width: 85%;
+  font-family: 'Boogaloo', cursive;
 
+  
   #vocab-form {
     text-align: left;
-
+    
     fieldset {
       border: 1px dashed black;
       background-color: #E0E0E0;
     }
-
+    
     legend {
       background-color: white;
       border: 1px dashed black;
       padding: 10px 20px;
+
+      img {
+        width: 20px;
+        height: auto;
+        padding-left: 5px;
+        vertical-align: middle;
+      }
     }
     
     div {
       padding: 10px;
+      display: inline-block;
       
       input, label, span {
         padding: 10px;
+      }
+
+      label {
+        display: inline-block;
       }
       
       span {
@@ -29,15 +43,24 @@
     }
 
     button {
-      margin: 2%;
-    }
-
-    button {
       float: right;
     }
   }
 
   button {
+    margin: 2%;
+    border-radius: 5px;
+    background-color: #B7C8DE;
+    padding: 8px 20px;
+    font-family: Arial, Helvetica, sans-serif;
     float: left;
+  }
+
+  button:hover {
+    background-color: #7894B8;
+  }
+
+  button:focus {
+    outline: none;
   }
 }

@@ -19,6 +19,7 @@ const Op = models.Sequelize.Op;
 // Creates a single word in one language
 wordRouter.post('/word', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /word');
+  console.log(request.body);
 
   if (!request.body || 
     (!request.body.wordEnglish || !request.body.wordLocal || 
@@ -62,7 +63,7 @@ wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /words/bulk');
 
   const { 
-    wordsEnglish, wordsLocal, wordTypes, category, languageId, 
+    wordsEnglish, wordsLocal, wordTypes, category, transliteration, languageId, 
   } = request.body;
 
   // validation of request data
@@ -79,12 +80,14 @@ wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
   const wordsLocReduced = [];
   const wordTypesReduced = [];
   const categoryReduced = [];
+  const transliterationReduced = [];
   wordsEnglish.forEach((y, i) => {
     if (!wordsEngReduced.includes(y)) {
       wordsEngReduced.push(y);
       wordsLocReduced.push(wordsLocal[i]);
       wordTypesReduced.push(wordTypes[i]);
       categoryReduced.push(category[i]);
+      transliterationReduced.push(transliteration[i]);
     }
   });
 
@@ -94,6 +97,7 @@ wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
       wordLocal: wordsLocReduced[i],
       typeOfWord: wordTypesReduced[i],
       category: categoryReduced[i],
+      transliteration: transliterationReduced[i],
       languageId,
     };
   });

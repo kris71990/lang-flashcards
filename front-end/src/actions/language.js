@@ -28,17 +28,19 @@ const languagesFetchRequest = () => (store) => {
 };
 
 const languageCreateRequest = lang => (store) => {
+  const { 
+    selectedLanguage, transliteration, spokenIn, family, totalSpeakers, 
+  } = lang;
+
   return superagent.post(`${API_URL}/language`)
-    .send({ languageName: lang, wordCount: 0 })
+    .send({ 
+      languageName: selectedLanguage, transliteration, spokenIn, family, totalSpeakers, wordCount: 0, 
+    })
     .then((response) => {
       return store.dispatch(languageAdd(response.body.language));
     });
 };
 
 export { 
-  languageSelect,
-  languagesFetch,
-  languagesFetchRequest,
-  languageCreateRequest,
-  languageTransDirSet,
+  languageSelect, languagesFetch, languagesFetchRequest, languageCreateRequest, languageTransDirSet,
 };

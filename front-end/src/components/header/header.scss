@@ -1,7 +1,8 @@
 header {
   height: auto;
   position: relative;
-  border: 10px ridge grey;
+  border-top: 10px ridge grey;
+  border-bottom: 5px solid black;
   background-color: #295599;
 
   h1 {

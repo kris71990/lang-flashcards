@@ -1,44 +1,154 @@
 #langs div div {
-  width: 50%;
-  margin: 20px auto;
   background-color: white;
-  width: 218px;
-  height: 145px;
   margin: 20px;
-  border-radius: 20px;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
   text-align: center;
-  line-height: 145px;
-  font-size: 1.4em;
   border: 2px solid black;
-}
 
-#langs div div:hover {
-  background-color: black;
-  color: white;
-  // border: 2px solid white;
+  h2 {
+    display: block;
+    line-height: 0;
+    margin-top: 90px;
+  }
+
+  h5 {
+    padding-top: 2px;
+    display: block;
+    line-height: 0;
+  }
 }
 
 .selected-dutch {
-  background-image: url('../../assets/netherlands.png');
-  background-repeat: 'no-repeat';
-  opacity: 0.3;
+  background-image: url('../../assets/dutch.png');
 }
 
 .selected-german {
-  background-image: url('../../assets/germany.png');
-  background-repeat: 'no-repeat';
-  opacity: 0.3;
+  background-image: url('../../assets/german.png');
 }
 
 .selected-french {
-  background-image: url('../../assets/france.png');
-  background-repeat: 'no-repeat';
-  opacity: 0.3;
+  background-image: url('../../assets/french.png');
+}
+
+.selected-greek {
+  background-image: url('../../assets/greek.png');
+}
+
+.selected-mandarin {
+  background-image: url('../../assets/mandarin.png');
+}
+
+.selected-finnish {
+  background-image: url('../../assets/finnish.png');
+}
+
+.selected-afrikaans {
+  background-image: url('../../assets/afrikaans.png');
+}
+
+.selected-arabic {
+  background-image: url('../../assets/arabic.png');
+}
+
+.selected-khmer {
+  background-image: url('../../assets/khmer.png');
+}
+
+.selected-cantonese {
+  background-image: url('../../assets/cantonese.png');
+}
+
+.selected-czech {
+  background-image: url('../../assets/czech.png');
+}
+
+.selected-danish {
+  background-image: url('../../assets/danish.png');
+}
+
+.selected-hebrew {
+  background-image: url('../../assets/hebrew.png');
+}
+
+.selected-hungarian {
+  background-image: url('../../assets/hungarian.png');
+}
+
+.selected-hindi {
+  background-image: url('../../assets/hindi.png');
+}
+
+.selected-italian {
+  background-image: url('../../assets/italian.png');
+}
+
+.selected-japanese {
+  background-image: url('../../assets/japanese.png');
+}
+
+.selected-korean {
+  background-image: url('../../assets/korean.png');
+}
+
+.selected-lao {
+  background-image: url('../../assets/lao.png');
+}
+
+.selected-burmese {
+  background-image: url('../../assets/burmese.png');
+}
+
+.selected-norwegian {
+  background-image: url('../../assets/norwegian.png');
+}
+
+.selected-urdu {
+  background-image: url('../../assets/urdu.png');
+}
+
+.selected-polish {
+  background-image: url('../../assets/polish.png');
+}
+
+.selected-portuguese {
+  background-image: url('../../assets/portuguese.png');
+}
+
+.selected-russian {
+  background-image: url('../../assets/russian.png');
+}
+
+.selected-spanish {
+  background-image: url('../../assets/spanish.png');
+}
+
+.selected-swedish {
+  background-image: url('../../assets/swedish.png');
+}
+
+.selected-thai {
+  background-image: url('../../assets/thai.png');
+}
+
+.selected-turkish {
+  background-image: url('../../assets/turkish.png');
+}
+
+.selected-vietnamese {
+  background-image: url('../../assets/vietnamese.png');
 }
 
 #langs div[class^="selected"] {
-  opacity: 0.3;
-  background-color: rgb(114, 114, 114);
-  color: black;
+  opacity: 0.5;
+  background-color: #727272;
+  background-repeat: no-repeat;
+  background-position: center;
   border: 2px solid black;
+}
+
+#langs div div:not([class^="selected"]):hover {
+  background-color: #CBCCCE;
+  opacity: 0.5;
 }

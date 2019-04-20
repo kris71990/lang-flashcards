@@ -11,6 +11,7 @@ import './word-form.scss';
 const defaultState = {
   wordEnglish: [],
   wordLocal: [],
+  transliteration: [],
   typeOfWord: [],
   categoryOfWord: [],
   totalFields: 1,
@@ -93,6 +94,7 @@ class WordForm extends React.Component {
         wordsLocal: this.state.wordLocal,
         wordTypes: this.state.typeOfWord,
         category: this.state.categoryOfWord,
+        transliteration: this.state.transliteration,
         languageId: languageSelectionCode,
       })
         .then(() => {
@@ -108,6 +110,7 @@ class WordForm extends React.Component {
         wordLocal: this.state.wordLocal[0],
         typeOfWord: this.state.typeOfWord[0],
         category: this.state.categoryOfWord[0],
+        transliteration: this.state.transliteration[0],
         languageId: languageSelectionCode,
       })
         .then(() => {
@@ -119,10 +122,11 @@ class WordForm extends React.Component {
   }
 
   render() {
-    let { words } = this.props;
+    let { words, language } = this.props;
 
     // get words from local storage to keep app alive on page refresh
     if (!words.languageSelectionCode) words = JSON.parse(localStorage.getItem('words'));
+    if (!language.languageSelectionCode) language = JSON.parse(localStorage.getItem('language'));
     const languageSelection = words.languageSelection;
     const { totalFields } = this.state;
     let formattedLang;
@@ -134,12 +138,12 @@ class WordForm extends React.Component {
       <div id="vocab-container">
         <form id="vocab-form" onSubmit={ this.handleSubmit }>
           <fieldset>
-            <legend>Add Vocabulary ({ formattedLang })</legend>
+            <legend>Add Vocabulary ({ formattedLang }) <img src={ require(`../../assets/${language.languageSelection}.png`) }></img></legend>
             {
               [...Array(totalFields)].map((e, i) => {
                 return (
                   <div key={i}>
-                    <label>English</label> 
+                    <label>English:</label> 
                     <input 
                       type="text" 
                       className="english" 
@@ -148,7 +152,7 @@ class WordForm extends React.Component {
                       placeholder="ex. boy"
                       onChange={ this.handleChange }
                     />
-                    <label>{ formattedLang }</label> 
+                    <label>{ formattedLang }:</label> 
                     <input 
                       type="text" 
                       className={ languageSelection }
@@ -157,6 +161,20 @@ class WordForm extends React.Component {
                       placeholder="ex. jongen"
                       onChange={ this.handleChange }
                     />
+                    { language.languageSelectionTransliteration ?
+                      <div>
+                        <label>Latinization:</label> 
+                        <input 
+                          type="text" 
+                          className="transliteration" 
+                          name="transliteration"
+                          index={`${i}`}
+                          placeholder="ex. ni hao"
+                          onChange={ this.handleChange }
+                        />
+                      </div>
+                      : null
+                    }
                     <label>Part of Speech</label> 
                     <select
                       className="wordType-select"
@@ -167,10 +185,13 @@ class WordForm extends React.Component {
                     >
                       <option value="">Select</option>
                       <option value="noun">Noun</option>
-                      <option value="proper">Proper Noun</option>
-                      <option value="verb">Verb</option>
                       <option value="pronoun">Pronoun</option>
+                      <option value="proper noun">Proper Noun</option>
+                      <option value="verb">Verb</option>
                       <option value="adjective">Adjective</option>
+                      <option value="adverb">Adverb</option>
+                      <option value="preposition">Preposition</option>
+                      <option value="conjunction">Conjunction</option>
                       <option value="other">Other</option>
                     </select>
                     <label>Category</label> 
@@ -182,10 +203,27 @@ class WordForm extends React.Component {
                       onChange={ this.handleChange }
                     >
                       <option value="">Select</option>
+                      <option value="animal">Animal</option>
+                      <option value="art">Art</option>
+                      <option value="accomodation/housing">Accomodation/Housing</option>
+                      <option value="body">Body Part</option>
+                      <option value="education">Education</option>
+                      <option value="food">Food</option>
                       <option value="greeting">Greeting</option>
+                      <option value="health">Health</option>
+                      <option value="love">Love</option>
+                      <option value="money">Money</option>
+                      <option value="number">Number</option>
                       <option value="object">Object</option>
-                      <option value="cooking">Cooking</option>
                       <option value="outdoors">Outdoors</option>
+                      <option value="person">Person</option>
+                      <option value="phrase">Phrase</option>
+                      <option value="religion">Religion</option>
+                      <option value="society">Society</option>
+                      <option value="sport">Sport</option>
+                      <option value="time/date">Time/Date</option>
+                      <option value="transportation">Transportation</option>
+                      <option value="other">Other</option>
                     </select>
                     <span>
                       { this.state.wordDirty && this.state.wordDirtyIndex === i 
@@ -209,6 +247,7 @@ class WordForm extends React.Component {
 
 WordForm.propTypes = {
   words: PropTypes.object,
+  language: PropTypes.object,
   addWord: PropTypes.func,
   bulkAddWords: PropTypes.func,
   history: PropTypes.object,
@@ -217,6 +256,7 @@ WordForm.propTypes = {
 const mapStateToProps = (state) => {
   return {
     words: state.words,
+    language: state.language,
   };
 };
 

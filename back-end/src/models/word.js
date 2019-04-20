@@ -18,6 +18,11 @@ const Word = (sequelize, DataTypes) => sequelize.define('word', {
     unique: false,
     allowNull: false,
   },
+  transliteration: {
+    type: DataTypes.STRING,
+    unique: false,
+    allowNull: true,
+  },
   wordEnglish: {
     type: DataTypes.STRING,
     unique: false,

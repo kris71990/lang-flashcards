@@ -14,18 +14,29 @@ class CardView extends React.Component {
     super(props);
     this.state = {
       cardNumber: 0,
+      answer: false,
+      hintCategory: false,
+      hintType: false,
+      hintTransliteration: false,
     };
     autoBind.call(this, CardView);
   }
 
   componentDidMount() {
-    let { langData } = this.props;
+    let { langData, baseLangData } = this.props;
     if (!langData.languageId) {
       langData = JSON.parse(localStorage.getItem('words'));
+      baseLangData = JSON.parse(localStorage.getItem('language'));
+
       return this.props.wordsFetch({ 
         languageSelection: langData.languageSelection, 
         translationDirection: langData.translationDirection, 
         languageSelectionCode: langData.languageSelectionCode, 
+        languageSelectionLocal: baseLangData.languageSelectionLocal,
+        languageSelectionTransliteration: baseLangData.languageSelectionTransliteration,
+        spokenIn: baseLangData.spokenIn,
+        family: baseLangData.family,
+        totalSpeakers: baseLangData.totalSpeakers,
       })
         .then(() => {
           console.log('Words retrieved');
@@ -36,6 +47,7 @@ class CardView extends React.Component {
 
   handleFormat(type) {
     let { langData } = this.props;
+    const { languageSelectionLocal } = this.props.baseLangData;
     let formatLang;
 
     if (!langData.langId) {
@@ -47,6 +59,11 @@ class CardView extends React.Component {
 
     switch (type) {
       case 'language':
+        if (!languageSelectionLocal) {
+          return formatLang;
+        }
+        return `${formatLang} (${languageSelectionLocal})`;
+      case 'language-simple':
         return formatLang;
       case 'trans':
         switch (this.props.langData.translationDirection) {
@@ -62,8 +79,51 @@ class CardView extends React.Component {
 
   handleRandomCard() {
     const rand = Math.floor(Math.random() * this.props.langData.words.length);
-    this.setState({
+    return this.setState({
       cardNumber: rand,
+      answer: false,
+      hintCategory: false,
+      hintType: false,
+      hintTransliteration: false,
+    });
+  }
+
+  handleHideHint() {
+    return this.setState({
+      hintCategory: false,
+      hintType: false,
+      hintTransliteration: false,
+    });
+  }
+
+  handleHint() {
+    const rand = Math.floor(Math.random() * 100 + 1);
+    switch (rand % 3) {
+      case 0:
+        return this.setState({
+          hintCategory: true,
+          hintType: false,
+          hintTransliteration: false,
+        });
+      case 1:
+        return this.setState({
+          hintType: true,
+          hintCategory: false,
+          hintTransliteration: false,
+        });
+      default:
+        return this.setState({
+          hintType: false,
+          hintCategory: false,
+          hintTransliteration: true,
+        });
+    }
+  }
+
+  handleFlipCard() {
+    const flip = !this.state.answer;
+    return this.setState({
+      answer: flip,
     });
   }
 
@@ -72,10 +132,13 @@ class CardView extends React.Component {
   }
 
   render() {
-    let { langData } = this.props;
+    let { langData, baseLangData } = this.props;
     if (!langData.langId) langData = JSON.parse(localStorage.getItem('words'));
+    if (!baseLangData.spokenIn) baseLangData = JSON.parse(localStorage.getItem('language'));
     
-    const { cardNumber } = this.state;
+    const { 
+      cardNumber, answer, hintType, hintCategory, hintTransliteration,
+    } = this.state;
     let wordsToCards;
     let totalWords;
 
@@ -84,28 +147,78 @@ class CardView extends React.Component {
       totalWords = wordsToCards.length;
     }
 
+    let cardJSX;
+    if (wordsToCards && wordsToCards.length > 0) {
+      switch (langData.translationDirection) {
+        case 'native-english':
+          if (!answer) {
+            cardJSX = <p>
+              { wordsToCards[cardNumber].wordLocal }
+              { hintType ? <span>({ wordsToCards[cardNumber].typeOfWord })</span> : null }
+              { hintCategory ? <span>({ wordsToCards[cardNumber].category })</span> : null }
+              { hintTransliteration ? 
+                <span>({ wordsToCards[cardNumber].transliteration })</span> 
+                : null 
+              }
+            </p>;
+          } else {
+            cardJSX = <p>{ wordsToCards[cardNumber].wordEnglish }</p>;
+          }
+          break;
+        case 'english-native':
+          if (!answer) {
+            cardJSX = <p>{ wordsToCards[cardNumber].wordEnglish }</p>;
+          } else {
+            cardJSX = <p>
+              { wordsToCards[cardNumber].wordLocal }
+              { hintType ? <span>({ wordsToCards[cardNumber].typeOfWord })</span> : null }
+              { hintCategory ? <span>({ wordsToCards[cardNumber].category })</span> : null }
+              { hintTransliteration ? 
+                <span>({ wordsToCards[cardNumber].transliteration })</span> 
+                : null 
+              }
+            </p>;
+          }
+          break;
+        default: 
+          cardJSX = <p>Card Error</p>;
+      }
+    }
+
     return (
       <div>
-        { wordsToCards.length > 0 ?
-          <div className="card-container">
-            <h1>Your <span>{ this.handleFormat('language') } </span> flashcards ({ totalWords ? totalWords : '0'})</h1>
+        { wordsToCards && wordsToCards.length > 0 ?
+          <div className="card-box">
+            <h1>Your <span>{ this.handleFormat('language') }</span> flashcards ({ totalWords ? totalWords : '0'})</h1>
             <h3>{ this.handleFormat('trans') }</h3>
-            <div id="card">
-              {
-                langData.translationDirection === 'native-english' ?
-                  <p>{ wordsToCards[cardNumber].wordLocal }</p>
-                  : <p>{ wordsToCards[cardNumber].wordEnglish }</p>
-              }
+            <div onClick={ this.handleFlipCard } id="card">
+              { cardJSX }
             </div>
+            { hintType || hintCategory || hintTransliteration ?
+              <button onClick={ this.handleHideHint }>Hide Hint</button>
+              : <button onClick={ this.handleHint }>Hint</button>
+            }
             <button onClick={ this.handleRandomCard }>Next Card</button>
             <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
           </div>
           : 
-          <div className="card-container">
+          <div className="card-box">
             <h2>There are currently no flashcards to study in { this.handleFormat('language') }.</h2>
             <h3>Add some words!</h3>
             <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
           </div>
+        }
+        {
+          baseLangData.languageSelection ? 
+            <div className="lang-info-box">
+              <img src={ require(`../../assets/${baseLangData.languageSelection}.png`)}></img>
+              <h1>{ this.handleFormat('language-simple') } at a glance...</h1>
+              <h3><span>Known locally as: </span>{ baseLangData.languageSelectionLocal }</h3>
+              <p><span>Native Speakers: </span>{ baseLangData.totalSpeakers }</p>
+              <p><span>Official Language in: </span> { baseLangData.spokenIn.join(', ') }</p>
+              <p><span>Family: </span>{ baseLangData.family.join(' -> ')}</p>
+            </div>
+            : null
         }
       </div>
     );
@@ -114,6 +227,7 @@ class CardView extends React.Component {
 
 CardView.propTypes = {
   langData: PropTypes.object,
+  baseLangData: PropTypes.object,
   history: PropTypes.object,
   wordsFetch: PropTypes.func,
 };
@@ -130,6 +244,7 @@ const mapStateToProps = (state) => {
       translationDirection: state.words.translationDirection,
       words: state.words.words,
     },
+    baseLangData: state.language,
   };
 };
 

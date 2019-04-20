@@ -148,12 +148,18 @@ describe('Word Router Tests', () => {
       const wordsLocal = ['mann', 'frau', 'madchen'];
       const wordTypes = ['noun', 'noun', 'noun'];
       const category = ['person', 'person', 'person'];
+      const transliteration = [null, 'ni hao', 'shan'];
 
       return mockLanguage('German')
         .then((languageMock) => {
           return superagent.post(`${API_URL}/words/bulk`)
             .send({ 
-              wordsEnglish, wordsLocal, wordTypes, category, languageId: languageMock.languageId, 
+              wordsEnglish, 
+              wordsLocal, 
+              wordTypes, 
+              category, 
+              transliteration, 
+              languageId: languageMock.languageId, 
             })
             .then((response) => {
               expect(response.status).toEqual(201);
