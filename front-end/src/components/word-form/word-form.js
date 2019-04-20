@@ -185,10 +185,13 @@ class WordForm extends React.Component {
                     >
                       <option value="">Select</option>
                       <option value="noun">Noun</option>
-                      <option value="proper">Proper Noun</option>
-                      <option value="verb">Verb</option>
                       <option value="pronoun">Pronoun</option>
+                      <option value="proper noun">Proper Noun</option>
+                      <option value="verb">Verb</option>
                       <option value="adjective">Adjective</option>
+                      <option value="adverb">Adverb</option>
+                      <option value="preposition">Preposition</option>
+                      <option value="conjunction">Conjunction</option>
                       <option value="other">Other</option>
                     </select>
                     <label>Category</label> 
@@ -201,16 +204,24 @@ class WordForm extends React.Component {
                     >
                       <option value="">Select</option>
                       <option value="animal">Animal</option>
+                      <option value="art">Art</option>
+                      <option value="accomodation/housing">Accomodation/Housing</option>
+                      <option value="body">Body Part</option>
                       <option value="education">Education</option>
                       <option value="food">Food</option>
                       <option value="greeting">Greeting</option>
+                      <option value="health">Health</option>
+                      <option value="love">Love</option>
                       <option value="money">Money</option>
                       <option value="number">Number</option>
                       <option value="object">Object</option>
                       <option value="outdoors">Outdoors</option>
                       <option value="person">Person</option>
+                      <option value="phrase">Phrase</option>
+                      <option value="religion">Religion</option>
+                      <option value="society">Society</option>
                       <option value="sport">Sport</option>
-                      <option value="time">Time</option>
+                      <option value="time/date">Time/Date</option>
                       <option value="transportation">Transportation</option>
                       <option value="other">Other</option>
                     </select>
