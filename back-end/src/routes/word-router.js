@@ -19,7 +19,6 @@ const Op = models.Sequelize.Op;
 // Creates a single word in one language
 wordRouter.post('/word', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /word');
-  console.log(request.body);
 
   if (!request.body || 
     (!request.body.wordEnglish || !request.body.wordLocal || 

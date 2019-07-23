@@ -4,7 +4,8 @@ import logger from '../lib/logger';
 import models from '../models';
 
 passport.use(new LocalStrategy((username, password, done) => {
-  return models.account.findOne({ where: { username } })
+  console.log(username, password);
+  models.account.findOne({ where: { username } })
     .then((user) => {
       logger.log(logger.INFO, 'User Found');
       if (!user || !user.validatePassword(password)) {
