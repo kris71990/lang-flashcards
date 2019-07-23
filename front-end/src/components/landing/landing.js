@@ -1,11 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import autoBind from '../../utils/autobind';
+import * as authActions from '../../actions/auth';
 import * as languageActions from '../../actions/language';
 import * as wordActions from '../../actions/words';
 
+import AuthForm from '../auth-form/auth-form';
 import LanguageMenu from '../language-menu/language-menu';
 import LanguageChoicePanel from '../language-panel/language-panel';
 import TranslationChoice from '../translation-choice/translation-choice';
@@ -26,6 +29,23 @@ class Landing extends React.Component {
 
   componentDidMount() {
     this.props.languagesFetch();
+  }
+
+  handleLogin(user) {
+    return this.props.login(user)
+      .then(() => {
+        this.props.history.push(routes.ROOT_ROUTE);
+      })
+      .catch(console.error);
+  }
+
+  handleSignup(user) {
+    console.log(user);
+    return this.props.signup(user)
+      .then(() => {
+        this.props.history.push(routes.ROOT_ROUTE);
+      })
+      .catch(console.error);
   }
 
   handleChoice() {
@@ -61,12 +81,13 @@ class Landing extends React.Component {
   handleCreateLanguage(lang) {
     this.props.createLanguage(lang)
       .then(() => {
-        console.log('language created');
+        console.log('language created'); // eslint-disable-line
       });
   }
 
   render() {
     const { toggleMenu } = this.state;
+    const { location } = this.props;
     const { 
       languages, languageSelection, translationDirection, 
     } = this.props.language;
@@ -78,8 +99,8 @@ class Landing extends React.Component {
       formattedLangSelection = `${languageSelection.charAt(0).toUpperCase()}${languageSelection.slice(1)}`;
     }
 
-    return (
-      <section>
+    const defaultJSX = 
+      <div>
         <div id="intro">
           <h2>Choose a language 
             <span>OR</span> 
@@ -124,6 +145,29 @@ class Landing extends React.Component {
             }
           </div>
         </div>
+      </div>;
+    
+    const loginJSX = 
+      <div>
+        <h2>Login</h2>
+        <p>No account?</p>
+        <Link to="/signup">Signup</Link>
+        <AuthForm onComplete={ this.handleLogin } type="login"/>
+      </div>;
+    
+    const signupJSX = 
+      <div>
+        <h2>Signup</h2>
+        <p>Already have an account?</p>
+        <Link to="/login">Login</Link>
+        <AuthForm onComplete={ this.handleSignup } type="signup"/>
+      </div>;
+
+    return (
+      <section>
+        { location.pathname === routes.ROOT_ROUTE ? defaultJSX : undefined }
+        { location.pathname === routes.LOGIN_ROUTE ? loginJSX : undefined }
+        { location.pathname === routes.SIGNUP_ROUTE ? signupJSX : undefined }
       </section>
     );
   }
@@ -136,12 +180,16 @@ Landing.propTypes = {
   setTransDir: PropTypes.func,
   languagesFetch: PropTypes.func,
   wordsFetch: PropTypes.func,
+  location: PropTypes.object,
   history: PropTypes.object,
+  signup: PropTypes.func,
+  login: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
   return {
     language: state.language,
+    token: state.auth,
   };
 };
 
@@ -151,6 +199,8 @@ const mapDispatchToProps = dispatch => ({
   setTransDir: dir => dispatch(languageActions.languageTransDirSet(dir)),
   createLanguage: lang => dispatch(languageActions.languageCreateRequest(lang)),
   wordsFetch: lang => dispatch(wordActions.wordsFetchRequest(lang)),
+  signup: user => dispatch(authActions.signupRequest(user)),
+  login: user => dispatch(authActions.loginRequest(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);
