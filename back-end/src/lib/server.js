@@ -6,6 +6,7 @@ import HttpError from 'http-errors';
 
 import logger from './logger';
 import models from '../models/index';
+import accountRouter from '../routes/account-router';
 import languageRouter from '../routes/language-router';
 import wordRouter from '../routes/word-router';
 import errorMiddleware from './error-middleware';
@@ -17,6 +18,7 @@ let server = null;
 
 app.use(cors({ credentials: true, origin: CLIENT_URL }));
 
+app.use(accountRouter);
 app.use(languageRouter);
 app.use(wordRouter);
 
