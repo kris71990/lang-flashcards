@@ -28,11 +28,14 @@ const languagesFetchRequest = () => (store) => {
 };
 
 const languageCreateRequest = lang => (store) => {
+  const { auth: token } = store.getState();
   const { 
     selectedLanguage, transliteration, spokenIn, family, totalSpeakers, 
   } = lang;
 
   return superagent.post(`${API_URL}/language`)
+    .set('Authorization', `Bearer ${token}`)
+    .set('Content-Type', 'application/json')
     .send({ 
       languageName: selectedLanguage, transliteration, spokenIn, family, totalSpeakers, wordCount: 0, 
     })

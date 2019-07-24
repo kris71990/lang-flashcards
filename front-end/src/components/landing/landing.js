@@ -18,6 +18,7 @@ import './landing.scss';
 
 const defaultState = {
   toggleMenu: false,
+  authError: false,
 };
 
 class Landing extends React.Component {
@@ -75,18 +76,30 @@ class Landing extends React.Component {
   handleToggle() {
     return this.setState({
       toggleMenu: !this.state.toggleMenu,
+      authError: false,
     });
   }
 
   handleCreateLanguage(lang) {
-    this.props.createLanguage(lang)
+    if (!this.props.token) {
+      this.setState({
+        authError: true,
+        toggleMenu: false,
+      });
+      return null;
+    }
+    return this.props.createLanguage(lang)
       .then(() => {
+        this.setState({
+          authError: false,
+          toggleMenu: false,
+        });
         console.log('language created'); // eslint-disable-line
       });
   }
 
   render() {
-    const { toggleMenu } = this.state;
+    const { toggleMenu, authError } = this.state;
     const { location } = this.props;
     const { 
       languages, languageSelection, translationDirection, 
@@ -104,12 +117,16 @@ class Landing extends React.Component {
         <div id="intro">
           <h2>Choose a language 
             <span>OR</span> 
-            <span id="add-toggle" onClick={ this.handleToggle }>Add a new language</span>
-            { toggleMenu ?
-              <span id="hide" onClick={ this.handleToggle }>Hide Menu</span>
-              : null
-            }
+            <span id="add-toggle" onClick={ this.handleToggle }>
+              { toggleMenu ? 'Hide language menu' : 'Add a new language' }
+            </span>
           </h2>
+          { authError ? 
+            <Link to={ routes.LOGIN_ROUTE }>
+              Log in or sign up to add a language
+            </Link>
+            : undefined
+          }
         </div>
         <div id="add-menu">
           { toggleMenu ? 
@@ -184,6 +201,7 @@ Landing.propTypes = {
   history: PropTypes.object,
   signup: PropTypes.func,
   login: PropTypes.func,
+  token: PropTypes.string,
 };
 
 const mapStateToProps = (state) => {
