@@ -5,6 +5,7 @@
     - 201 - successful creation
     - 409 - error on duplicate
     - 400 - error on missing language data (languageName)
+    - 401 - error when user is not authorized
   - GET /languages/all
     - 200 - successful return of all existing languages
 */
@@ -12,45 +13,67 @@
 import superagent from 'superagent';
 import { startServer, stopServer } from '../lib/server';
 import { mockLanguage, removeMocks } from './lib/language-mock';
+import { createAccountMock, removeAccountMock } from './lib/account-mock';
 
 const API_URL = `http://localhost:${process.env.PORT}`;
 
 describe('Language Router Tests', () => {
   beforeAll(startServer);
   afterEach(removeMocks);
+  afterEach(removeAccountMock);
   afterAll(stopServer);
 
   describe('POST /language', () => {
     test('POST should return new language (201)', () => {
-      return superagent.post(`${API_URL}/language`)
-        .send({ languageName: 'Dutch', transliteration: false })
-        .then((response) => {
-          const { language } = response.body;
-          expect(response.status).toEqual(201);
-          expect(language).toBeInstanceOf(Object);
-          expect(language.languageName).toEqual('Dutch');
-          expect(language.languageId).toBeTruthy();
+      return createAccountMock()
+        .then((accountMock) => {
+          return superagent.post(`${API_URL}/language`)
+            .set('Authorization', `Bearer ${accountMock.token}`)
+            .send({ languageName: 'Dutch', transliteration: false })
+            .then((response) => {
+              const { language } = response.body;
+              expect(response.status).toEqual(201);
+              expect(language).toBeInstanceOf(Object);
+              expect(language.languageName).toEqual('Dutch');
+              expect(language.languageId).toBeTruthy();
+            });
         });
     });
 
     test('POST should return conflict (409) if language already exists', () => {
-      return mockLanguage('Dutch')
-        .then((languageMock) => {
-          return superagent.post(`${API_URL}/language`)
-            .send({
-              languageName: languageMock.languageName,
-              transliteration: false,
-            })
-            .catch((error) => {
-              expect(error.status).toEqual(409);
+      return createAccountMock() 
+        .then((accountMock) => {
+          return mockLanguage('Dutch')
+            .then((languageMock) => {
+              return superagent.post(`${API_URL}/language`)
+                .set('Authorization', `Bearer ${accountMock.token}`)
+                .send({
+                  languageName: languageMock.languageName,
+                  transliteration: false,
+                })
+                .catch((error) => {
+                  expect(error.status).toEqual(409);
+                });
             });
         });
     });
 
     test('POST should return bad request (400) if missing information', () => {
+      return createAccountMock() 
+        .then((accountMock) => {
+          return superagent.post(`${API_URL}/language`)
+            .set('Authorization', `Bearer ${accountMock.token}`)
+            .catch((error) => {
+              expect(error.status).toEqual(400);
+            });
+        });
+    });
+
+    test('POST should return 401 if unauthorized', () => {
       return superagent.post(`${API_URL}/language`)
+        .send({ languageName: 'Dutch', transliteration: false })
         .catch((error) => {
-          expect(error.status).toEqual(400);
+          expect(error.status).toEqual(401);
         });
     });
   });

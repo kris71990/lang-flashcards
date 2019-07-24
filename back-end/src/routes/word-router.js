@@ -11,14 +11,14 @@ import { json } from 'body-parser';
 import HttpError from 'http-errors';
 import logger from '../lib/logger';
 import models from '../models';
-import bearerAuthMiddleware from '../lib/bearer-auth-middleware';
+// import bearerAuthMiddleware from '../lib/bearer-auth-middleware';
 
 const jsonParser = json();
 const wordRouter = new Router();
 const Op = models.Sequelize.Op;
 
 // Creates a single word in one language
-wordRouter.post('/word', bearerAuthMiddleware, jsonParser, (request, response, next) => {
+wordRouter.post('/word', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /word');
 
   if (!request.body || 
@@ -59,7 +59,7 @@ wordRouter.post('/word', bearerAuthMiddleware, jsonParser, (request, response, n
 });
 
 // Creation of mulitple words at a time in one language
-wordRouter.post('/words/bulk', bearerAuthMiddleware, jsonParser, (request, response, next) => {
+wordRouter.post('/words/bulk', jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /words/bulk');
 
   const { 
