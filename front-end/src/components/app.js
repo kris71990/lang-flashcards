@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Header from './header/header';
 import Landing from './landing/landing';
@@ -14,6 +16,8 @@ class App extends React.Component {
           <Header/>
           <div className="wrapper">
             <Route exact path="/" component={ Landing }/>
+            <Route path="/login" component={ Landing }/>
+            <Route path="/signup" component={ Landing }/>
             <Route path="/cards" component={ CardsContainer }/>
           </div>
           <Footer/>
@@ -23,4 +27,12 @@ class App extends React.Component {
   }
 }
 
-export default App;
+App.propTypes = {
+  loggedIn: PropTypes.bool,
+};
+
+const mapStateToProps = state => ({
+  loggedIn: !!state.auth,
+});
+
+export default connect(mapStateToProps, null)(App);

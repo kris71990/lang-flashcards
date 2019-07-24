@@ -11,6 +11,7 @@ import { json } from 'body-parser';
 import HttpError from 'http-errors';
 import logger from '../lib/logger';
 import models from '../models';
+// import bearerAuthMiddleware from '../lib/bearer-auth-middleware';
 
 const jsonParser = json();
 const wordRouter = new Router();
