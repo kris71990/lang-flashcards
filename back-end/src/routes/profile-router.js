@@ -45,12 +45,12 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
 
   return models.profile.update(
     { ...request.body },
-    { where: { accountId: { [Op.eq]: request.params.id } }, returning: true },
+    { where: { id: { [Op.eq]: request.params.id } }, returning: true },
   )
     .then((profile) => {
       if (profile[0] === 0) return next(new HttpError(400, 'Bad request'));
       logger.log(logger.INFO, 'Returning updated profile');
-      return response.json(profile[1]);
+      return response.json(profile[1][0]);
     })
     .catch(next);
 });

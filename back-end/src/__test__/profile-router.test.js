@@ -95,4 +95,60 @@ describe('Profile Router Tests', () => {
         });
     });
   });
+
+  describe('PUT /profile/:id', () => {
+    test('PUT returns updated profile', () => {
+      let profileMock;
+      return createProfileMock()
+        .then((profileSetMock) => {
+          profileMock = profileSetMock;
+          return superagent.put(`${API_URL}/profile/${profileMock.profile.id}`)
+            .set('Authorization', `Bearer ${profileMock.accountSetMock.token}`)
+            .send({
+              name: 'bleh',
+            });
+        })
+        .then((res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toBeTruthy();
+          expect(res.body.name).toEqual('bleh');
+          expect(res.body.id).toEqual(profileMock.profile.id);
+          expect(res.body.accountId).toEqual(profileMock.accountSetMock.account.id);
+        });
+    });
+
+    test('PUT returns profile if not updated', () => {
+      return createProfileMock()
+        .then((profileMock) => {
+          return superagent.put(`${API_URL}/profile/${profileMock.profile.id}`)
+            .set('Authorization', `Bearer ${profileMock.accountSetMock.token}`)
+            .then((res) => {
+              expect(res.status).toEqual(200);
+              expect(res.body).toBeTruthy();
+              expect(res.body.name).toEqual(profileMock.profile.name);
+              expect(res.body.id).toEqual(profileMock.profile.id);
+              expect(res.body.accountId).toEqual(profileMock.accountSetMock.account.id);
+            });
+        });
+    });
+
+    test('PUT without credentials returns unauthorized (401)', () => {
+      return createProfileMock()
+        .then((profileMock) => {
+          return superagent.put(`${API_URL}/profile/${profileMock.profile.id}`)
+            .catch((err) => {
+              expect(err.status).toEqual(401);
+              expect(err.body).toBeFalsy();
+            });
+        });
+    });
+
+    test('PUT without profile id returns 404', () => {
+      return superagent.put(`${API_URL}/profile/`)
+        .catch((err) => {
+          expect(err.status).toEqual(404);
+          expect(err.body).toBeFalsy();
+        });
+    });
+  });
 });
