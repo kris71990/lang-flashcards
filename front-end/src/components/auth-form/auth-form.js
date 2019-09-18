@@ -86,11 +86,11 @@ class AuthForm extends React.Component {
   }
 
   handleConstructErrorMsg() {
-    const { usernameDirty, passwordDirty, emailDirty } = this.state;
+    const { usernameError, passwordError, emailError } = this.state;
     const errors = [
-      usernameDirty ? this.state.usernameError : null,
-      passwordDirty ? this.state.passwordError : null,
-      emailDirty ? this.state.emailError : null,
+      usernameError ? usernameError : null,
+      passwordError ? passwordError : null,
+      emailError ? emailError : null,
     ];
     return this.setState({
       errorMsgDisplay: errors.filter(err => err),
@@ -131,7 +131,7 @@ class AuthForm extends React.Component {
           />
           <button type="submit">{ type === 'login' ? 'Login' : 'Signup' }</button>
         </form>
-        <div>
+        <div id="errors">
           {  
             errorMsgDisplay.map((err, i) => {
               return (
