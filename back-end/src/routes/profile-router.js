@@ -60,7 +60,7 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
   // update of languages
   const updatedLangs = [...profile.languages];
   updatedLangs.push({ 
-    language, wordsAdded: null, score: [], skillLevel: null, 
+    language, wordsAdded: null, score: [], skillLevel: null, added: new Date(),
   });
   
   return models.profile.update(

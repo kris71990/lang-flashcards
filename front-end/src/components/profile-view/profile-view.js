@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import autoBind from '../../utils/autobind';
 import * as profileActions from '../../actions/profile';
-import computeAccountAge from '../../utils/account-age';
+import * as dateParser from '../../utils/date-parser';
 
 import './profile-view.scss';
 
@@ -24,7 +24,7 @@ class ProfileView extends React.Component {
     let profileJSX;
     
     if (profile) {
-      const activeFor = computeAccountAge(profile.createdAt);
+      const activeFor = dateParser.computeAge(profile.createdAt, 'account');
 
       profileJSX = 
         <div>
@@ -38,6 +38,8 @@ class ProfileView extends React.Component {
                   <thead>
                     <tr>
                       <th>Language</th>
+                      <th>Began Studying on...</th>
+                      <th>...for</th>
                       <th>Words Added</th>
                       <th>Score</th>
                       <th>Level Attained</th>
@@ -46,11 +48,15 @@ class ProfileView extends React.Component {
                   <tbody>
                   {
                     profile.languages.map((lang) => {
+                      const formatDate = dateParser.formatLanguageAddedTime(lang.added);
+                      const langAge = dateParser.computeAge(lang.added, 'lang');
                       return (
                         <tr key={ lang.language }>
                           <td>
                             { lang.language.charAt(0).toUpperCase() + lang.language.slice(1) }
                           </td>
+                          <td>{ formatDate }</td>
+                          <td>{ langAge }</td>
                           <td>{ lang.wordsAdded ? lang.wordsAdded : 0 }</td>
                           <td>{ lang.score.length > 0 ? lang.score : 0 }</td>
                           <td>{ lang.skillLevel ? lang.skillLevel : 'None' }</td>
