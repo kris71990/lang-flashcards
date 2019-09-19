@@ -12,7 +12,6 @@ const profileRouter = new Router();
 const Op = models.Sequelize.Op;
 
 profileRouter.post('/profile', bearerAuthMiddleware, jsonParser, (request, response, next) => {
-  console.log(request);
   if (!request.body.name) return next(new HttpError(400, 'Bad Request'));
   logger.log(logger.INFO, 'Processing POST on /profile');
 
@@ -43,15 +42,35 @@ profileRouter.get('/profile/me', bearerAuthMiddleware, (request, response, next)
 
 profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing PUT on /profile');
+  const { profile, language } = request.body;
 
+  // simple update of username
+  if (!language) {
+    return models.profile.update(
+      { ...profile },
+      { where: { id: { [Op.eq]: request.params.id } }, returning: true },
+    )
+      .then((prof) => {
+        if (prof[0] === 0) return next(new HttpError(400, 'Bad request'));
+        logger.log(logger.INFO, 'Returning updated profile');
+        return response.json(prof[1][0]);
+      })
+      .catch(next);
+  }
+  // update of languages
+  const updatedLangs = [...profile.languages];
+  updatedLangs.push({ 
+    language, wordsAdded: null, score: [], skillLevel: null, 
+  });
+  
   return models.profile.update(
-    { ...request.body },
+    { languages: updatedLangs },
     { where: { id: { [Op.eq]: request.params.id } }, returning: true },
   )
-    .then((profile) => {
-      if (profile[0] === 0) return next(new HttpError(400, 'Bad request'));
+    .then((prof) => {
+      if (prof[0] === 0) return next(new HttpError(400, 'Bad request'));
       logger.log(logger.INFO, 'Returning updated profile');
-      return response.json(profile[1][0]);
+      return response.json(prof[1][0]);
     })
     .catch(next);
 });

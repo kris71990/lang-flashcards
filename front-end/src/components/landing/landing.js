@@ -91,6 +91,8 @@ class Landing extends React.Component {
       });
       return null;
     }
+
+    const { profile } = this.props;
     return this.props.createLanguage(lang)
       .then(() => {
         this.setState({
@@ -98,6 +100,9 @@ class Landing extends React.Component {
           toggleMenu: false,
         });
         console.log('language created'); // eslint-disable-line
+      })
+      .then(() => {
+        return this.props.updateProfile(profile, lang.selectedLanguage);
       });
   }
 
@@ -206,6 +211,7 @@ Landing.propTypes = {
   profile: PropTypes.object,
   fetchProfile: PropTypes.func,
   createProfile: PropTypes.func,
+  updateProfile: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
@@ -226,6 +232,7 @@ const mapDispatchToProps = dispatch => ({
   login: user => dispatch(authActions.loginRequest(user)),
   createProfile: username => dispatch(profileActions.createProfileReq(username)),
   fetchProfile: () => dispatch(profileActions.fetchProfileReq()),
+  updateProfile: (profile, lang) => dispatch(profileActions.updateProfileReq(profile, lang)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);
