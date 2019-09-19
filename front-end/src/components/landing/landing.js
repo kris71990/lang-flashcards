@@ -30,7 +30,7 @@ class Landing extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchProfile();
+    if (this.props.token) this.props.fetchProfile();
     return this.props.languagesFetch();
   }
 
