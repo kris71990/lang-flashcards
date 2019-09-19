@@ -30,6 +30,39 @@ class ProfileView extends React.Component {
         <div>
           <h1>Welcome { profile.name }!</h1>
           <p>Account age: { activeFor }</p>
+          {
+            profile.languages.length > 0 ?
+              <div id="lang-list">
+                <h3>Your languages</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Language</th>
+                      <th>Words Added</th>
+                      <th>Score</th>
+                      <th>Level Attained</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {
+                    profile.languages.map((lang) => {
+                      return (
+                        <tr key={ lang.language }>
+                          <td>
+                            { lang.language.charAt(0).toUpperCase() + lang.language.slice(1) }
+                          </td>
+                          <td>{ lang.wordsAdded ? lang.wordsAdded : 0 }</td>
+                          <td>{ lang.score.length > 0 ? lang.score : 0 }</td>
+                          <td>{ lang.skillLevel ? lang.skillLevel : 'None' }</td>
+                        </tr>
+                      );
+                    })
+                  }
+                  </tbody>
+                </table>
+              </div>
+              : null
+          }
         </div>;
     }
 

@@ -1,4 +1,29 @@
 #profile-container {
   width: 100%;
   margin: 50px;
+
+  #lang-list {
+    h3 {
+      text-decoration: underline;
+    }
+    table {
+      border: 2px solid black;
+      border-collapse: collapse;
+      padding: 10px;
+      th {
+        padding: 10px 20px;
+        border-bottom: 2px solid black;
+        border-right: 1px solid black;
+      }
+      td {
+        text-align: center;
+        padding: 10px 20px;
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
+      }
+      td:first-of-type {
+        text-align: left;
+      }
+    }
+  }
 }
