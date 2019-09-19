@@ -12,6 +12,7 @@ const profileRouter = new Router();
 const Op = models.Sequelize.Op;
 
 profileRouter.post('/profile', bearerAuthMiddleware, jsonParser, (request, response, next) => {
+  console.log(request);
   if (!request.body.name) return next(new HttpError(400, 'Bad Request'));
   logger.log(logger.INFO, 'Processing POST on /profile');
 

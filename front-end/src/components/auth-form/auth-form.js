@@ -29,7 +29,7 @@ class AuthForm extends React.Component {
 
   handleValidation(name, value) {
     if (this.props.type === 'login') {
-      return null;
+      return { error: null, dirty: false };
     }
 
     switch (name) {
