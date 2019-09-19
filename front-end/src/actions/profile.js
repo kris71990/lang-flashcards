@@ -7,7 +7,6 @@ const setProfile = profile => ({
 
 const createProfileReq = username => (store) => {
   const { auth: token } = store.getState();
-  console.log(username);
 
   return superagent.post(`${API_URL}/profile`)
     .set('Authorization', `Bearer ${token}`)
