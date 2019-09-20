@@ -97,7 +97,7 @@ describe('Profile Router Tests', () => {
   });
 
   describe('PUT /profile/:id', () => {
-    test('PUT returns updated profile', () => {
+    test('PUT returns updated profile with simple name update', () => {
       let profileMock;
       return createProfileMock()
         .then((profileSetMock) => {
@@ -106,7 +106,7 @@ describe('Profile Router Tests', () => {
             .set('Authorization', `Bearer ${profileMock.accountSetMock.token}`)
             .send({
               profile: { name: 'bleh' },
-              languages: null,
+              language: null,
               words: null,
             });
         })
@@ -120,6 +120,103 @@ describe('Profile Router Tests', () => {
     });
 
     // create tests for updating of languages and word counts
+    test('PUT returns updated profile with added language', () => {
+      let profileMock;
+      return createProfileMock()
+        .then((profileSetMock) => {
+          profileMock = profileSetMock;
+          return superagent.put(`${API_URL}/profile/${profileMock.profile.id}`)
+            .set('Authorization', `Bearer ${profileMock.accountSetMock.token}`)
+            .send({
+              profile: { 
+                name: profileMock.profile.name,
+                languages: [],
+                accountId: profileMock.profile.accountId,
+              },
+              language: 'dutch',
+              words: null,
+            });
+        })
+        .then((res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toBeTruthy();
+          expect(res.body.name).toEqual('kris');
+          expect(res.body.languages).toHaveLength(1);
+          expect(res.body.languages[0].language).toEqual('dutch');
+          expect(res.body.languages[0].wordsAdded).toBeNull();
+          expect(res.body.languages[0].score).toHaveLength(0);
+          expect(res.body.languages[0].skillLevel).toBeNull();
+          expect(res.body.languages[0].added).toBeTruthy();
+        });
+    });
+
+    test('PUT returns updated profile with incremented word count (when first null)', () => {
+      let profileMock;
+      return createProfileMock()
+        .then((profileSetMock) => {
+          profileMock = profileSetMock;
+          return superagent.put(`${API_URL}/profile/${profileMock.profile.id}`)
+            .set('Authorization', `Bearer ${profileMock.accountSetMock.token}`)
+            .send({
+              profile: { 
+                name: profileMock.profile.name,
+                languages: [
+                  { 
+                    language: 'dutch', 
+                    wordsAdded: null, 
+                    score: [], 
+                    skillLevel: null, 
+                  },
+                ],
+                accountId: profileMock.profile.accountId,
+              },
+              language: 'dutch',
+              words: 3,
+            });
+        })
+        .then((res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toBeTruthy();
+          expect(res.body.name).toEqual('kris');
+          expect(res.body.languages).toHaveLength(1);
+          expect(res.body.languages[0].language).toEqual('dutch');
+          expect(res.body.languages[0].wordsAdded).toEqual(3);
+        });
+    });
+
+    test('PUT returns updated profile with incremented word count when words exist', () => {
+      let profileMock;
+      return createProfileMock()
+        .then((profileSetMock) => {
+          profileMock = profileSetMock;
+          return superagent.put(`${API_URL}/profile/${profileMock.profile.id}`)
+            .set('Authorization', `Bearer ${profileMock.accountSetMock.token}`)
+            .send({
+              profile: { 
+                name: profileMock.profile.name,
+                languages: [
+                  { 
+                    language: 'dutch', 
+                    wordsAdded: 17, 
+                    score: [], 
+                    skillLevel: null, 
+                  },
+                ],
+                accountId: profileMock.profile.accountId,
+              },
+              language: 'dutch',
+              words: 5,
+            });
+        })
+        .then((res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toBeTruthy();
+          expect(res.body.name).toEqual('kris');
+          expect(res.body.languages).toHaveLength(1);
+          expect(res.body.languages[0].language).toEqual('dutch');
+          expect(res.body.languages[0].wordsAdded).toEqual(22);
+        });
+    });
 
     test('PUT returns profile if not updated', () => {
       return createProfileMock()
