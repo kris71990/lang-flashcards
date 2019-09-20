@@ -12,6 +12,7 @@ const createProfileMock = () => {
 
       return models.profile.create({
         name: 'kris',
+        languages: [],
         accountId: accountSetMock.account.id,
       });
     })

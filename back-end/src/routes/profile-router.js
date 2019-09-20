@@ -43,7 +43,6 @@ profileRouter.get('/profile/me', bearerAuthMiddleware, (request, response, next)
 profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing PUT on /profile');
   const { profile, language, words } = request.body;
-  console.log(request.body);
 
   // simple update of username
   if (!language && words === null) {

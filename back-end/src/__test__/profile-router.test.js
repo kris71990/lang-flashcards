@@ -105,7 +105,9 @@ describe('Profile Router Tests', () => {
           return superagent.put(`${API_URL}/profile/${profileMock.profile.id}`)
             .set('Authorization', `Bearer ${profileMock.accountSetMock.token}`)
             .send({
-              name: 'bleh',
+              profile: { name: 'bleh' },
+              languages: null,
+              words: null,
             });
         })
         .then((res) => {
@@ -116,6 +118,8 @@ describe('Profile Router Tests', () => {
           expect(res.body.accountId).toEqual(profileMock.accountSetMock.account.id);
         });
     });
+
+    // create tests for updating of languages and word counts
 
     test('PUT returns profile if not updated', () => {
       return createProfileMock()
