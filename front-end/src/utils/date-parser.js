@@ -22,6 +22,9 @@ const computeAge = (createdTime, type) => {
         }
         break;
       }
+    case daysSinceCreation < 2:
+      activeFor = `${days} day`;
+      break;
     case daysSinceCreation < 365:
       activeFor = `${days} days`;
       break;

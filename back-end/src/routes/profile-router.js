@@ -40,11 +40,39 @@ profileRouter.get('/profile/me', bearerAuthMiddleware, (request, response, next)
     .catch(next);
 });
 
+// CLEAN UP
 profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing PUT on /profile');
-  const { profile, language, words } = request.body;
+  const { 
+    profile, language, words, score, 
+  } = request.body;
 
-  // simple update of username
+  // update user score of language (!words, score, language, profile)
+  if (score) {
+    const updatedLangs = [...profile.languages];
+    updatedLangs.map((lang) => {
+      if (lang.language === language) {
+        const currentScore = lang.score;
+        const updatedScore = [currentScore[0] + score[0], currentScore[1] + score[1]];
+        lang.score = updatedScore;
+        return lang;
+      }
+      return lang;
+    });
+
+    return models.profile.update(
+      { languages: updatedLangs },
+      { where: { id: { [Op.eq]: request.params.id } }, returning: true },
+    )
+      .then((prof) => {
+        if (prof[0] === 0) return next(new HttpError(400, 'Bad request'));
+        logger.log(logger.INFO, 'Returning updated profile');
+        return response.json(prof[1][0]);
+      })
+      .catch(next);
+  }
+
+  // simple update of username (!words, !score, !language, profile)
   if (!language && words === null) {
     return models.profile.update(
       { ...profile },
@@ -58,11 +86,11 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
       .catch(next);
   } 
   
-  if (language && words === null) {
-    // update of languages
+  // update of languages (!words, !score, language, profile)
+  if (language && words === null && score === null) {
     const updatedLangs = [...profile.languages];
     updatedLangs.push({ 
-      language, wordsAdded: null, score: [], skillLevel: null, added: new Date(),
+      language, wordsAdded: null, score: [0, 0], skillLevel: null, added: new Date(),
     });
     
     return models.profile.update(
@@ -77,7 +105,7 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
       .catch(next);
   } 
 
-  // update word count when words are added
+  // update word count when words are added (!score, language, words, profile)
   if (language && words > 0) {
     const updatedLangs = [...profile.languages];
     updatedLangs.map((lang) => {

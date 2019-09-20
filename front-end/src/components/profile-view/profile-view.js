@@ -73,7 +73,12 @@ class ProfileView extends React.Component {
                           <td>{ formatDate }</td>
                           <td>{ langAge }</td>
                           <td>{ lang.wordsAdded ? lang.wordsAdded : 0 }</td>
-                          <td>{ lang.score.length > 0 ? lang.score : 0 }</td>
+                          <td>
+                          { 
+                            lang.score[1] > 0 ? 
+                              `${lang.score[0]}/${lang.score[1]}` : 0 
+                          }
+                          </td>
                           <td>{ lang.skillLevel ? lang.skillLevel : 'None' }</td>
                         </tr>
                       );

@@ -23,7 +23,12 @@ class CardContainer extends React.Component {
     const { profile, updateProfile } = this.props;
     return (
       <div className="card-container">
-        <Route exact path={this.props.match.url} component={ CardView }/>
+        <Route 
+          exact path={this.props.match.url} 
+          render={
+            props => <CardView {...props} profile={profile} updateProfile={updateProfile}/>
+          }
+        />
         <Route 
           path={`${this.props.match.url}/add`} 
           render={
@@ -52,7 +57,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchProfile: () => dispatch(profileActions.fetchProfileReq()),
-  updateProfile: (profile, lang, words) => dispatch(profileActions.updateProfileReq(profile, lang, words)),
+  updateProfile: (profile, lang, words, score) => dispatch(profileActions.updateProfileReq(profile, lang, words, score)),
 });
 
 
