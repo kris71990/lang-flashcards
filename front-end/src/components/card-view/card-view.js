@@ -39,7 +39,7 @@ class CardView extends React.Component {
         totalSpeakers: baseLangData.totalSpeakers,
       })
         .then(() => {
-          console.log('Words retrieved');
+          console.log('Words retrieved'); // eslint-disable-line
         });
     } 
     return null;

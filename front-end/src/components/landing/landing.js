@@ -102,7 +102,7 @@ class Landing extends React.Component {
         console.log('language created'); // eslint-disable-line
       })
       .then(() => {
-        return this.props.updateProfile(profile, lang.selectedLanguage);
+        return this.props.updateProfile(profile, lang.selectedLanguage, null);
       });
   }
 
@@ -232,7 +232,7 @@ const mapDispatchToProps = dispatch => ({
   login: user => dispatch(authActions.loginRequest(user)),
   createProfile: username => dispatch(profileActions.createProfileReq(username)),
   fetchProfile: () => dispatch(profileActions.fetchProfileReq()),
-  updateProfile: (profile, lang) => dispatch(profileActions.updateProfileReq(profile, lang)),
+  updateProfile: (profile, lang, words) => dispatch(profileActions.updateProfileReq(profile, lang, words)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

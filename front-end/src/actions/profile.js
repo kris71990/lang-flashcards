@@ -16,12 +16,12 @@ const createProfileReq = username => (store) => {
     });
 };
 
-const updateProfileReq = (profile, lang) => (store) => {
+const updateProfileReq = (profile, lang, words) => (store) => {
   const { auth: token } = store.getState();
 
   return superagent.put(`${API_URL}/profile/${profile.id}`)
     .set('Authorization', `Bearer ${token}`)
-    .send({ profile, language: lang })
+    .send({ profile, language: lang, words })
     .then((res) => {
       return store.dispatch(setProfile(res.body));
     });
