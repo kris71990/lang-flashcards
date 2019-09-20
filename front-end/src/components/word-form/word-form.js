@@ -119,8 +119,8 @@ class WordForm extends React.Component {
         languageId: languageSelectionCode,
       })
         .then(() => {
+          this.props.updateProfile(this.props.profile, this.props.words.languageSelection, this.state.wordLocal.length);
           this.setState(defaultState);
-          this.props.updateProfile(this.props.profile, null, this.state.wordLocal.length);
           return this.props.history.push(routes.CARDS_ROUTE);
         });
     } 
@@ -136,8 +136,8 @@ class WordForm extends React.Component {
         languageId: languageSelectionCode,
       })
         .then(() => {
+          this.props.updateProfile(this.props.profile, this.props.words.languageSelection, 1);
           this.setState(defaultState);
-          this.props.updateProfile(this.props.profile, null, 1);
           return this.props.history.push(routes.CARDS_ROUTE);
         });
     }

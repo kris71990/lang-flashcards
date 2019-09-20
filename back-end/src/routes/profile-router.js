@@ -46,7 +46,7 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
   console.log(request.body);
 
   // simple update of username
-  if (!language && !words) {
+  if (!language && words === null) {
     return models.profile.update(
       { ...profile },
       { where: { id: { [Op.eq]: request.params.id } }, returning: true },
@@ -59,7 +59,7 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
       .catch(next);
   } 
   
-  if (language) {
+  if (language && words === null) {
     // update of languages
     const updatedLangs = [...profile.languages];
     updatedLangs.push({ 
@@ -77,6 +77,43 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
       })
       .catch(next);
   } 
+
+  // update word count when words are added
+  if (language && words > 0) {
+    const updatedLangs = [...profile.languages];
+    updatedLangs.map((lang) => {
+      if (lang.language === language) {
+        if (lang.wordsAdded === null) {
+          lang.wordsAdded = words;
+        } else {
+          lang.wordsAdded += words;
+        }
+        return lang;
+      }
+      return lang;
+    });
+  
+    return models.profile.update(
+      { languages: updatedLangs },
+      { where: { id: { [Op.eq]: request.params.id } }, returning: true },
+    )
+      .then((prof) => {
+        if (prof[0] === 0) return next(new HttpError(400, 'Bad request'));
+        logger.log(logger.INFO, 'Returning updated profile');
+        return response.json(prof[1][0]);
+      })
+      .catch(next);
+  }
+
+  // just in case, return profile
+  return models.profile.findOne(
+    { where: { id: { [Op.eq]: request.params.id } }, returning: true },
+  )
+    .then((prof) => {
+      logger.log(logger.INFO, 'Returning profile');
+      return response.json(prof);
+    })
+    .catch(next);
 });
 
 export default profileRouter;

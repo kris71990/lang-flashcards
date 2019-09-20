@@ -26,6 +26,21 @@ class ProfileView extends React.Component {
     if (profile) {
       const activeFor = dateParser.computeAge(profile.createdAt, 'account');
 
+      // IRRELEVANT CODE - fixed on back end, here for development purposes
+      // (bug creates multiple language entries for same language on table)
+      const uniqueLangs = new Set();
+      const langsFiltered = profile.languages.filter((lang) => {
+        if (uniqueLangs.has(lang.language)) {
+          return false;
+        }
+        uniqueLangs.add(lang.language);
+        return true;
+      });
+      // ---------------------
+      langsFiltered.sort((a, b) => {
+        return b.wordsAdded - a.wordsAdded;
+      });
+
       profileJSX = 
         <div>
           <h1>Welcome { profile.name }!</h1>
@@ -47,7 +62,7 @@ class ProfileView extends React.Component {
                   </thead>
                   <tbody>
                   {
-                    profile.languages.map((lang) => {
+                    langsFiltered.map((lang) => {
                       const formatDate = dateParser.formatLanguageAddedTime(lang.added);
                       const langAge = dateParser.computeAge(lang.added, 'lang');
                       return (
