@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import autoBind from '../../utils/autobind';
 
+import './auth-form.scss';
+
 const defaultState = {
   username: '',
   usernameDirty: false,
@@ -12,6 +14,7 @@ const defaultState = {
   email: '',
   emailDirty: false,
   emailError: 'Email required',
+  errorMsgDisplay: [],
 };
 
 const MIN_NAME_LENGTH = 4;
@@ -26,25 +29,34 @@ class AuthForm extends React.Component {
 
   handleValidation(name, value) {
     if (this.props.type === 'login') {
-      return null;
+      return { error: null, dirty: false };
     }
 
     switch (name) {
       case 'username':
         if (value.length < MIN_NAME_LENGTH) {
-          return `Your name must be at least ${MIN_NAME_LENGTH} characters long/`;
+          return {
+            error: `Username must be at least ${MIN_NAME_LENGTH} characters.`,
+            dirty: true,
+          };
         }
-        return null;
+        return { error: null, dirty: false };
       case 'email':
         if (!value.includes('@')) {
-          return 'You must provide a valid email.';
+          return { 
+            error: 'Provide a valid email.',
+            dirty: true,
+          };
         }
-        return null;
+        return { error: null, dirty: false };
       case 'password': 
         if (value.length < MIN_PASSWORD_LENGTH) {
-          return `Your password must be at least ${MIN_PASSWORD_LENGTH} characters long.`;
+          return { 
+            error: `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`,
+            dirty: true,
+          };
         }
-        return null;
+        return { error: null, dirty: false };
       default:
         return null;
     }
@@ -52,10 +64,12 @@ class AuthForm extends React.Component {
 
   handleChange(e) {
     const { name, value } = e.target;
-    this.setState({ 
+    const status = this.handleValidation(name, value);
+
+    return this.setState({ 
       [name]: value,
-      [`${name}Dirty`]: true,
-      [`${name}Error`]: this.handleValidation(name, value),
+      [`${name}Dirty`]: status.dirty,
+      [`${name}Error`]: status.error,
     });
   }
 
@@ -65,48 +79,68 @@ class AuthForm extends React.Component {
 
     if (this.props.type === 'login' || (!usernameError && !passwordError && !emailError)) {
       this.props.onComplete(this.state);
-      this.setState(defaultState);
-    } else {
-      this.setState({
-        usernameDirty: true,
-        emailDirty: true,
-        passwordDirty: true,
-      });
-    }
+      return this.setState(defaultState);
+    } 
+
+    return this.handleConstructErrorMsg();
+  }
+
+  handleConstructErrorMsg() {
+    const { usernameError, passwordError, emailError } = this.state;
+    const errors = [
+      usernameError ? usernameError : null,
+      passwordError ? passwordError : null,
+      emailError ? emailError : null,
+    ];
+    return this.setState({
+      errorMsgDisplay: errors.filter(err => err),
+    });
   }
 
   render() {
     const { type } = this.props;
+    const { errorMsgDisplay } = this.state;
 
     return (
-      <form className='auth-form' onSubmit={ this.handleSubmit }>
-        <input
-          name='username'
-          placeholder='username'
-          type='text'
-          value={ this.state.username }
-          onChange={ this.handleChange }
-        />
-        {
-          type === 'signup' ? 
-            <input
-              name='email'
-              placeholder='email'
-              type='email'
-              value={ this.state.email }
-              onChange={ this.handleChange }
-            />
-            : null
-        }
-        <input
-          name='password'
-          placeholder='password'
-          type='password'
-          value={ this.state.password }
-          onChange={ this.handleChange }
-        />
-        <button type="submit">{ type === 'login' ? 'Login' : 'Signup' }</button>
-      </form>
+      <div id="form-container">
+        <form className='auth-form' onSubmit={ this.handleSubmit }>
+          <input
+            name='username'
+            placeholder='username'
+            type='text'
+            value={ this.state.username }
+            onChange={ this.handleChange }
+          />
+          {
+            type === 'signup' ? 
+              <input
+                name='email'
+                placeholder='email'
+                type='text'
+                value={ this.state.email }
+                onChange={ this.handleChange }
+              />
+              : null
+          }
+          <input
+            name='password'
+            placeholder='password'
+            type='password'
+            value={ this.state.password }
+            onChange={ this.handleChange }
+          />
+          <button type="submit">{ type === 'login' ? 'Login' : 'Signup' }</button>
+        </form>
+        <div id="errors">
+          {  
+            errorMsgDisplay.map((err, i) => {
+              return (
+                <p key={ i }>{ err }</p>
+              );
+            })
+          }
+        </div>
+      </div>
     );
   }
 }

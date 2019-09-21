@@ -4,7 +4,9 @@ import HttpError from 'http-errors';
 import models from '../models/index';
 
 export default (request, response, next) => {
-  if (!request.headers.authorization) next(new HttpError(400, 'AUTH - invalid request'));
+  if (!request.headers.authorization) {
+    return next(new HttpError(400, 'AUTH - invalid request'));
+  }
 
   const base64AuthHeader = request.headers.authorization.split(' ')[1];
   if (!base64AuthHeader) next(new HttpError(400, 'AUTH - invalid request'));

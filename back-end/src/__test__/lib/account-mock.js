@@ -28,6 +28,9 @@ const createAccountMock = () => {
     });
 };
 
-const removeAccountMock = () => models.account.destroy({ where: {} }).then(() => console.log('content removed'));
+const removeAccountMock = () => { 
+  return models.account.destroy({ where: {} })
+    .then(() => console.log('content removed')); // eslint-disable-line
+};
 
 export { createAccountMock, removeAccountMock };

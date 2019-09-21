@@ -10,12 +10,15 @@ const sequelize = new Sequelize(DATABASE_URL, {
 });
 
 const account = sequelize.import('./account.js');
+const profile = sequelize.import('./profile.js');
 const language = sequelize.import('./language.js');
 const word = sequelize.import('./word.js');
 
+profile.belongsTo(account, { as: 'account' });
 language.hasMany(word, { foreignKey: 'languageId' });
 
 db[account.name] = account;
+db[profile.name] = profile;
 db[language.name] = language;
 db[word.name] = word;
 

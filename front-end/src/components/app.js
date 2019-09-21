@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Header from './header/header';
 import Landing from './landing/landing';
 import CardsContainer from './cards-container/cards-container';
+import ProfileView from './profile-view/profile-view';
 import Footer from './footer/footer';
 
 class App extends React.Component {
@@ -18,6 +19,7 @@ class App extends React.Component {
             <Route exact path="/" component={ Landing }/>
             <Route path="/login" component={ Landing }/>
             <Route path="/signup" component={ Landing }/>
+            <Route path="/profile" component={ ProfileView }/>
             <Route path="/cards" component={ CardsContainer }/>
           </div>
           <Footer/>

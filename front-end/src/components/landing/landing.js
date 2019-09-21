@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import autoBind from '../../utils/autobind';
 import * as authActions from '../../actions/auth';
+import * as profileActions from '../../actions/profile';
 import * as languageActions from '../../actions/language';
 import * as wordActions from '../../actions/words';
 
@@ -29,24 +30,26 @@ class Landing extends React.Component {
   }
 
   componentDidMount() {
-    this.props.languagesFetch();
+    if (this.props.token) this.props.fetchProfile();
+    return this.props.languagesFetch();
   }
 
   handleLogin(user) {
     return this.props.login(user)
       .then(() => {
+        this.props.fetchProfile();
         this.props.history.push(routes.ROOT_ROUTE);
       })
-      .catch(console.error);
+      .catch(console.error); // eslint-disable-line
   }
 
   handleSignup(user) {
-    console.log(user);
     return this.props.signup(user)
       .then(() => {
+        this.props.createProfile({ name: user.username });
         this.props.history.push(routes.ROOT_ROUTE);
       })
-      .catch(console.error);
+      .catch(console.error); // eslint-disable-line
   }
 
   handleChoice() {
@@ -88,6 +91,8 @@ class Landing extends React.Component {
       });
       return null;
     }
+
+    const { profile } = this.props;
     return this.props.createLanguage(lang)
       .then(() => {
         this.setState({
@@ -95,6 +100,9 @@ class Landing extends React.Component {
           toggleMenu: false,
         });
         console.log('language created'); // eslint-disable-line
+      })
+      .then(() => {
+        return this.props.updateProfile(profile, lang.selectedLanguage, null);
       });
   }
 
@@ -165,18 +173,16 @@ class Landing extends React.Component {
       </div>;
     
     const loginJSX = 
-      <div>
+      <div className="auth-container">
         <h2>Login</h2>
-        <p>No account?</p>
-        <Link to="/signup">Signup</Link>
+        <p>No account? Signup <Link to="/signup">here</Link>!</p>
         <AuthForm onComplete={ this.handleLogin } type="login"/>
       </div>;
     
     const signupJSX = 
-      <div>
+      <div className="auth-container">
         <h2>Signup</h2>
-        <p>Already have an account?</p>
-        <Link to="/login">Login</Link>
+        <p>Already have an account? Login <Link to="/login">here</Link>!</p>
         <AuthForm onComplete={ this.handleSignup } type="signup"/>
       </div>;
 
@@ -202,12 +208,17 @@ Landing.propTypes = {
   signup: PropTypes.func,
   login: PropTypes.func,
   token: PropTypes.string,
+  profile: PropTypes.object,
+  fetchProfile: PropTypes.func,
+  createProfile: PropTypes.func,
+  updateProfile: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
   return {
     language: state.language,
     token: state.auth,
+    profile: state.profile,
   };
 };
 
@@ -219,6 +230,9 @@ const mapDispatchToProps = dispatch => ({
   wordsFetch: lang => dispatch(wordActions.wordsFetchRequest(lang)),
   signup: user => dispatch(authActions.signupRequest(user)),
   login: user => dispatch(authActions.loginRequest(user)),
+  createProfile: username => dispatch(profileActions.createProfileReq(username)),
+  fetchProfile: () => dispatch(profileActions.fetchProfileReq()),
+  updateProfile: (profile, lang, words) => dispatch(profileActions.updateProfileReq(profile, lang, words)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);
