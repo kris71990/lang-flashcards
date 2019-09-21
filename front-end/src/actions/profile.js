@@ -18,7 +18,6 @@ const createProfileReq = username => (store) => {
 
 const updateProfileReq = (profile, lang, words, score) => (store) => {
   const { auth: token } = store.getState();
-  console.log(profile, lang, words, score);
 
   return superagent.put(`${API_URL}/profile/${profile.id}`)
     .set('Authorization', `Bearer ${token}`)

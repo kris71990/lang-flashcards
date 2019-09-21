@@ -130,7 +130,7 @@ describe('Profile Router Tests', () => {
             .send({
               profile: { 
                 name: profileMock.profile.name,
-                languages: [],
+                languages: profileMock.profile.languages,
                 accountId: profileMock.profile.accountId,
               },
               language: 'dutch',
@@ -144,7 +144,9 @@ describe('Profile Router Tests', () => {
           expect(res.body.languages).toHaveLength(1);
           expect(res.body.languages[0].language).toEqual('dutch');
           expect(res.body.languages[0].wordsAdded).toBeNull();
-          expect(res.body.languages[0].score).toHaveLength(0);
+          expect(res.body.languages[0].score).toHaveLength(2);
+          expect(res.body.languages[0].score[0]).toEqual(0);
+          expect(res.body.languages[0].score[1]).toEqual(0);
           expect(res.body.languages[0].skillLevel).toBeNull();
           expect(res.body.languages[0].added).toBeTruthy();
         });
@@ -215,6 +217,78 @@ describe('Profile Router Tests', () => {
           expect(res.body.languages).toHaveLength(1);
           expect(res.body.languages[0].language).toEqual('dutch');
           expect(res.body.languages[0].wordsAdded).toEqual(22);
+        });
+    });
+
+    test('PUT returns updated profile with updated score starting from zeros', () => {
+      let profileMock;
+      return createProfileMock()
+        .then((profileSetMock) => {
+          profileMock = profileSetMock;
+          return superagent.put(`${API_URL}/profile/${profileMock.profile.id}`)
+            .set('Authorization', `Bearer ${profileMock.accountSetMock.token}`)
+            .send({
+              profile: { 
+                name: profileMock.profile.name,
+                languages: [
+                  { 
+                    language: 'dutch', 
+                    wordsAdded: 3, 
+                    score: [0, 0], 
+                    skillLevel: null, 
+                  },
+                ],
+                accountId: profileMock.profile.accountId,
+              },
+              language: 'dutch',
+              words: null,
+              score: [5, 8],
+            });
+        })
+        .then((res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toBeTruthy();
+          expect(res.body.name).toEqual('kris');
+          expect(res.body.languages).toHaveLength(1);
+          expect(res.body.languages[0].language).toEqual('dutch');
+          expect(res.body.languages[0].score[0]).toEqual(5);
+          expect(res.body.languages[0].score[1]).toEqual(8);
+        });
+    });
+
+    test('PUT returns updated profile with updated score added to previous score', () => {
+      let profileMock;
+      return createProfileMock()
+        .then((profileSetMock) => {
+          profileMock = profileSetMock;
+          return superagent.put(`${API_URL}/profile/${profileMock.profile.id}`)
+            .set('Authorization', `Bearer ${profileMock.accountSetMock.token}`)
+            .send({
+              profile: { 
+                name: profileMock.profile.name,
+                languages: [
+                  { 
+                    language: 'dutch', 
+                    wordsAdded: 3, 
+                    score: [63, 88], 
+                    skillLevel: null, 
+                  },
+                ],
+                accountId: profileMock.profile.accountId,
+              },
+              language: 'dutch',
+              words: null,
+              score: [5, 8],
+            });
+        })
+        .then((res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toBeTruthy();
+          expect(res.body.name).toEqual('kris');
+          expect(res.body.languages).toHaveLength(1);
+          expect(res.body.languages[0].language).toEqual('dutch');
+          expect(res.body.languages[0].score[0]).toEqual(68);
+          expect(res.body.languages[0].score[1]).toEqual(96);
         });
     });
 

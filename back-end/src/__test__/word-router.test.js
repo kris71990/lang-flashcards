@@ -321,6 +321,7 @@ describe('Word Router Tests', () => {
           return mockWordsBulk(5, languageMock.languageId)
             .then(() => {
               return superagent.get(`${API_URL}/words/${languageMock.languageId}`)
+                .query({ languageSelection: 'dutch' })
                 .then((response) => {
                   expect(response.status).toEqual(200);
                   expect(response.body).toBeInstanceOf(Array);
