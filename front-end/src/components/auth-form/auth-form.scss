@@ -1,0 +1,58 @@
+#form-container {
+  width: 100%;
+  
+  form * {
+    display: block;
+    padding: 10px;
+    margin: 10px;
+    background-color: #C8DBE1;
+  }
+
+  .auth-form {
+    display: inline-block;
+    text-align: center;
+    margin: 20px;
+
+    input {
+      border-radius: 5px;
+      background-color: #C4C5C6;
+    }
+
+    ::-webkit-input-placeholder {
+      color: #717171;
+    }
+
+    input:focus {
+      outline: none;
+      border: 2px solid black;
+      background-color: #6EA7C2;
+    }
+
+    button {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      border: 1px solid black;
+      border-radius: 5px;
+      padding-left: 15px;
+      padding-right: 15px;
+      background-color: #C9CED1;
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    button:hover {
+      cursor: pointer;
+      background-color: #6EA7C2;
+    }
+  }
+  
+  #errors {
+    color: #F15353;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: left;
+    margin: 10px;
+  }
+}

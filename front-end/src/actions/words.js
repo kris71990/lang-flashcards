@@ -19,7 +19,6 @@ const wordsFetchRequest = langData => (store) => {
   const { 
     languageSelection, languageSelectionCode, translationDirection, languageSelectionLocal, languageSelectionTransliteration, spokenIn, family, totalSpeakers,
   } = langData;
-  console.log(langData);
   return superagent.get(`${API_URL}/words/${languageSelectionCode}`)
     .query(langData)
     .then((response) => {
@@ -38,7 +37,10 @@ const wordsFetchRequest = langData => (store) => {
 };
 
 const wordPostRequest = word => (store) => {
+  const { auth: token } = store.getState();
+
   return superagent.post(`${API_URL}/word`)
+    .set('Authorization', `Bearer ${token}`)
     .send(word)
     .then((response) => {
       return store.dispatch(wordAdd(response.body));
@@ -46,7 +48,10 @@ const wordPostRequest = word => (store) => {
 };
 
 const wordsBulkPostRequest = words => (store) => {
+  const { auth: token } = store.getState();
+  
   return superagent.post(`${API_URL}/words/bulk`)
+    .set('Authorization', `Bearer ${token}`)
     .send(words)
     .then((response) => {
       return store.dispatch(wordsBulkAdd(response.body));

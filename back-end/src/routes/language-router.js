@@ -10,12 +10,13 @@ import { json } from 'body-parser';
 import HttpError from 'http-errors';
 import logger from '../lib/logger';
 import models from '../models';
+import bearerAuthMiddleware from '../lib/bearer-auth-middleware';
 
 const jsonParser = json();
 const languageRouter = new Router();
 
 // POST /language creates a new language
-languageRouter.post('/language', jsonParser, (request, response, next) => {
+languageRouter.post('/language', bearerAuthMiddleware, jsonParser, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a post on /language');
   
   if (!request.body || !request.body.languageName) return next(new HttpError(400, 'Bad request'));

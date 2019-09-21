@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import autoBind from '../../utils/autobind';
 import * as wordActions from '../../actions/words';
+// import * as profileActions from '../../actions/profile';
 import * as routes from '../../utils/routes';
 
 import './word-form.scss';
@@ -25,6 +26,26 @@ class WordForm extends React.Component {
     super(props);
     this.state = defaultState;
     autoBind.call(this, WordForm);
+  }
+
+  componentDidMount() {
+    let { words, language } = this.props;
+    if (!words.languageSelectionCode) words = JSON.parse(localStorage.getItem('words'));
+    if (!language.languageSelectionCode) language = JSON.parse(localStorage.getItem('language'));
+
+    return this.props.wordsFetch({ 
+      languageSelection: language.languageSelection, 
+      translationDirection: language.translationDirection, 
+      languageSelectionCode: language.languageSelectionCode, 
+      languageSelectionLocal: language.languageSelectionLocal,
+      languageSelectionTransliteration: language.languageSelectionTransliteration,
+      spokenIn: language.spokenIn,
+      family: language.family,
+      totalSpeakers: language.totalSpeakers,
+    })
+      .then(() => {
+        console.log('Words retrieved'); // eslint-disable-line
+      });
   }
 
   handleChange(e) {
@@ -98,8 +119,9 @@ class WordForm extends React.Component {
         languageId: languageSelectionCode,
       })
         .then(() => {
+          this.props.updateProfile(this.props.profile, this.props.words.languageSelection, this.state.wordLocal.length);
           this.setState(defaultState);
-          this.props.history.push(routes.CARDS_ROUTE);
+          return this.props.history.push(routes.CARDS_ROUTE);
         });
     } 
     
@@ -114,8 +136,9 @@ class WordForm extends React.Component {
         languageId: languageSelectionCode,
       })
         .then(() => {
+          this.props.updateProfile(this.props.profile, this.props.words.languageSelection, 1);
           this.setState(defaultState);
-          this.props.history.push(routes.CARDS_ROUTE);
+          return this.props.history.push(routes.CARDS_ROUTE);
         });
     }
     return this.setState({ wordDirty: true });
@@ -138,7 +161,9 @@ class WordForm extends React.Component {
       <div id="vocab-container">
         <form id="vocab-form" onSubmit={ this.handleSubmit }>
           <fieldset>
-            <legend>Add Vocabulary ({ formattedLang }) <img src={ require(`../../assets/${language.languageSelection}.png`) }></img></legend>
+            <legend>Add Vocabulary ({ formattedLang ? formattedLang : null }) 
+              <img src={ require(`../../assets/${words.languageSelection}.png`) }></img>
+            </legend>
             {
               [...Array(totalFields)].map((e, i) => {
                 return (
@@ -207,10 +232,12 @@ class WordForm extends React.Component {
                       <option value="art">Art</option>
                       <option value="accomodation/housing">Accomodation/Housing</option>
                       <option value="body">Body Part</option>
+                      <option value="color">Color</option>
                       <option value="education">Education</option>
-                      <option value="food">Food</option>
+                      <option value="food/cooking">Food/Cooking</option>
                       <option value="greeting">Greeting</option>
                       <option value="health">Health</option>
+                      <option value="location">Location</option>
                       <option value="love">Love</option>
                       <option value="money">Money</option>
                       <option value="number">Number</option>
@@ -219,10 +246,11 @@ class WordForm extends React.Component {
                       <option value="person">Person</option>
                       <option value="phrase">Phrase</option>
                       <option value="religion">Religion</option>
-                      <option value="society">Society</option>
+                      <option value="society/urban">Society/Urban Life</option>
                       <option value="sport">Sport</option>
                       <option value="time/date">Time/Date</option>
                       <option value="transportation">Transportation</option>
+                      <option value="weather">Weather/Climate</option>
                       <option value="other">Other</option>
                     </select>
                     <span>
@@ -248,9 +276,13 @@ class WordForm extends React.Component {
 WordForm.propTypes = {
   words: PropTypes.object,
   language: PropTypes.object,
+  profile: PropTypes.object,
   addWord: PropTypes.func,
   bulkAddWords: PropTypes.func,
+  wordsFetch: PropTypes.func,
   history: PropTypes.object,
+  updateProfile: PropTypes.func,
+  fetchProfile: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
@@ -263,6 +295,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   addWord: word => dispatch(wordActions.wordPostRequest(word)),
   bulkAddWords: words => dispatch(wordActions.wordsBulkPostRequest(words)),
+  wordsFetch: lang => dispatch(wordActions.wordsFetchRequest(lang)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WordForm);

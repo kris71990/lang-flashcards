@@ -14,10 +14,12 @@ class CardView extends React.Component {
     super(props);
     this.state = {
       cardNumber: 0,
+      isCorrect: false,
       answer: false,
       hintCategory: false,
       hintType: false,
       hintTransliteration: false,
+      score: [0, 0],
     };
     autoBind.call(this, CardView);
   }
@@ -39,10 +41,15 @@ class CardView extends React.Component {
         totalSpeakers: baseLangData.totalSpeakers,
       })
         .then(() => {
-          console.log('Words retrieved');
+          console.log('Words retrieved'); // eslint-disable-line
         });
     } 
     return null;
+  }
+
+  componentWillUnmount() {
+    const { profile, langData } = this.props;
+    return this.props.updateProfile(profile, langData.lang, null, this.state.score);
   }
 
   handleFormat(type) {
@@ -77,10 +84,22 @@ class CardView extends React.Component {
     }
   }
 
+  // cycle cards and update user score
   handleRandomCard() {
     const rand = Math.floor(Math.random() * this.props.langData.words.length);
+    const updatedScore = [...this.state.score];
+    
+    if (this.state.isCorrect) {
+      updatedScore[0] += 1;
+      updatedScore[1] += 1;
+    } else {
+      updatedScore[1] += 1;
+    }
+
     return this.setState({
       cardNumber: rand,
+      isCorrect: false,
+      score: updatedScore,
       answer: false,
       hintCategory: false,
       hintType: false,
@@ -131,8 +150,17 @@ class CardView extends React.Component {
     return this.props.history.push(routes.CARD_FORM_ROUTE);
   }
 
+  handleChange(e) {
+    const { name, checked } = e.target;
+
+    return this.setState({
+      [name]: checked,
+    });
+  }
+
   render() {
     let { langData, baseLangData } = this.props;
+    const { score } = this.state;
     if (!langData.langId) langData = JSON.parse(localStorage.getItem('words'));
     if (!baseLangData.spokenIn) baseLangData = JSON.parse(localStorage.getItem('language'));
     
@@ -190,7 +218,10 @@ class CardView extends React.Component {
         { wordsToCards && wordsToCards.length > 0 ?
           <div className="card-box">
             <h1>Your <span>{ this.handleFormat('language') }</span> flashcards ({ totalWords ? totalWords : '0'})</h1>
-            <h3>{ this.handleFormat('trans') }</h3>
+            <div className="subheader">
+              <h3>{ this.handleFormat('trans') }</h3>
+              <p>Current Score: { `${score[0]}/${score[1]}` }</p>
+            </div>
             <div onClick={ this.handleFlipCard } id="card">
               { cardJSX }
             </div>
@@ -199,7 +230,14 @@ class CardView extends React.Component {
               : <button onClick={ this.handleHint }>Hint</button>
             }
             <button onClick={ this.handleRandomCard }>Next Card</button>
-            <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
+            <input 
+              type="checkbox" name="isCorrect" 
+              checked={ this.state.isCorrect }
+              onChange={ this.handleChange }
+            />
+            <label htmlFor="isCorrect">Correct?</label>
+            {/* <span>Current Score: { `${score[0]}/${score[1]}` }</span> */}
+            <div><button onClick={ this.handleLoadForm }>Add Vocabulary</button></div>
           </div>
           : 
           <div className="card-box">
@@ -230,6 +268,8 @@ CardView.propTypes = {
   baseLangData: PropTypes.object,
   history: PropTypes.object,
   wordsFetch: PropTypes.func,
+  profile: PropTypes.object,
+  updateProfile: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => ({
