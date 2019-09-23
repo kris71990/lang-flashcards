@@ -6,6 +6,7 @@ import autoBind from '../../utils/autobind';
 import * as routes from '../../utils/routes';
 
 import * as wordActions from '../../actions/words';
+import scoreParser from '../../utils/score-parser';
 
 import './card-view.scss';
 
@@ -20,6 +21,7 @@ class CardView extends React.Component {
       hintType: false,
       hintTransliteration: false,
       score: [0, 0],
+      color: 'black',
     };
     autoBind.call(this, CardView);
   }
@@ -96,6 +98,8 @@ class CardView extends React.Component {
       updatedScore[1] += 1;
     }
 
+    const updatedColor = scoreParser(updatedScore);
+
     return this.setState({
       cardNumber: rand,
       isCorrect: false,
@@ -104,6 +108,7 @@ class CardView extends React.Component {
       hintCategory: false,
       hintType: false,
       hintTransliteration: false,
+      color: updatedColor,
     });
   }
 
@@ -220,7 +225,9 @@ class CardView extends React.Component {
             <h1>Your <span>{ this.handleFormat('language') }</span> flashcards ({ totalWords ? totalWords : '0'})</h1>
             <div className="subheader">
               <h3>{ this.handleFormat('trans') }</h3>
-              <p>Current Score: { `${score[0]}/${score[1]}` }</p>
+              <p>Current Score: 
+                <span id={ this.state.color }> { `${score[0]}/${score[1]}` }</span>
+              </p>
             </div>
             <div onClick={ this.handleFlipCard } id="card">
               { cardJSX }

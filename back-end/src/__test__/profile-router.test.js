@@ -253,6 +253,7 @@ describe('Profile Router Tests', () => {
           expect(res.body.languages[0].language).toEqual('dutch');
           expect(res.body.languages[0].score[0]).toEqual(5);
           expect(res.body.languages[0].score[1]).toEqual(8);
+          expect(res.body.languages[0].skillLevel).toEqual('Beginner');
         });
     });
 
@@ -289,6 +290,7 @@ describe('Profile Router Tests', () => {
           expect(res.body.languages[0].language).toEqual('dutch');
           expect(res.body.languages[0].score[0]).toEqual(68);
           expect(res.body.languages[0].score[1]).toEqual(96);
+          expect(res.body.languages[0].skillLevel).toEqual('Beginner');
         });
     });
 

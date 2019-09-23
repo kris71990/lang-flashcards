@@ -43,8 +43,10 @@ class ProfileView extends React.Component {
 
       profileJSX = 
         <div>
-          <h1>Welcome { profile.name }!</h1>
-          <p>Account age: { activeFor }</p>
+          <div id="prof-intro">
+            <h1>Welcome { profile.name }!</h1>
+            <p>Account age: { activeFor }</p>
+          </div>
           {
             profile.languages.length > 0 ?
               <div id="lang-list">
