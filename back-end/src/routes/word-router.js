@@ -144,4 +144,32 @@ wordRouter.get('/words/:language', (request, response, next) => {
     .catch(next);
 });
 
+wordRouter.put('/word/:id', bearerAuthMiddleware, jsonParser, (request, response, next) => {
+  logger.log(logger.INFO, 'Processing a put on /word/:id');
+
+  return models.word.update(
+    { ...request.body },
+    { where: { wordId: { [Op.eq]: request.body.id } }, returning: true },
+  )
+    .then((word) => {
+      if (word[0] === 0) return next(new HttpError(400, 'Bad request'));
+      logger.log(logger.INFO, 'Returning updated word');
+      return response.json(word[1][0]);
+    })
+    .catch(next);
+});
+
+wordRouter.delete('/word/:id', bearerAuthMiddleware, (request, response, next) => {
+  logger.log(logger.INFO, 'Processing a delete on /word/:id');
+
+  return models.word.destroy({
+    where: { wordId: { [Op.eq]: request.params.id } },
+  })
+    .then(() => {
+      logger.log(logger.INFO, 'Word deleted');
+      return response.sendStatus(204);
+    })
+    .catch(next);
+});
+
 export default wordRouter;
