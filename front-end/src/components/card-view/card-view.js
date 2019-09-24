@@ -121,8 +121,11 @@ class CardView extends React.Component {
   }
 
   handleHint() {
+    const { words } = this.props.langData;
+    const { cardNumber } = this.state;
     const rand = Math.floor(Math.random() * 100 + 1);
-    switch (rand % 3) {
+
+    switch (rand % 4) {
       case 0:
         return this.setState({
           hintCategory: true,
@@ -135,11 +138,24 @@ class CardView extends React.Component {
           hintCategory: false,
           hintTransliteration: false,
         });
-      default:
+      case 2:
+        if (!words[cardNumber].transliteration) {
+          return this.setState({
+            hintType: false,
+            hintCategory: false,
+            hintTransliteration: false,
+          });
+        }
         return this.setState({
           hintType: false,
           hintCategory: false,
           hintTransliteration: true,
+        });
+      default:
+        return this.setState({
+          hintType: false,
+          hintCategory: false,
+          hintTransliteration: false,
         });
     }
   }
