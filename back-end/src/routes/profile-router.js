@@ -78,11 +78,16 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
       })
       .catch(next);
   }
-  
+
   // update of languages (!words, !score, language, profile)
-  // add a language
-  if (words === null && !score) {
-    const updatedLangs = profileUpdates.addLanguage(profile.languages, language);
+  // add or remove a language
+  if ((!words || words === null) && !score) {
+    let updatedLangs;
+    if (language.language) {
+      updatedLangs = profileUpdates.removeLanguage(profile.languages, language.language);
+    } else {
+      updatedLangs = profileUpdates.addLanguage(profile.languages, language);
+    }
     
     return models.profile.update(
       { languages: updatedLangs },
@@ -90,7 +95,7 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
     )
       .then((prof) => {
         if (prof[0] === 0) return next(new HttpError(400, 'Bad request'));
-        logger.log(logger.INFO, `Returning updated profile (${language} added).`);
+        logger.log(logger.INFO, `Returning updated profile (${language.language ? language.language : language} ${language.language ? 'removed' : 'added'}).`);
         return response.json(prof[1][0]);
       })
       .catch(next);

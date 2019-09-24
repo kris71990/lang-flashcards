@@ -42,10 +42,20 @@ const updateScore = (profileLangs, language, score) => {
 
 const addLanguage = (profileLangs, language) => {
   const updatedLangs = [...profileLangs];
+  const mappedLangs = updatedLangs.map(lang => lang.language);
+
+  if (mappedLangs.includes(language)) return updatedLangs;
+
   updatedLangs.push({ 
     language, wordsAdded: null, score: [0, 0], skillLevel: null, added: new Date(),
   });
   return updatedLangs;
+};
+
+const removeLanguage = (profileLangs, language) => {
+  const updatedLangs = [...profileLangs];
+  const filteredLangs = updatedLangs.filter(lang => lang.language !== language);
+  return filteredLangs;
 };
 
 const updateWordCount = (profileLangs, language, wordCount) => {
@@ -64,4 +74,6 @@ const updateWordCount = (profileLangs, language, wordCount) => {
   return updatedLangs;
 };
 
-export { updateScore, addLanguage, updateWordCount };
+export { 
+  updateScore, addLanguage, removeLanguage, updateWordCount, 
+};

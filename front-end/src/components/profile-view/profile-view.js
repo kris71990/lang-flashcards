@@ -19,6 +19,12 @@ class ProfileView extends React.Component {
     return this.props.fetchProfile();
   }
 
+  handleRemoveLanguage(e) {
+    const { profile } = this.props;
+    console.log(e.target.id);
+    return this.props.updateProfile(profile, { language: e.target.id });
+  }
+
   render() {
     const { profile } = this.props;
     let profileJSX;
@@ -60,6 +66,7 @@ class ProfileView extends React.Component {
                       <th>Words Added</th>
                       <th>Score</th>
                       <th>Level Attained</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -82,6 +89,11 @@ class ProfileView extends React.Component {
                           }
                           </td>
                           <td>{ lang.skillLevel ? lang.skillLevel : 'None' }</td>
+                          <td>
+                            <button 
+                              id={ lang.language} 
+                              onClick={ this.handleRemoveLanguage }>X</button>
+                          </td>
                         </tr>
                       );
                     })
@@ -110,7 +122,7 @@ ProfileView.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   fetchProfile: () => dispatch(profileActions.fetchProfileReq()),
-  updateProfile: profile => dispatch(profileActions.updateProfileReq(profile)),
+  updateProfile: (profile, lang) => dispatch(profileActions.updateProfileReq(profile, lang)),
 });
 
 const mapStateToProps = (state) => {
