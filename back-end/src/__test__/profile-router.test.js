@@ -152,6 +152,31 @@ describe('Profile Router Tests', () => {
         });
     });
 
+    test('PUT returns updated profile with removed language', () => {
+      let profileMock;
+      return createProfileMock()
+        .then((profileSetMock) => {
+          profileMock = profileSetMock;
+          return superagent.put(`${API_URL}/profile/${profileMock.profile.id}`)
+            .set('Authorization', `Bearer ${profileMock.accountSetMock.token}`)
+            .send({
+              profile: { 
+                name: profileMock.profile.name,
+                languages: [{ language: 'bengali' }],
+                accountId: profileMock.profile.accountId,
+              },
+              language: { language: 'bengali' },
+              words: null,
+            });
+        })
+        .then((res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toBeTruthy();
+          expect(res.body.name).toEqual('kris');
+          expect(res.body.languages).toHaveLength(0);
+        });
+    });
+
     test('PUT returns updated profile with incremented word count (when first null)', () => {
       let profileMock;
       return createProfileMock()
