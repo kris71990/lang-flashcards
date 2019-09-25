@@ -11,7 +11,10 @@ import './profile-view.scss';
 class ProfileView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      editing: false,
+      language: undefined,
+    };
     autoBind.call(this, ProfileView);
   }
 
@@ -19,10 +22,26 @@ class ProfileView extends React.Component {
     return this.props.fetchProfile();
   }
 
+  handleEdit(e) {
+    if (this.state.editing) {
+      return this.setState({
+        editing: false,
+        language: undefined,
+      });
+    }
+    return this.setState({
+      editing: true,
+      language: e.target.id,
+    });
+  }
+
   handleRemoveLanguage(e) {
     const { profile } = this.props;
-    console.log(e.target.id);
-    return this.props.updateProfile(profile, { language: e.target.id });
+    this.props.updateProfile(profile, { language: this.state.language });
+    return this.setState({
+      editing: false,
+      language: undefined,
+    });
   }
 
   render() {
@@ -34,18 +53,18 @@ class ProfileView extends React.Component {
 
       // IRRELEVANT CODE - fixed on back end, here for development purposes
       // (bug creates multiple language entries for same language on table)
-      const uniqueLangs = new Set();
-      const langsFiltered = profile.languages.filter((lang) => {
-        if (uniqueLangs.has(lang.language)) {
-          return false;
-        }
-        uniqueLangs.add(lang.language);
-        return true;
-      });
-      // ---------------------
-      langsFiltered.sort((a, b) => {
-        return b.wordsAdded - a.wordsAdded;
-      });
+      // const uniqueLangs = new Set();
+      // const langsFiltered = profile.languages.filter((lang) => {
+      //   if (uniqueLangs.has(lang.language)) {
+      //     return false;
+      //   }
+      //   uniqueLangs.add(lang.language);
+      //   return true;
+      // });
+      // // ---------------------
+      // langsFiltered.sort((a, b) => {
+      //   return b.wordsAdded - a.wordsAdded;
+      // });
 
       profileJSX = 
         <div>
@@ -71,7 +90,7 @@ class ProfileView extends React.Component {
                   </thead>
                   <tbody>
                   {
-                    langsFiltered.map((lang) => {
+                    profile.languages.map((lang) => {
                       const formatDate = dateParser.formatLanguageAddedTime(lang.added);
                       const langAge = dateParser.computeAge(lang.added, 'lang');
                       return (
@@ -91,8 +110,8 @@ class ProfileView extends React.Component {
                           <td>{ lang.skillLevel ? lang.skillLevel : 'None' }</td>
                           <td>
                             <button 
-                              id={ lang.language} 
-                              onClick={ this.handleRemoveLanguage }>X</button>
+                              id={ lang.language } 
+                              onClick={ this.handleEdit }>X</button>
                           </td>
                         </tr>
                       );
@@ -100,6 +119,18 @@ class ProfileView extends React.Component {
                   }
                   </tbody>
                 </table>
+              </div>
+              : null
+          }
+          {
+            this.state.editing ? 
+              <div id="modal">
+                <div id="remove-modal">
+                  <h4>Are you sure you want to remove this language from your list?</h4>
+                  <p>Your progress will be lost, but all flashcards will still be accessible to everyone.</p>
+                  <button onClick={ this.handleRemoveLanguage }>Remove</button>
+                  <button onClick={ this.handleEdit }>Back</button>
+                </div>
               </div>
               : null
           }
