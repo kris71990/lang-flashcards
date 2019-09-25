@@ -35,7 +35,7 @@ class ProfileView extends React.Component {
     });
   }
 
-  handleRemoveLanguage(e) {
+  handleRemoveLanguage() {
     const { profile } = this.props;
     this.props.updateProfile(profile, { language: this.state.language });
     return this.setState({
