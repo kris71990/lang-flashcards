@@ -62,6 +62,7 @@ class WordForm extends React.Component {
     this.setState({
       [name]: prevState,
       wordDirty: false,
+      wordError: 'Error',
       wordDirtyIndex: undefined,
     });
   }
@@ -91,15 +92,23 @@ class WordForm extends React.Component {
 
     let { words } = this.props;
     const { 
-      wordEnglish, wordLocal, typeOfWord, categoryOfWord, 
+      wordEnglish, wordLocal, typeOfWord, categoryOfWord, wordDirty,
     } = this.state;
 
     if (!words.languageSelectionCode) words = JSON.parse(localStorage.getItem('words'));
     const languageSelectionCode = words.languageSelectionCode;
+    const existingWords = words.words.map(word => word.wordLocal);
 
     // loop through word arrays and make sure no fields are null, break if error
     for (let i = 0; i < wordEnglish.length; i++) {
-      if (!wordEnglish[i] || !wordLocal[i] || !typeOfWord[i] || !categoryOfWord[i]) {
+      if (existingWords.includes(wordLocal[i])) {
+        return this.setState({
+          wordDirty: true,
+          wordError: 'Word Already Exists',
+          wordDirtyIndex: i,
+        });
+      }
+      if ((!wordEnglish[i] || !wordLocal[i] || !typeOfWord[i] || !categoryOfWord[i])) {
         return this.setState({ 
           wordDirty: true,
           wordDirtyIndex: i,
@@ -108,7 +117,7 @@ class WordForm extends React.Component {
     }
 
     // if no fields are null, check that there are data for multiple words, and that all data is filled out. If so, post in bulk and return to cards view
-    if ((wordEnglish.length > 1 && wordLocal.length > 1 && categoryOfWord.length > 1 && typeOfWord.length > 1) 
+    if ((wordDirty === false) && (wordEnglish.length > 1 && wordLocal.length > 1 && categoryOfWord.length > 1 && typeOfWord.length > 1) 
       && (wordEnglish.length === wordLocal.length && wordLocal.length === categoryOfWord.length && categoryOfWord.length === typeOfWord.length)) {
       return this.props.bulkAddWords({
         wordsEnglish: this.state.wordEnglish,
@@ -126,7 +135,7 @@ class WordForm extends React.Component {
     } 
     
     // if data exists only for one word, post a single word and return to cards view
-    if (wordEnglish.length === wordLocal.length && wordLocal.length === categoryOfWord.length && categoryOfWord.length === typeOfWord.length) {
+    if ((wordDirty === false) && (wordEnglish.length === wordLocal.length && wordLocal.length === categoryOfWord.length && categoryOfWord.length === typeOfWord.length)) {
       return this.props.addWord({
         wordEnglish: this.state.wordEnglish[0],
         wordLocal: this.state.wordLocal[0],
