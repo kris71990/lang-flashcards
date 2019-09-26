@@ -7,6 +7,7 @@ import * as routes from '../../utils/routes';
 
 import * as wordActions from '../../actions/words';
 import scoreParser from '../../utils/score-parser';
+import * as indexOptions from '../../utils/card-randomizer';
 
 import './card-view.scss';
 
@@ -15,6 +16,7 @@ class CardView extends React.Component {
     super(props);
     this.state = {
       cardNumber: 0,
+      cardTracker: [],
       isCorrect: false,
       answer: false,
       hintCategory: false,
@@ -44,6 +46,11 @@ class CardView extends React.Component {
       })
         .then(() => {
           console.log('Words retrieved'); // eslint-disable-line
+          const indexArr = indexOptions.createShuffledIndexArray(langData.words.length);
+          return this.setState({
+            cardTracker: indexArr,
+            cardNumber: indexArr[0],
+          });
         });
     } 
     return null;
@@ -88,10 +95,19 @@ class CardView extends React.Component {
 
   // cycle cards and update user score
   handleRandomCard() {
-    const rand = Math.floor(Math.random() * this.props.langData.words.length);
-    const updatedScore = [...this.state.score];
+    const { 
+      score, cardTracker, isCorrect, 
+    } = this.state;
+    const { words } = this.props.langData;
+    const updatedScore = [...score];
+    const indices = [...cardTracker];
+
+    let updatedIndices = indexOptions.updateIndexArray(indices);
+    if (updatedIndices.length === 0) {
+      updatedIndices = indexOptions.createShuffledIndexArray(words.length);
+    }
     
-    if (this.state.isCorrect) {
+    if (isCorrect) {
       updatedScore[0] += 1;
       updatedScore[1] += 1;
     } else {
@@ -101,7 +117,8 @@ class CardView extends React.Component {
     const updatedColor = scoreParser(updatedScore);
 
     return this.setState({
-      cardNumber: rand,
+      cardTracker: updatedIndices,
+      cardNumber: updatedIndices[0],
       isCorrect: false,
       score: updatedScore,
       answer: false,
