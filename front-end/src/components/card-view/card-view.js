@@ -259,7 +259,6 @@ class CardView extends React.Component {
               onChange={ this.handleChange }
             />
             <label htmlFor="isCorrect">Correct?</label>
-            {/* <span>Current Score: { `${score[0]}/${score[1]}` }</span> */}
             <div><button onClick={ this.handleLoadForm }>Add Vocabulary</button></div>
           </div>
           : 

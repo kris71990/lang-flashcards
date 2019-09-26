@@ -63,17 +63,23 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
   } 
 
   // update user score of language (!words, score, language, profile)
-  // if score data, update scores for given language
+  // if score data, update scores for given language; add language if not on profile
   if (score) {
-    const updatedLangs = profileUpdates.updateScore(profile.languages, language, score);
-
+    let updatedLangs;
+    if (!profile.languages.map(lang => lang.language).includes(language)) {
+      updatedLangs = profileUpdates.addLanguage(profile.languages, language);
+      updatedLangs = profileUpdates.updateScore(updatedLangs, language, score);
+    } else {
+      updatedLangs = profileUpdates.updateScore(profile.languages, language, score);
+    }
+    
     return models.profile.update(
       { languages: updatedLangs },
       { where: { id: { [Op.eq]: request.params.id } }, returning: true },
     )
       .then((prof) => {
         if (prof[0] === 0) return next(new HttpError(400, 'Bad request'));
-        logger.log(logger.INFO, `Returning updated profile (score for ${language}).`);
+        logger.log(logger.INFO, `Returning updated profile (${language} updated).`);
         return response.json(prof[1][0]);
       })
       .catch(next);
