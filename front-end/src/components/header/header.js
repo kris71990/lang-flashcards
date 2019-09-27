@@ -12,7 +12,7 @@ class Header extends React.Component {
     const JSXLoggedOut = 
       <ul>
         <li><Link to={routes.ROOT_ROUTE}>Home</Link></li>
-        <li><Link to={routes.LOGIN_ROUTE}>Login/Signup</Link></li>
+        <li><Link to={routes.LOGIN_ROUTE}>Login / Signup</Link></li>
       </ul>;
 
     const JSXLoggedIn =
