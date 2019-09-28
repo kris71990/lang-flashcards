@@ -5,8 +5,8 @@ footer {
   text-align: center;
   height: 80px;
   margin-top: 20px;
-  border-top: 2px solid $header-border;
-  border-bottom: 10px solid grey;
+  border-top: 3px ridge $header-border;
+  border-bottom: 10px solid $mid-grey;
   background-color: $header-background;
   font-family: $header-default;
   color: white;

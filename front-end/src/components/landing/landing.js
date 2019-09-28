@@ -123,12 +123,12 @@ class Landing extends React.Component {
     const defaultJSX = 
       <div>
         <div id="intro">
-          <h2>Choose a language 
+          <h3>Choose a language 
             <span>OR</span> 
             <span id="add-toggle" onClick={ this.handleToggle }>
               { toggleMenu ? 'Hide language menu' : 'Add a new language' }
             </span>
-          </h2>
+          </h3>
           { authError ? 
             <Link to={ routes.LOGIN_ROUTE }>
               Log in or sign up to add a language

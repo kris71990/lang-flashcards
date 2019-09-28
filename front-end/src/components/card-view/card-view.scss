@@ -1,3 +1,6 @@
+@import '../../style/colors';
+@import '../../style/fonts';
+
 @keyframes fadein {
   from { 
     opacity: 0; 
@@ -19,7 +22,7 @@
 .card-box {
   width: 65%;
   text-align: center;
-  font-family: 'Boogaloo', cursive;
+  font-family: $body-sans-serif;
   vertical-align: top;
 
   .subheader * {
@@ -34,22 +37,22 @@
       color: black;
     }   
     #green {
-      color: #0A9E11;
+      color: $score-green;
     } 
     #teal {
-      color: #0CA693;
+      color: $score-teal;
     } 
     #blue {
-      color: #0C6CA6;
+      color: $score-blue;
     }  
     #purple {
-      color: #860D4D;
+      color: $score-purple;
     }
     #orange {
-      color: #D47312;
+      color: $score-orange;
     } 
     #red {
-      color: #DE1610;
+      color: $score-red;
     } 
   }
   
@@ -57,7 +60,7 @@
     font-size: 2em;
 
     span {
-      color: #466FA2;
+      color: $auth-background;
     }
   }
 
@@ -69,8 +72,8 @@
     width: 75%;
     height: auto;
     margin: 2% auto;
-    border: 6px ridge #466FA2;
-    background-color: #B3CDEF;
+    border: 6px ridge $auth-background;
+    background-color: $card-background;
 
     p {
       line-height: 5em;
@@ -86,14 +89,14 @@
 
   button {
     border-radius: 5px;
-    background-color: #B7C8DE;
+    background-color: $card-buttons-light;
     padding: 8px 20px;
     font-family: Arial, Helvetica, sans-serif;
     margin: 2%;
   }
 
   button:hover {
-    background-color: #7894B8;
+    background-color: $card-buttons-dark;
   }
 
   button:focus {
@@ -105,10 +108,10 @@
   width: 30%;
   padding: 20px;
   text-align: right;
-  font-family: 'Aladin', cursive;
+  font-family: $body-sans-serif;
 
   img {
-    width: 100px;
+    width: 150px;
     height: auto;
   }
 
@@ -126,7 +129,6 @@
 
   p, h3 {
     padding: 5px;
-    font-style: italic;
   }
 
   span {

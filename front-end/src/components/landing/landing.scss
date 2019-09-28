@@ -1,12 +1,17 @@
+@import '../../style/fonts';
+@import '../../style/colors';
+
 .auth-container {
   width: 400px;
   margin: 50px auto;
-  border: 8px solid black;
-  border-radius: 10px;
+  border: 6px solid black;
+  border-radius: 8px;
   text-align: center;
-  background-color: #396795;
-
+  background-color: $auth-background;
+  
   h2 {
+    font-size: 2em;
+    font-family: $header-default;
     margin-bottom: 5px;
   }
 
@@ -18,16 +23,12 @@
 #intro {
   text-align: center;
   padding-top: 3%;
+  font-family: $body-sans-serif;
 
-  h2 {
-    line-height: 1.5em;
-    font-size: 1.2em;
-    font-style: italic;
-
+  h3 {
     span:first-child {
-      font-style: normal;
-      margin-left: 10px;
-      margin-right: 10px;
+      margin-left: 20px;
+      margin-right: 20px;
     }
 
     #add-toggle:hover {
@@ -37,7 +38,7 @@
 
   a {
     text-decoration: none;
-    color: red;
+    color: $error;
   }
 
   a:hover {
@@ -62,9 +63,10 @@
   }
 
   button {
-    margin: 2% auto;
+    margin: 2% 2%;
     padding: 1% 2%;
     border-radius: 10px;
+    cursor: pointer;
   }
 
   button:focus {

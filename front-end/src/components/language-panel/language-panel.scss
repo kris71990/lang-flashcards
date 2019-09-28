@@ -1,22 +1,24 @@
-#langs div div {
-  background-color: white;
-  margin: 20px;
-  width: 200px;
-  height: 200px;
-  border-radius: 10px;
-  text-align: center;
-  border: 2px solid black;
+@import '../../style/colors';
+@import '../../style/fonts';
 
-  h2 {
-    display: block;
-    line-height: 0;
-    margin-top: 90px;
+#langs div {
+  * {
+    margin: 0;
   }
-
-  h5 {
-    padding-top: 2px;
-    display: block;
-    line-height: 0;
+  
+  div {
+    background-color: #EEEEEE;
+    margin: 20px;
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 50px;
+    
+    h2 {
+      font-family: $body-serif;
+      padding-top: 50px;
+    }
   }
 }
 
@@ -141,14 +143,15 @@
 }
 
 #langs div[class^="selected"] {
-  opacity: 0.5;
-  background-color: #727272;
+  opacity: 0.4;
+  background-color: $mid-grey;
   background-repeat: no-repeat;
   background-position: center;
-  border: 2px solid black;
+  border: 1px solid black;
 }
 
 #langs div div:not([class^="selected"]):hover {
-  background-color: #CBCCCE;
+  background-color: $light-grey;
   opacity: 0.5;
+  cursor: pointer;
 }
