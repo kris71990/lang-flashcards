@@ -8,61 +8,90 @@ header {
   border-bottom: 3px ridge $header-border;
   background-color: $header-background;
   font-family: $header-default;
+  text-align: center;
+  color: white;
   
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   h1 {
     font-family: $header-title;
-    margin: 2% 0;
-    padding-left: 5%;
-    width: 60%;
-    letter-spacing: 0.2em;
-    color: white;
+    letter-spacing: 0.1em;
     text-shadow: 2px 2px black;
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
   }
 
   p {
-    padding-left: 5%;
-    width: 50%;
-    font-size: 130%;
-    letter-spacing: 0.1em;
+    width: 100%;
+    text-align: left;
+    padding-left: 10px;
     font-style: italic;
-    color: white;
     text-shadow: 2px 2px black;
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
   }
 
   nav {
-    width: 40%;
-    position: absolute;
-    top: 10%;
-    right: 0;
+    width: 100%;
     letter-spacing: 1px;
 
     ul {
-      list-style: none;
-      padding-left: 0;
       text-align: right;
+      padding-right: 10px;
+
+      span {
+        padding: 10px;
+      }
 
       li {
-        width: 80%;
-        padding: 1%;
+        display: inline;
         color: $header-menu;
-        
-        a {
-          text-decoration: none;
-          color: inherit;
-        }
+      }
+    }
+  }
+}
 
-        a:hover {
-          color: white;
+@media only screen and (min-width: 420px) {
+  header {    
+    h1 {
+      margin: 2% 0;
+      padding-left: 5%;
+      width: 60%;
+      letter-spacing: 0.2em;
+    }
+  
+    p {
+      padding-left: 5%;
+      width: 50%;
+      font-size: 130%;
+      text-align: center;
+      letter-spacing: 0.1em;
+    }
+  
+    nav {
+      width: 40%;
+      position: absolute;
+      top: 10%;
+      right: 0;
+      letter-spacing: 1px;
+  
+      ul {
+        list-style: none;
+        padding-left: 0;
+        text-align: right;
+        
+        span {
+          display: none;
+        }
+        
+        li {
+          display: block;
+          width: 80%;
+          padding: 1%;
+
+          a:hover {
+            color: white;
+          }
         }
       }
     }

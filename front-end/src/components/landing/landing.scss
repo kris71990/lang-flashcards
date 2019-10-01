@@ -2,7 +2,7 @@
 @import '../../style/colors';
 
 .auth-container {
-  width: 400px;
+  width: 90%;
   margin: 50px auto;
   border: 6px solid black;
   border-radius: 8px;
@@ -27,22 +27,14 @@
 
   h3 {
     span:first-child {
-      margin-left: 20px;
-      margin-right: 20px;
+      display: block;
+      margin: 10px;
     }
 
-    #add-toggle:hover {
-      cursor: pointer;
+    #add-toggle {
+      color: #2B75D8;
+      text-decoration: underline;
     }
-  }
-
-  a {
-    text-decoration: none;
-    color: $error;
-  }
-
-  a:hover {
-    text-decoration: underline;
   }
 }
 
@@ -72,5 +64,40 @@
 
   button:focus {
     outline: 0;
+  }
+}
+
+// 
+@media only screen and (min-width: 420px) {
+  .auth-container {
+    width: 400px;
+  }
+  
+  #intro {
+    h3 {
+      span:first-child {
+        display: inline;
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+
+      #add-toggle {
+        color: black;
+        text-decoration: none;
+      }
+  
+      #add-toggle:hover {
+        cursor: pointer;
+      }
+    }
+
+    a {
+      text-decoration: none;
+      color: $error;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
   }
 }

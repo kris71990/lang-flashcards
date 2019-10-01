@@ -12,13 +12,16 @@ class Header extends React.Component {
     const JSXLoggedOut = 
       <ul>
         <li><Link to={routes.ROOT_ROUTE}>Home</Link></li>
+        <span> | </span>
         <li><Link to={routes.LOGIN_ROUTE}>Login / Signup</Link></li>
       </ul>;
 
     const JSXLoggedIn =
       <ul>
         <li><Link to={routes.ROOT_ROUTE}>Home</Link></li>
+        <span> | </span>
         <li><Link to={routes.PROFILE_ROUTE}>Profile</Link></li>
+        <span> | </span>
         <li><Link to={routes.ROOT_ROUTE} onClick={ this.props.logout }>Logout</Link></li>
       </ul>;
 
