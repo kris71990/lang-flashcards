@@ -20,18 +20,18 @@
 }
 
 .card-box {
-  width: 65%;
+  width: 100%;
   text-align: center;
   font-family: $body-sans-serif;
   vertical-align: top;
 
   .subheader * {
-    display: inline;
+    display: block;
   }
 
   .subheader {
-    h3 {
-      padding-right: 20%;
+    span {
+      display: inline;
     }
     #black {
       color: black;
@@ -57,10 +57,11 @@
   }
   
   h1 {
-    font-size: 2em;
+    font-size: 1.5em;
 
     span {
       color: $auth-background;
+      display: none;
     }
   }
 
@@ -69,21 +70,23 @@
   }
 
   #card {
-    width: 75%;
-    height: auto;
-    margin: 2% auto;
+    width: 90%;
+    height: 200px;
+    margin: 30px auto;
     border: 6px ridge $auth-background;
     background-color: $card-background;
+    overflow: scroll;
 
     p {
-      line-height: 5em;
       font-size: 2.5em;
+      line-height: 100px;
       animation: fadein 2s;
     }
 
     span {
       animation: fadein 2s;
-      padding-left: 2%;
+      display: inline;
+      padding-left: 10px;
     }
   }
 
@@ -92,11 +95,7 @@
     background-color: $card-buttons-light;
     padding: 8px 20px;
     font-family: Arial, Helvetica, sans-serif;
-    margin: 2%;
-  }
-
-  button:hover {
-    background-color: $card-buttons-dark;
+    margin: 10px 8px;
   }
 
   button:focus {
@@ -105,13 +104,15 @@
 }
 
 .lang-info-box {
-  width: 30%;
-  padding: 20px;
-  text-align: right;
+  width: 90%;
+  margin: 50px auto;
+  text-align: center;
   font-family: $body-sans-serif;
 
   img {
-    width: 150px;
+    display: block;
+    margin: 0 auto;
+    width: 60%;
     height: auto;
   }
 
@@ -140,5 +141,90 @@
 }
 
 .card-box, .lang-info-box {
-  display: inline-block;
+  display: block;
+}
+
+@media only screen and (min-width: 420px) {
+  .card-box {
+    width: 65%;
+  
+    .subheader * {
+      display: inline;
+    }
+  
+    .subheader {
+      h3 {
+        padding-right: 20%;
+      }
+    }
+
+    h1 {
+      font-size: 2em;
+  
+      span {
+        display: inline;
+      }
+    }
+
+    #card {
+      width: 75%;
+      height: auto;
+      margin: 2% auto;
+  
+      p {
+        line-height: 5em;
+        font-size: 2.5em;
+      }
+  
+      span {
+        padding-left: 2%;
+      }
+    }
+  
+    button {
+      margin: 2%;
+    }
+  
+    button:hover {
+      background-color: $card-buttons-dark;
+    }
+  }
+
+  .lang-info-box {
+    width: 30%;
+    padding: 20px;
+    text-align: right;
+    font-family: $body-sans-serif;
+
+    img {
+      display: inline-block;
+      width: 150px;
+      height: auto;
+    }
+  }
+
+  .card-box, .lang-info-box {
+    display: inline-block;
+  }
+
+  @media only screen and (max-width: 800px) {
+    .card-box {
+      width: 100%;
+
+      h1 > span {
+        display: none;
+      }
+    }
+    .lang-info-box {
+      width: 90%;
+    }
+
+    .card-box, .lang-info-box {
+      display: block;
+    }
+
+    .lang-info-box {
+      text-align: center;
+    }
+  }
 }

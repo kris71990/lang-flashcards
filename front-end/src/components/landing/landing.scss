@@ -56,10 +56,9 @@
   }
 
   button {
-    margin: 2% 2%;
-    padding: 1% 2%;
+    margin: 4% 1%;
+    padding: 15px;
     border-radius: 10px;
-    cursor: pointer;
   }
 
   button:focus {
@@ -67,7 +66,6 @@
   }
 }
 
-// 
 @media only screen and (min-width: 420px) {
   .auth-container {
     width: 400px;
@@ -98,6 +96,17 @@
 
     a:hover {
       text-decoration: underline;
+    }
+  }
+
+  #lang-choices {
+    button {
+      margin: 2% 1%;
+      cursor: pointer;
+    }
+  
+    button:focus {
+      outline: 0;
     }
   }
 }
