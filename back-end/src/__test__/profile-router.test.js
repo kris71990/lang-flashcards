@@ -30,6 +30,17 @@ describe('Profile Router Tests', () => {
         });
     });
 
+    test('POST profile without name returns 400', () => {
+      return createAccountMock()
+        .then((accountMock) => {
+          return superagent.post(`${API_URL}/profile`)
+            .set('Authorization', `Bearer ${accountMock.token}`)
+            .catch((err) => {
+              expect(err.status).toEqual(400);
+            });
+        });
+    });
+
     test('POST profile that already exists returns 409', () => {
       return createProfileMock()
         .then((profileMock) => {
@@ -245,6 +256,36 @@ describe('Profile Router Tests', () => {
         });
     });
 
+    test('PUT returns updated profile with new language and score', () => {
+      let profileMock;
+      return createProfileMock()
+        .then((profileSetMock) => {
+          profileMock = profileSetMock;
+          return superagent.put(`${API_URL}/profile/${profileMock.profile.id}`)
+            .set('Authorization', `Bearer ${profileMock.accountSetMock.token}`)
+            .send({
+              profile: { 
+                name: profileMock.profile.name,
+                languages: [],
+                accountId: profileMock.profile.accountId,
+              },
+              language: 'dutch',
+              words: null,
+              score: [5, 8],
+            });
+        })
+        .then((res) => {
+          expect(res.status).toEqual(200);
+          expect(res.body).toBeTruthy();
+          expect(res.body.name).toEqual('kris');
+          expect(res.body.languages).toHaveLength(1);
+          expect(res.body.languages[0].language).toEqual('dutch');
+          expect(res.body.languages[0].score[0]).toEqual(5);
+          expect(res.body.languages[0].score[1]).toEqual(8);
+          expect(res.body.languages[0].skillLevel).toEqual('Beginner');
+        });
+    });
+
     test('PUT returns updated profile with updated score starting from zeros', () => {
       let profileMock;
       return createProfileMock()
@@ -296,7 +337,7 @@ describe('Profile Router Tests', () => {
                   { 
                     language: 'dutch', 
                     wordsAdded: 3, 
-                    score: [63, 88], 
+                    score: [63, 300], 
                     skillLevel: null, 
                   },
                 ],
@@ -314,8 +355,8 @@ describe('Profile Router Tests', () => {
           expect(res.body.languages).toHaveLength(1);
           expect(res.body.languages[0].language).toEqual('dutch');
           expect(res.body.languages[0].score[0]).toEqual(68);
-          expect(res.body.languages[0].score[1]).toEqual(96);
-          expect(res.body.languages[0].skillLevel).toEqual('Beginner');
+          expect(res.body.languages[0].score[1]).toEqual(308);
+          expect(res.body.languages[0].skillLevel).toEqual('Novice');
         });
     });
 
