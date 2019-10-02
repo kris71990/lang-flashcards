@@ -67,7 +67,7 @@ class LanguagePanel extends React.Component {
                     `${choice.languageName.charAt(0).toUpperCase()}${choice.languageName.slice(1)}`
                   }
                   </h2>
-                  <h5>{ supportedLangs[choice.languageName].localName }</h5>
+                  <h5 className="local-name">{ supportedLangs[choice.languageName].localName }</h5>
                 </div>
                 <span>{choice.wordCount}</span>
               </div>

@@ -1,9 +1,10 @@
+@import '../../style/colors';
+
 #translation-direction {
   .selected {
     opacity: 0.3;
-    background-color: rgb(114, 114, 114);
+    background-color: $mid-grey;
     color: black;
-    font-weight: bold;
-    border: 2px solid black;
+    border: 1px solid $mid-grey;
   }
 }

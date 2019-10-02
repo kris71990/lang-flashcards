@@ -1,70 +1,90 @@
+@import '../../style/colors';
+@import '../../style/fonts';
+
 header {
   height: auto;
+  width: 100%;
   position: relative;
-  border-top: 10px ridge grey;
-  border-bottom: 5px solid black;
-  background-color: #295599;
+  border-top: 10px solid $mid-grey;
+  border-bottom: 3px ridge $header-border;
+  background-color: $header-background;
+  font-family: $header-default;
+  text-align: center;
+  color: white;
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 
   h1 {
-    margin: 2% 0 2% 0;
-    padding-left: 15%;
-    width: 60%;
-    font-family: 'Niconne', cursive;
-    font-size: 250%;
-    letter-spacing: 0.2em;
-    font-style: italic;
-    color: white;
+    font-family: $header-title;
+    letter-spacing: 0.1em;
     text-shadow: 2px 2px black;
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
   }
 
   p {
-    padding-left: 20%;
-    margin-bottom: 2%;
-    width: 60%;
-    font-family: 'Aladin', cursive;
-    font-size: 130%;
-    letter-spacing: 0.1em;
-    font-style: italic;
-    color: white;
-    text-shadow: 2px 2px black;
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    display: none;
   }
 
   nav {
-    width: 20%;
-    position: absolute;
-    top: 10%;
-    right: 0;
+    width: 100%;
+    letter-spacing: 1px;
 
     ul {
+      text-align: right;
       list-style: none;
+      padding-right: 10px;
       padding-left: 0;
-      text-align: center;
+
+      span {
+        padding: 10px;
+      }
 
       li {
-        font-family: 'Aladin', cursive;
-        width: 50%;
-        margin: 1% 1%;
-        border: 2px solid green;
-        background-color: azure;
-        border-radius: 20px;
+        display: inline;
+        color: $header-menu;
+      }
+    }
+  }
+}
 
-        a {
-          text-decoration: none;
-          color: inherit;
+@media only screen and (min-width: 420px) {
+  header {    
+    h1 {
+      margin: 2% 0;
+      width: 50%;
+      letter-spacing: 0.2em;
+    }
+  
+    p {
+      display: block;
+      width: 50%;
+      font-size: 130%;
+      text-align: center;
+      letter-spacing: 0.1em;
+    }
+  
+    nav {
+      width: 40%;
+      position: absolute;
+      top: 10%;
+      right: 0;
+      letter-spacing: 1px;
+  
+      ul {        
+        span {
+          display: none;
         }
+        
+        li {
+          display: block;
+          width: 80%;
+          padding: 1%;
 
-        a:hover {
-          color: #5693F2;
+          a:hover {
+            color: white;
+          }
         }
       }
     }

@@ -1,11 +1,14 @@
+@import '../../style/colors';
+@import '../../style/fonts';
+
 #form-container {
   width: 100%;
+  overflow: scroll;
   
   form * {
     display: block;
     padding: 10px;
     margin: 10px;
-    background-color: #C8DBE1;
   }
 
   .auth-form {
@@ -15,17 +18,17 @@
 
     input {
       border-radius: 5px;
-      background-color: #C4C5C6;
+      background-color: $light-grey;
     }
 
     ::-webkit-input-placeholder {
-      color: #717171;
+      color: $mid-grey;
     }
 
     input:focus {
       outline: none;
       border: 2px solid black;
-      background-color: #6EA7C2;
+      background-color: $form-focus;
     }
 
     button {
@@ -35,7 +38,8 @@
       border-radius: 5px;
       padding-left: 15px;
       padding-right: 15px;
-      background-color: #C9CED1;
+      background-color: $light-grey;
+      font-family: $header-default;
     }
 
     button:focus {
@@ -44,13 +48,12 @@
 
     button:hover {
       cursor: pointer;
-      background-color: #6EA7C2;
+      background-color: $form-focus;
     }
   }
   
   #errors {
-    color: #F15353;
-    font-size: 1.1em;
+    color: $error;
     font-weight: bold;
     text-align: left;
     margin: 10px;
