@@ -79,7 +79,6 @@
 
     p {
       font-size: 2.5em;
-      line-height: 100px;
       animation: fadein 2s;
     }
 
@@ -168,16 +167,18 @@
 
     #card {
       width: 75%;
-      height: auto;
+      height: 300px;
       margin: 2% auto;
+      overflow: scroll;
   
       p {
-        line-height: 5em;
+        margin-top: 120px;
         font-size: 2.5em;
       }
   
       span {
-        padding-left: 2%;
+        display: block;
+        padding: 0;
       }
     }
   

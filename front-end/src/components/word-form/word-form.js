@@ -91,6 +91,11 @@ class WordForm extends React.Component {
     e.preventDefault();
 
     let { words } = this.props;
+    if (!this.props.profile) {
+      return this.setState({
+        wordDirty: true,
+      });
+    }
     const { 
       wordEnglish, wordLocal, typeOfWord, categoryOfWord, wordDirty,
     } = this.state;
@@ -177,24 +182,31 @@ class WordForm extends React.Component {
               [...Array(totalFields)].map((e, i) => {
                 return (
                   <div key={i}>
-                    <label>English:</label> 
-                    <input 
-                      type="text" 
-                      className="english" 
-                      name="wordEnglish"
-                      index={`${i}`}
-                      placeholder="ex. boy"
-                      onChange={ this.handleChange }
-                    />
-                    <label>{ formattedLang }:</label> 
-                    <input 
-                      type="text" 
-                      className={ languageSelection }
-                      name="wordLocal"
-                      index={i}
-                      placeholder="ex. jongen"
-                      onChange={ this.handleChange }
-                    />
+                    { i > 0 ? <span id="divider">-----------</span> : null }
+                    <div>
+                      <div>
+                        <label>English:</label> 
+                        <input 
+                          type="text" 
+                          className="english" 
+                          name="wordEnglish"
+                          index={`${i}`}
+                          placeholder="ex. boy"
+                          onChange={ this.handleChange }
+                        />
+                      </div>
+                      <div>
+                        <label>{ formattedLang }:</label> 
+                        <input 
+                          type="text" 
+                          className={ languageSelection }
+                          name="wordLocal"
+                          index={i}
+                          placeholder="ex. jongen"
+                          onChange={ this.handleChange }
+                        />
+                      </div>
+                    </div>
                     { language.languageSelectionTransliteration ?
                       <div>
                         <label>Latinization:</label> 
@@ -209,59 +221,65 @@ class WordForm extends React.Component {
                       </div>
                       : null
                     }
-                    <label>Part of Speech</label> 
-                    <select
-                      className="wordType-select"
-                      name="typeOfWord"
-                      index={i}
-                      value={ this.state.value }
-                      onChange={ this.handleChange }
-                    >
-                      <option value="">Select</option>
-                      <option value="noun">Noun</option>
-                      <option value="pronoun">Pronoun</option>
-                      <option value="proper noun">Proper Noun</option>
-                      <option value="verb">Verb</option>
-                      <option value="adjective">Adjective</option>
-                      <option value="adverb">Adverb</option>
-                      <option value="preposition">Preposition</option>
-                      <option value="conjunction">Conjunction</option>
-                      <option value="other">Other</option>
-                    </select>
-                    <label>Category</label> 
-                    <select
-                      className="category-select"
-                      name="categoryOfWord"
-                      index={i}
-                      value={ this.state.value }
-                      onChange={ this.handleChange }
-                    >
-                      <option value="">Select</option>
-                      <option value="animal">Animal</option>
-                      <option value="art">Art</option>
-                      <option value="accomodation/housing">Accomodation/Housing</option>
-                      <option value="body">Body Part</option>
-                      <option value="color">Color</option>
-                      <option value="education">Education</option>
-                      <option value="food/cooking">Food/Cooking</option>
-                      <option value="greeting">Greeting</option>
-                      <option value="health">Health</option>
-                      <option value="location">Location</option>
-                      <option value="love">Love</option>
-                      <option value="money">Money</option>
-                      <option value="number">Number</option>
-                      <option value="object">Object</option>
-                      <option value="outdoors">Outdoors</option>
-                      <option value="person">Person</option>
-                      <option value="phrase">Phrase</option>
-                      <option value="religion">Religion</option>
-                      <option value="society/urban">Society/Urban Life</option>
-                      <option value="sport">Sport</option>
-                      <option value="time/date">Time/Date</option>
-                      <option value="transportation">Transportation</option>
-                      <option value="weather">Weather/Climate</option>
-                      <option value="other">Other</option>
-                    </select>
+                    <div id="dropdowns">
+                      <div>
+                        <label>Part of Speech</label> 
+                        <select
+                          className="wordType-select"
+                          name="typeOfWord"
+                          index={i}
+                          value={ this.state.value }
+                          onChange={ this.handleChange }
+                        >
+                          <option value="">Select</option>
+                          <option value="noun">Noun</option>
+                          <option value="pronoun">Pronoun</option>
+                          <option value="proper noun">Proper Noun</option>
+                          <option value="verb">Verb</option>
+                          <option value="adjective">Adjective</option>
+                          <option value="adverb">Adverb</option>
+                          <option value="preposition">Preposition</option>
+                          <option value="conjunction">Conjunction</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label>Category</label> 
+                        <select
+                          className="category-select"
+                          name="categoryOfWord"
+                          index={i}
+                          value={ this.state.value }
+                          onChange={ this.handleChange }
+                        >
+                          <option value="">Select</option>
+                          <option value="animal">Animal</option>
+                          <option value="art">Art</option>
+                          <option value="accomodation/housing">Accomodation/Housing</option>
+                          <option value="body">Body Part</option>
+                          <option value="color">Color</option>
+                          <option value="education">Education</option>
+                          <option value="food/cooking">Food/Cooking</option>
+                          <option value="greeting">Greeting</option>
+                          <option value="health">Health</option>
+                          <option value="location">Location</option>
+                          <option value="love">Love</option>
+                          <option value="money">Money</option>
+                          <option value="number">Number</option>
+                          <option value="object">Object</option>
+                          <option value="outdoors">Outdoors</option>
+                          <option value="person">Person</option>
+                          <option value="phrase">Phrase</option>
+                          <option value="religion">Religion</option>
+                          <option value="society/urban">Society/Urban Life</option>
+                          <option value="sport">Sport</option>
+                          <option value="time/date">Time/Date</option>
+                          <option value="transportation">Transportation</option>
+                          <option value="weather">Weather/Climate</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                    </div>
                     <span>
                       { this.state.wordDirty && this.state.wordDirtyIndex === i 
                         ? this.state.wordError : null

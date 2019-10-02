@@ -6,11 +6,12 @@
   font-family: $body-sans-serif;
   
   #prof-intro {
-    margin: 50px;
+    margin: 20px;
   }
 
   #lang-list {
     margin: 5%;
+    overflow: scroll;
     table {
       border: 2px groove black;
       border-collapse: collapse;
@@ -30,6 +31,9 @@
       td:first-of-type {
         text-align: left;
       }
+      button {
+        background-color: white;
+      }
     }
   }
 
@@ -48,27 +52,52 @@
     border-radius: 5px;
     background-color: #E7F4FA;
     z-index: 1000;
-    width: 60%;
+    width: 80%;
     height: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
     h4, p {
-      margin-left: 20px;
+      margin-left: 10px;
+      margin-right: 10px;
+      padding: 10px;
     }
 
     button {
       float: right;
       padding: 5px 10px;
-      margin: 0 20px 10px 0;
+      margin: 20px 20px 20px 0;
       border: 1px solid $card-buttons-light;
       border-radius: 2px;
       background-color: $card-buttons-light;
     }
+  }
+}
 
-    button:hover {
-      cursor: pointer;
+@media only screen and (min-width: 420px) {
+  #profile-container {
+    width: 100%;
+    
+    #prof-intro {
+      margin: 50px;
+    }
+  
+    #remove-modal {
+      width: 60%;
+  
+      h4, p {
+        margin-left: 20px;
+      }
+  
+      button {
+        padding: 5px 10px;
+        margin: 0 20px 10px 0;
+      }
+  
+      button:hover {
+        cursor: pointer;
+      }
     }
   }
 }
