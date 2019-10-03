@@ -63,26 +63,15 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
   } 
 
   // update user score of language (!words, score, language, profile)
-  // if score data, update scores for given language
+  // if score data, update scores for given language; add language if not on profile
   if (score) {
-    const updatedLangs = profileUpdates.updateScore(profile.languages, language, score);
-
-    return models.profile.update(
-      { languages: updatedLangs },
-      { where: { id: { [Op.eq]: request.params.id } }, returning: true },
-    )
-      .then((prof) => {
-        if (prof[0] === 0) return next(new HttpError(400, 'Bad request'));
-        logger.log(logger.INFO, `Returning updated profile (score for ${language}).`);
-        return response.json(prof[1][0]);
-      })
-      .catch(next);
-  }
-  
-  // update of languages (!words, !score, language, profile)
-  // add a language
-  if (words === null && !score) {
-    const updatedLangs = profileUpdates.addLanguage(profile.languages, language);
+    let updatedLangs;
+    if (!profile.languages.map(lang => lang.language).includes(language)) {
+      updatedLangs = profileUpdates.addLanguage(profile.languages, language);
+      updatedLangs = profileUpdates.updateScore(updatedLangs, language, score);
+    } else {
+      updatedLangs = profileUpdates.updateScore(profile.languages, language, score);
+    }
     
     return models.profile.update(
       { languages: updatedLangs },
@@ -90,7 +79,29 @@ profileRouter.put('/profile/:id', bearerAuthMiddleware, jsonParser, (request, re
     )
       .then((prof) => {
         if (prof[0] === 0) return next(new HttpError(400, 'Bad request'));
-        logger.log(logger.INFO, `Returning updated profile (${language} added).`);
+        logger.log(logger.INFO, `Returning updated profile (${language} updated).`);
+        return response.json(prof[1][0]);
+      })
+      .catch(next);
+  }
+
+  // update of languages (!words, !score, language, profile)
+  // add or remove a language
+  if ((!words || words === null) && !score) {
+    let updatedLangs;
+    if (language.language) {
+      updatedLangs = profileUpdates.removeLanguage(profile.languages, language.language);
+    } else {
+      updatedLangs = profileUpdates.addLanguage(profile.languages, language);
+    }
+    
+    return models.profile.update(
+      { languages: updatedLangs },
+      { where: { id: { [Op.eq]: request.params.id } }, returning: true },
+    )
+      .then((prof) => {
+        if (prof[0] === 0) return next(new HttpError(400, 'Bad request'));
+        logger.log(logger.INFO, `Returning updated profile (${language.language ? language.language : language} ${language.language ? 'removed' : 'added'}).`);
         return response.json(prof[1][0]);
       })
       .catch(next);

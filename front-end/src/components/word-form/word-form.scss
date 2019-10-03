@@ -1,15 +1,23 @@
+@import '../../style/colors';
+@import '../../style/fonts';
+
 #vocab-container {
   margin: 3% auto;
   width: 85%;
-  font-family: 'Boogaloo', cursive;
-
+  font-family: $body-serif;
+  font-size: 80%;
   
   #vocab-form {
     text-align: left;
+    overflow: scroll;
     
     fieldset {
       border: 1px dashed black;
       background-color: #E0E0E0;
+
+      p {
+        color: red;
+      }
     }
     
     legend {
@@ -26,41 +34,76 @@
     }
     
     div {
-      padding: 10px;
-      display: inline-block;
-      
+      #dropdowns {
+        * {
+          display: inline-block;
+        }
+      }
+
       input, label, span {
-        padding: 10px;
+        padding: 5px;
+        margin: 5px;
       }
 
-      label {
-        display: inline-block;
+      select {
+        border: 1px solid black;
       }
-      
+
       span {
-        color: red;
+        color: $error;
       }
-    }
 
-    button {
-      float: right;
+      #divider {
+        display: block;
+        color: black;
+      }
     }
   }
 
   button {
-    margin: 2%;
     border-radius: 5px;
-    background-color: #B7C8DE;
+    background-color: $card-buttons-light;
     padding: 8px 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    float: left;
-  }
-
-  button:hover {
-    background-color: #7894B8;
+    margin: 5px;
   }
 
   button:focus {
     outline: none;
+  }
+}
+
+@media only screen and (min-width: 420px) {
+  #vocab-container {
+    #vocab-form {  
+      div {
+        display: inline-block;
+
+        #dropdowns {
+          label {
+            display: inline-block;
+          }
+        }
+
+        select {
+          border: none;
+        }
+  
+        label {
+          display: inline-block;
+        }
+      }
+  
+      button {
+        float: right;
+      }
+    }
+  
+    button:hover {
+      background-color: $card-buttons-dark;
+    }
+  
+    button:focus {
+      outline: none;
+    }
   }
 }

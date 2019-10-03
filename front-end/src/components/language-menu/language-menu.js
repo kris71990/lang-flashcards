@@ -76,7 +76,7 @@ class LanguageMenu extends React.Component {
               : null
           }
         </select>
-        <button onClick={ this.handleAdd }>Add</button>
+        <button onClick={ this.handleAdd }>+</button>
       </div>
     );
   }

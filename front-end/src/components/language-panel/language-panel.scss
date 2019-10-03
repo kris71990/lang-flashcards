@@ -1,22 +1,32 @@
-#langs div div {
-  background-color: white;
-  margin: 20px;
-  width: 200px;
-  height: 200px;
-  border-radius: 10px;
-  text-align: center;
-  border: 2px solid black;
+@import '../../style/colors';
+@import '../../style/fonts';
 
-  h2 {
-    display: block;
-    line-height: 0;
-    margin-top: 90px;
+#langs div {
+  * {
+    margin: 0;
+  }
+  
+  div {
+    background-color: #EEEEEE;
+    margin: 20px;
+    width: 300px;
+    height: 150px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 150px;
+    
+    h2 {
+      font-family: $body-serif;
+    }
+
+    .local-name {
+      display: none;
+    }
   }
 
-  h5 {
-    padding-top: 2px;
+  span {
     display: block;
-    line-height: 0;
+    text-align: center;
   }
 }
 
@@ -141,14 +151,41 @@
 }
 
 #langs div[class^="selected"] {
-  opacity: 0.5;
-  background-color: #727272;
-  background-repeat: no-repeat;
+  opacity: 0.4;
+  background-color: $mid-grey;
+  background-repeat: repeat-y;
   background-position: center;
-  border: 2px solid black;
+  border: 1px solid black;
 }
 
-#langs div div:not([class^="selected"]):hover {
-  background-color: #CBCCCE;
-  opacity: 0.5;
+@media only screen and (min-width: 420px) {
+  #langs div {    
+    div {
+      margin: 20px;
+      width: 200px;
+      height: 200px;
+      border-radius: 5px;
+      text-align: center;
+      line-height: 50px;
+      
+      h2 {
+        font-family: $body-serif;
+        padding-top: 50px;
+      }
+
+      .local-name {
+        display: inline-block;
+      }
+    }
+  }
+
+  #langs div[class^="selected"] {
+    background-repeat: no-repeat;
+  }
+  
+  #langs div div:not([class^="selected"]):hover {
+    background-color: $light-grey;
+    opacity: 0.5;
+    cursor: pointer;
+  }
 }

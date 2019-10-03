@@ -351,4 +351,91 @@ describe('Word Router Tests', () => {
         });
     });
   });
+
+  describe('PUT /word/:wordId', () => {
+    test('PUT /word/:id will update the appropriate word', () => {
+      return createAccountMock()
+        .then((accountMock) => {
+          return mockLanguage('German')
+            .then((languageMock) => {
+              return mockWord('madchen', 'boy', 'noun', 'person', languageMock.languageId)
+                .then((wordMock) => {
+                  return superagent.put(`${API_URL}/word/${wordMock.wordId}`)
+                    .set('Authorization', `Bearer ${accountMock.token}`)
+                    .send({
+                      wordEnglish: 'girl',
+                      wordLocal: 'madchen',
+                      typeOfWord: 'noun',
+                      category: 'person',
+                      languageId: languageMock.languageId,
+                      id: wordMock.wordId,
+                    })
+                    .then((response) => {
+                      expect(response.status).toEqual(200);
+                      expect(response.body.wordEnglish).toEqual('girl');
+                      expect(response.body.wordLocal).toEqual('madchen');
+                      expect(response.body.typeOfWord).toEqual('noun');
+                      expect(response.body.category).toEqual('person');
+                      expect(response.body.languageId).toEqual(languageMock.languageId);
+                      expect(response.body.wordId).toEqual(wordMock.wordId);
+                    });
+                });
+            });
+        });
+    });
+
+    test('PUT /word/:id will return unauthorized if no token', () => {
+      return mockLanguage('German')
+        .then((languageMock) => {
+          return mockWord('madchen', 'boy', 'noun', 'person', languageMock.languageId)
+            .then((wordMock) => {
+              return superagent.put(`${API_URL}/word/${wordMock.wordId}`)
+                .send({
+                  wordEnglish: 'girl',
+                  wordLocal: 'madchen',
+                  typeOfWord: 'noun',
+                  category: 'person',
+                  languageId: languageMock.languageId,
+                  id: wordMock.wordId,
+                })
+                .catch((err) => {
+                  expect(err.status).toEqual(401);
+                  expect(err.body).toBeFalsy();
+                });
+            });
+        });
+    });
+  });
+
+  describe('DELETE /word/:id', () => {
+    test('DELETE /word/:id will delete the word', () => {
+      return createAccountMock()
+        .then((accountMock) => {
+          return mockLanguage('German')
+            .then((languageMock) => {
+              return mockWord('madchen', 'boy', 'noun', 'person', languageMock.languageId)
+                .then((wordMock) => {
+                  return superagent.del(`${API_URL}/word/${wordMock.wordId}`)
+                    .set('Authorization', `Bearer ${accountMock.token}`)
+                    .then((response) => {
+                      expect(response.status).toEqual(204);
+                    });
+                });
+            });
+        });
+    });
+
+    test('DELETE /word/:id without token will return unauthorized', () => {
+      return mockLanguage('German')
+        .then((languageMock) => {
+          return mockWord('madchen', 'boy', 'noun', 'person', languageMock.languageId)
+            .then((wordMock) => {
+              return superagent.del(`${API_URL}/word/${wordMock.wordId}`)
+                .catch((err) => {
+                  expect(err.status).toEqual(401);
+                });
+            });
+        });
+    });
+  });
 });

@@ -1,12 +1,17 @@
-.auth-container {
-  width: 400px;
-  margin: 50px auto;
-  border: 8px solid black;
-  border-radius: 10px;
-  text-align: center;
-  background-color: #396795;
+@import '../../style/fonts';
+@import '../../style/colors';
 
+.auth-container {
+  width: 90%;
+  margin: 50px auto;
+  border: 6px solid black;
+  border-radius: 8px;
+  text-align: center;
+  background-color: $auth-background;
+  
   h2 {
+    font-size: 2em;
+    font-family: $header-default;
     margin-bottom: 5px;
   }
 
@@ -18,30 +23,18 @@
 #intro {
   text-align: center;
   padding-top: 3%;
+  font-family: $body-sans-serif;
 
-  h2 {
-    line-height: 1.5em;
-    font-size: 1.2em;
-    font-style: italic;
-
+  h3 {
     span:first-child {
-      font-style: normal;
-      margin-left: 10px;
-      margin-right: 10px;
+      display: block;
+      margin: 10px;
     }
 
-    #add-toggle:hover {
-      cursor: pointer;
+    #add-toggle {
+      color: #2B75D8;
+      text-decoration: underline;
     }
-  }
-
-  a {
-    text-decoration: none;
-    color: red;
-  }
-
-  a:hover {
-    text-decoration: underline;
   }
 }
 
@@ -53,6 +46,7 @@
   width: 100%;
   margin: 0 auto;
   text-align: center;
+  font-family: $body-sans-serif;
 
   section {
     display: flex;
@@ -62,12 +56,57 @@
   }
 
   button {
-    margin: 2% auto;
-    padding: 1% 2%;
+    margin: 4% 1%;
+    padding: 15px;
     border-radius: 10px;
   }
 
   button:focus {
     outline: 0;
+  }
+}
+
+@media only screen and (min-width: 420px) {
+  .auth-container {
+    width: 400px;
+  }
+  
+  #intro {
+    h3 {
+      span:first-child {
+        display: inline;
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+
+      #add-toggle {
+        color: black;
+        text-decoration: none;
+      }
+  
+      #add-toggle:hover {
+        cursor: pointer;
+      }
+    }
+
+    a {
+      text-decoration: none;
+      color: $error;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  #lang-choices {
+    button {
+      margin: 2% 1%;
+      cursor: pointer;
+    }
+  
+    button:focus {
+      outline: 0;
+    }
   }
 }

@@ -6,6 +6,8 @@ import autoBind from '../../utils/autobind';
 import * as routes from '../../utils/routes';
 
 import * as wordActions from '../../actions/words';
+import scoreParser from '../../utils/score-parser';
+import * as indexOptions from '../../utils/card-randomizer';
 
 import './card-view.scss';
 
@@ -14,12 +16,14 @@ class CardView extends React.Component {
     super(props);
     this.state = {
       cardNumber: 0,
+      cardTracker: [],
       isCorrect: false,
       answer: false,
       hintCategory: false,
       hintType: false,
       hintTransliteration: false,
       score: [0, 0],
+      color: 'black',
     };
     autoBind.call(this, CardView);
   }
@@ -42,6 +46,11 @@ class CardView extends React.Component {
       })
         .then(() => {
           console.log('Words retrieved'); // eslint-disable-line
+          const indexArr = indexOptions.createShuffledIndexArray(langData.words.length);
+          return this.setState({
+            cardTracker: indexArr,
+            cardNumber: indexArr[0],
+          });
         });
     } 
     return null;
@@ -86,24 +95,37 @@ class CardView extends React.Component {
 
   // cycle cards and update user score
   handleRandomCard() {
-    const rand = Math.floor(Math.random() * this.props.langData.words.length);
-    const updatedScore = [...this.state.score];
+    const { 
+      score, cardTracker, isCorrect, 
+    } = this.state;
+    const { words } = this.props.langData;
+    const updatedScore = [...score];
+    const indices = [...cardTracker];
+
+    let updatedIndices = indexOptions.updateIndexArray(indices);
+    if (updatedIndices.length === 0) {
+      updatedIndices = indexOptions.createShuffledIndexArray(words.length);
+    }
     
-    if (this.state.isCorrect) {
+    if (isCorrect) {
       updatedScore[0] += 1;
       updatedScore[1] += 1;
     } else {
       updatedScore[1] += 1;
     }
 
+    const updatedColor = scoreParser(updatedScore);
+
     return this.setState({
-      cardNumber: rand,
+      cardTracker: updatedIndices,
+      cardNumber: updatedIndices[0],
       isCorrect: false,
       score: updatedScore,
       answer: false,
       hintCategory: false,
       hintType: false,
       hintTransliteration: false,
+      color: updatedColor,
     });
   }
 
@@ -116,8 +138,11 @@ class CardView extends React.Component {
   }
 
   handleHint() {
+    const { words } = this.props.langData;
+    const { cardNumber } = this.state;
     const rand = Math.floor(Math.random() * 100 + 1);
-    switch (rand % 3) {
+
+    switch (rand % 4) {
       case 0:
         return this.setState({
           hintCategory: true,
@@ -130,11 +155,24 @@ class CardView extends React.Component {
           hintCategory: false,
           hintTransliteration: false,
         });
-      default:
+      case 2:
+        if (!words[cardNumber].transliteration) {
+          return this.setState({
+            hintType: false,
+            hintCategory: false,
+            hintTransliteration: false,
+          });
+        }
         return this.setState({
           hintType: false,
           hintCategory: false,
           hintTransliteration: true,
+        });
+      default:
+        return this.setState({
+          hintType: false,
+          hintCategory: false,
+          hintTransliteration: false,
         });
     }
   }
@@ -220,7 +258,9 @@ class CardView extends React.Component {
             <h1>Your <span>{ this.handleFormat('language') }</span> flashcards ({ totalWords ? totalWords : '0'})</h1>
             <div className="subheader">
               <h3>{ this.handleFormat('trans') }</h3>
-              <p>Current Score: { `${score[0]}/${score[1]}` }</p>
+              <p>Current Score: 
+                <span id={ this.state.color }> { `${score[0]}/${score[1]}` }</span>
+              </p>
             </div>
             <div onClick={ this.handleFlipCard } id="card">
               { cardJSX }
@@ -236,7 +276,6 @@ class CardView extends React.Component {
               onChange={ this.handleChange }
             />
             <label htmlFor="isCorrect">Correct?</label>
-            {/* <span>Current Score: { `${score[0]}/${score[1]}` }</span> */}
             <div><button onClick={ this.handleLoadForm }>Add Vocabulary</button></div>
           </div>
           : 

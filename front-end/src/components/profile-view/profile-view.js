@@ -11,12 +11,37 @@ import './profile-view.scss';
 class ProfileView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      editing: false,
+      language: undefined,
+    };
     autoBind.call(this, ProfileView);
   }
 
   componentDidMount() {
     return this.props.fetchProfile();
+  }
+
+  handleEdit(e) {
+    if (this.state.editing) {
+      return this.setState({
+        editing: false,
+        language: undefined,
+      });
+    }
+    return this.setState({
+      editing: true,
+      language: e.target.id,
+    });
+  }
+
+  handleRemoveLanguage() {
+    const { profile } = this.props;
+    this.props.updateProfile(profile, { language: this.state.language });
+    return this.setState({
+      editing: false,
+      language: undefined,
+    });
   }
 
   render() {
@@ -28,23 +53,25 @@ class ProfileView extends React.Component {
 
       // IRRELEVANT CODE - fixed on back end, here for development purposes
       // (bug creates multiple language entries for same language on table)
-      const uniqueLangs = new Set();
-      const langsFiltered = profile.languages.filter((lang) => {
-        if (uniqueLangs.has(lang.language)) {
-          return false;
-        }
-        uniqueLangs.add(lang.language);
-        return true;
-      });
-      // ---------------------
-      langsFiltered.sort((a, b) => {
-        return b.wordsAdded - a.wordsAdded;
-      });
+      // const uniqueLangs = new Set();
+      // const langsFiltered = profile.languages.filter((lang) => {
+      //   if (uniqueLangs.has(lang.language)) {
+      //     return false;
+      //   }
+      //   uniqueLangs.add(lang.language);
+      //   return true;
+      // });
+      // // ---------------------
+      // langsFiltered.sort((a, b) => {
+      //   return b.wordsAdded - a.wordsAdded;
+      // });
 
       profileJSX = 
         <div>
-          <h1>Welcome { profile.name }!</h1>
-          <p>Account age: { activeFor }</p>
+          <div id="prof-intro">
+            <h1>Welcome { profile.name }!</h1>
+            <p>Account age: { activeFor }</p>
+          </div>
           {
             profile.languages.length > 0 ?
               <div id="lang-list">
@@ -58,11 +85,12 @@ class ProfileView extends React.Component {
                       <th>Words Added</th>
                       <th>Score</th>
                       <th>Level Attained</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                   {
-                    langsFiltered.map((lang) => {
+                    profile.languages.map((lang) => {
                       const formatDate = dateParser.formatLanguageAddedTime(lang.added);
                       const langAge = dateParser.computeAge(lang.added, 'lang');
                       return (
@@ -80,12 +108,29 @@ class ProfileView extends React.Component {
                           }
                           </td>
                           <td>{ lang.skillLevel ? lang.skillLevel : 'None' }</td>
+                          <td>
+                            <button 
+                              id={ lang.language } 
+                              onClick={ this.handleEdit }>X</button>
+                          </td>
                         </tr>
                       );
                     })
                   }
                   </tbody>
                 </table>
+              </div>
+              : null
+          }
+          {
+            this.state.editing ? 
+              <div id="modal">
+                <div id="remove-modal">
+                  <h4>Are you sure you want to remove this language from your list?</h4>
+                  <p>Your progress will be lost, but all flashcards will still be accessible to everyone.</p>
+                  <button onClick={ this.handleRemoveLanguage }>Remove</button>
+                  <button onClick={ this.handleEdit }>Back</button>
+                </div>
               </div>
               : null
           }
@@ -108,7 +153,7 @@ ProfileView.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   fetchProfile: () => dispatch(profileActions.fetchProfileReq()),
-  updateProfile: profile => dispatch(profileActions.updateProfileReq(profile)),
+  updateProfile: (profile, lang) => dispatch(profileActions.updateProfileReq(profile, lang)),
 });
 
 const mapStateToProps = (state) => {
