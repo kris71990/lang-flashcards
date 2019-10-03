@@ -6,11 +6,11 @@
 
 ## Overview
 
-This is a flaschard app that helps people learn useful vocabulary and terminology in various languages. Users can select a language to practice, along with their desired direction of translation, and are presented with a collection of words and useful vocabulary to practice. 
+This is a flashcard application that helps people learn new languages. Users select a language to cycle through vocabulary, words and phrases in a flashcard style interface to improve foreign language skills. Users can sign up to add words and track their progress. 
 
-The is a full-stack application written entirely in modern **Javascript** **(ES6)**. The backend server and API is built **Node** and **Express**. It uses a **PostgreSQL** relational database and the data is managed by **Sequelize**. 
+The is a full-stack application written entirely in modern **Javascript** **(ES6/7)**. 
 
-The frontend is built with **React** and application state is managed by **Redux**. **Babel** and **Webpack** are used to transpile and bundle.
+The backend server and API is built with **Node** and **Express**. It utilizes a relational database using **PostgreSQL**, which is managed by **Sequelize**. The frontend is built with **React** and application state is managed with **Redux**. **Babel** and **Webpack** are used to transpile and bundle.
 
 All unit testing is done with **Jest**.
 
