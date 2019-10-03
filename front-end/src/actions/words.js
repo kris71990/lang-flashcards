@@ -10,6 +10,11 @@ const wordAdd = word => ({
   payload: word,
 });
 
+const wordUpdate = word => ({
+  type: 'WORD_UPDATE',
+  payload: word,
+});
+
 const wordsBulkAdd = words => ({
   type: 'BULK_ADD',
   payload: words,
@@ -58,6 +63,17 @@ const wordsBulkPostRequest = words => (store) => {
     });
 };
 
+const wordUpdateRequest = word => (store) => {
+  const { auth: token } = store.getState();
+
+  return superagent.put(`${API_URL}/word/${word.id}`)
+    .set('Authorization', `Bearer ${token}`)
+    .send(word)
+    .then((response) => {
+      return store.dispatch(wordUpdate(response.body));
+    });
+};
+
 export {
-  wordsFetchRequest, wordPostRequest, wordsBulkPostRequest,
+  wordsFetchRequest, wordPostRequest, wordsBulkPostRequest, wordUpdateRequest,
 };

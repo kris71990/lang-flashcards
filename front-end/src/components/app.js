@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Header from './header/header';
-import Landing from './landing/landing';
+import Landing from './landing/landing'; // eslint-disable-line
 import CardsContainer from './cards-container/cards-container';
 import ProfileView from './profile-view/profile-view';
 import Footer from './footer/footer';

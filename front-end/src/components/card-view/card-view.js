@@ -188,6 +188,11 @@ class CardView extends React.Component {
     return this.props.history.push(routes.CARD_FORM_ROUTE);
   }
 
+  handleUpdateWord() {
+    const word = this.props.langData.words[this.state.cardNumber];
+    return this.props.wordUpdate(word);
+  }
+
   handleChange(e) {
     const { name, checked } = e.target;
 
@@ -276,6 +281,7 @@ class CardView extends React.Component {
               onChange={ this.handleChange }
             />
             <label htmlFor="isCorrect">Correct?</label>
+            <div><button onClick={ this.handleUpdateWord }>Edit Word</button></div>
             <div><button onClick={ this.handleLoadForm }>Add Vocabulary</button></div>
           </div>
           : 
@@ -307,12 +313,14 @@ CardView.propTypes = {
   baseLangData: PropTypes.object,
   history: PropTypes.object,
   wordsFetch: PropTypes.func,
+  wordUpdate: PropTypes.func,
   profile: PropTypes.object,
   updateProfile: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => ({
   wordsFetch: lang => dispatch(wordActions.wordsFetchRequest(lang)),
+  wordUpdate: word => dispatch(wordActions.wordsUpdate(word)),
 });
 
 const mapStateToProps = (state) => {
