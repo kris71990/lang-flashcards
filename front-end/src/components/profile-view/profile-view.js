@@ -6,6 +6,7 @@ import autoBind from '../../utils/autobind';
 import * as profileActions from '../../actions/profile';
 import * as dateParser from '../../utils/date-parser';
 
+import ConfirmModal from '../confirm-modal/confirm-modal';
 import './profile-view.scss';
 
 class ProfileView extends React.Component {
@@ -50,21 +51,6 @@ class ProfileView extends React.Component {
     
     if (profile) {
       const activeFor = dateParser.computeAge(profile.createdAt, 'account');
-
-      // IRRELEVANT CODE - fixed on back end, here for development purposes
-      // (bug creates multiple language entries for same language on table)
-      // const uniqueLangs = new Set();
-      // const langsFiltered = profile.languages.filter((lang) => {
-      //   if (uniqueLangs.has(lang.language)) {
-      //     return false;
-      //   }
-      //   uniqueLangs.add(lang.language);
-      //   return true;
-      // });
-      // // ---------------------
-      // langsFiltered.sort((a, b) => {
-      //   return b.wordsAdded - a.wordsAdded;
-      // });
 
       profileJSX = 
         <div>
@@ -124,14 +110,16 @@ class ProfileView extends React.Component {
           }
           {
             this.state.editing ? 
-              <div id="modal">
-                <div id="remove-modal">
-                  <h4>Are you sure you want to remove this language from your list?</h4>
-                  <p>Your progress will be lost, but all flashcards will still be accessible to everyone.</p>
-                  <button onClick={ this.handleRemoveLanguage }>Remove</button>
-                  <button onClick={ this.handleEdit }>Back</button>
-                </div>
-              </div>
+              <ConfirmModal 
+                onConfirm={ this.handleRemoveLanguage }
+                onBack={ this.handleEdit }
+                message={ 
+                  { 
+                    h: 'Are you sure you want to remove this language from your list?',
+                    p: 'Your progress will be lost, but all flashcards will still be accessible to everyone.',
+                  } 
+                }
+              />
               : null
           }
         </div>;

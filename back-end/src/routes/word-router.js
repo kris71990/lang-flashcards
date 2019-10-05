@@ -149,7 +149,7 @@ wordRouter.put('/word/:id', bearerAuthMiddleware, jsonParser, (request, response
 
   return models.word.update(
     { ...request.body },
-    { where: { wordId: { [Op.eq]: request.body.id } }, returning: true },
+    { where: { wordId: { [Op.eq]: request.params.id } }, returning: true },
   )
     .then((word) => {
       if (word[0] === 0) return next(new HttpError(400, 'Bad request'));
