@@ -29,6 +29,11 @@ export default (state = defaultState, { type, payload }) => {
       return Object.assign({}, state, {
         words: [...oldWords, payload],
       });
+    case 'WORD_DELETE':
+      const newWords = state.words.filter(w => w.wordId !== payload);
+      return Object.assign({}, state, {
+        words: newWords,
+      });
     default:
       return state;
   }

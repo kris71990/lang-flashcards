@@ -6,6 +6,8 @@ import autoBind from '../../utils/autobind';
 import * as routes from '../../utils/routes';
 
 import EditForm from '../edit-form/edit-form';
+import ConfirmModal from '../confirm-modal/confirm-modal';
+
 import * as wordActions from '../../actions/words';
 import scoreParser from '../../utils/score-parser';
 import * as indexOptions from '../../utils/card-randomizer';
@@ -27,6 +29,7 @@ class CardView extends React.Component {
       color: 'black',
       editing: false,
       editError: undefined,
+      delete: false,
     };
     autoBind.call(this, CardView);
   }
@@ -192,6 +195,29 @@ class CardView extends React.Component {
     return this.props.history.push(routes.CARD_FORM_ROUTE);
   }
 
+  handleToggleDelete() {
+    const toggle = !this.state.delete;
+    return this.setState({
+      delete: toggle,
+    });
+  }
+
+  handleDelete() {
+    const id = this.props.langData.words[this.state.cardNumber].wordId;
+    return this.props.wordDelete(id)
+      .then(() => {
+        return this.setState({
+          delete: false,
+        });
+      });
+  }
+
+  handleBack() {
+    return this.setState({
+      delete: false,
+    });
+  }
+
   handleToggleForm() {
     if (!this.props.profile) {
       let hideError = false;
@@ -208,7 +234,6 @@ class CardView extends React.Component {
   }
 
   handleUpdateWord(word) {
-    console.log(word);
     return this.props.wordUpdate(word)
       .then(() => {
         return this.setState({
@@ -307,6 +332,7 @@ class CardView extends React.Component {
             <label htmlFor="isCorrect">Correct?</label>
             <div>
               <button onClick={ this.handleToggleForm }>Edit Word</button>
+              <button onClick={ this.handleToggleDelete }>Delete Word</button>
               <button onClick={ this.handleLoadForm }>Add Words</button>
             </div>
             { this.state.editError ? <span>{ this.state.editError }</span> : null }
@@ -331,7 +357,7 @@ class CardView extends React.Component {
             : null
         }
         { this.state.editing ? 
-            <div id="modal">
+            <div id="edit-modal">
               <div id="edit-form-modal">
                 <EditForm   
                   word={ wordsToCards[this.state.cardNumber] }
@@ -344,6 +370,20 @@ class CardView extends React.Component {
             </div>
           : null 
         }
+        {
+          this.state.delete ?
+            <ConfirmModal 
+              onConfirm={ this.handleDelete } 
+              onBack={ this.handleBack } 
+              message={ 
+                { 
+                  h: 'Are you sure you want to delete this word?', 
+                  p: 'This word will be permanently removed and will no longer appear in your card collection.',
+                } 
+              }
+            />
+            : null
+        }
       </div>
     );
   }
@@ -355,6 +395,7 @@ CardView.propTypes = {
   history: PropTypes.object,
   wordsFetch: PropTypes.func,
   wordUpdate: PropTypes.func,
+  wordDelete: PropTypes.func,
   profile: PropTypes.object,
   updateProfile: PropTypes.func,
 };
@@ -362,6 +403,7 @@ CardView.propTypes = {
 const mapDispatchToProps = dispatch => ({
   wordsFetch: lang => dispatch(wordActions.wordsFetchRequest(lang)),
   wordUpdate: word => dispatch(wordActions.wordUpdateRequest(word)),
+  wordDelete: id => dispatch(wordActions.wordDeleteRequest(id)),
 });
 
 const mapStateToProps = (state) => {

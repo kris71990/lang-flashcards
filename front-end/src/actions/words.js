@@ -15,6 +15,11 @@ const wordUpdate = word => ({
   payload: word,
 });
 
+const wordDelete = id => ({
+  type: 'WORD_DELETE',
+  payload: id,
+});
+
 const wordsBulkAdd = words => ({
   type: 'BULK_ADD',
   payload: words,
@@ -66,8 +71,6 @@ const wordsBulkPostRequest = words => (store) => {
 const wordUpdateRequest = word => (store) => {
   const { auth: token } = store.getState();
 
-  console.log(word);
-
   return superagent.put(`${API_URL}/word/${word.wordId}`)
     .set('Authorization', `Bearer ${token}`)
     .send(word)
@@ -76,6 +79,16 @@ const wordUpdateRequest = word => (store) => {
     });
 };
 
+const wordDeleteRequest = id => (store) => {
+  const { auth: token } = store.getState();
+  
+  return superagent.delete(`${API_URL}/word/${id}`)
+    .set('Authorization', `Bearer ${token}`)
+    .then(() => {
+      return store.dispatch(wordDelete(id));
+    });
+};
+
 export {
-  wordsFetchRequest, wordPostRequest, wordsBulkPostRequest, wordUpdateRequest,
+  wordsFetchRequest, wordPostRequest, wordsBulkPostRequest, wordUpdateRequest, wordDeleteRequest,
 };
