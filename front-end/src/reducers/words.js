@@ -26,8 +26,13 @@ export default (state = defaultState, { type, payload }) => {
       });
     case 'WORD_UPDATE':
       const oldWords = state.words.filter(w => w.wordId !== payload.wordId);
-      return Object.assign({}, {
+      return Object.assign({}, state, {
         words: [...oldWords, payload],
+      });
+    case 'WORD_DELETE':
+      const newWords = state.words.filter(w => w.wordId !== payload);
+      return Object.assign({}, state, {
+        words: newWords,
       });
     default:
       return state;
