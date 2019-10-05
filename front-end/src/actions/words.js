@@ -66,7 +66,9 @@ const wordsBulkPostRequest = words => (store) => {
 const wordUpdateRequest = word => (store) => {
   const { auth: token } = store.getState();
 
-  return superagent.put(`${API_URL}/word/${word.id}`)
+  console.log(word);
+
+  return superagent.put(`${API_URL}/word/${word.wordId}`)
     .set('Authorization', `Bearer ${token}`)
     .send(word)
     .then((response) => {

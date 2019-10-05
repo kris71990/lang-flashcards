@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import autoBind from '../../utils/autobind';
 import * as routes from '../../utils/routes';
 
+import EditForm from '../edit-form/edit-form';
 import * as wordActions from '../../actions/words';
 import scoreParser from '../../utils/score-parser';
 import * as indexOptions from '../../utils/card-randomizer';
@@ -24,6 +25,8 @@ class CardView extends React.Component {
       hintTransliteration: false,
       score: [0, 0],
       color: 'black',
+      editing: false,
+      editError: undefined,
     };
     autoBind.call(this, CardView);
   }
@@ -126,6 +129,7 @@ class CardView extends React.Component {
       hintType: false,
       hintTransliteration: false,
       color: updatedColor,
+      editError: undefined,
     });
   }
 
@@ -188,9 +192,29 @@ class CardView extends React.Component {
     return this.props.history.push(routes.CARD_FORM_ROUTE);
   }
 
-  handleUpdateWord() {
-    const word = this.props.langData.words[this.state.cardNumber];
-    return this.props.wordUpdate(word);
+  handleToggleForm() {
+    if (!this.props.profile) {
+      let hideError = false;
+      if (this.state.editError) hideError = true;
+      return this.setState({
+        editError: hideError ? undefined : 'Log in to edit word',
+      });
+    }
+    const toggle = !this.state.editing;
+    return this.setState({
+      editing: toggle,
+      editError: undefined,
+    });
+  }
+
+  handleUpdateWord(word) {
+    console.log(word);
+    return this.props.wordUpdate(word)
+      .then(() => {
+        return this.setState({
+          editing: false,
+        });
+      });
   }
 
   handleChange(e) {
@@ -281,14 +305,17 @@ class CardView extends React.Component {
               onChange={ this.handleChange }
             />
             <label htmlFor="isCorrect">Correct?</label>
-            <div><button onClick={ this.handleUpdateWord }>Edit Word</button></div>
-            <div><button onClick={ this.handleLoadForm }>Add Vocabulary</button></div>
+            <div>
+              <button onClick={ this.handleToggleForm }>Edit Word</button>
+              <button onClick={ this.handleLoadForm }>Add Words</button>
+            </div>
+            { this.state.editError ? <span>{ this.state.editError }</span> : null }
           </div>
           : 
           <div className="card-box">
             <h2>There are currently no flashcards to study in { this.handleFormat('language') }.</h2>
             <h3>Add some words!</h3>
-            <button onClick={ this.handleLoadForm }>Add Vocabulary</button>
+            <button onClick={ this.handleLoadForm }>Add Words</button>
           </div>
         }
         {
@@ -302,6 +329,20 @@ class CardView extends React.Component {
               <p><span>Family: </span>{ baseLangData.family.join(' -> ')}</p>
             </div>
             : null
+        }
+        { this.state.editing ? 
+            <div id="modal">
+              <div id="edit-form-modal">
+                <EditForm   
+                  word={ wordsToCards[this.state.cardNumber] }
+                  lang={ this.props.langData }
+                  baseLang={ this.props.baseLangData }
+                  onComplete={ this.handleUpdateWord }
+                />
+              </div>
+              <button onClick={ this.handleToggleForm }>Back</button> 
+            </div>
+          : null 
         }
       </div>
     );
@@ -320,7 +361,7 @@ CardView.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   wordsFetch: lang => dispatch(wordActions.wordsFetchRequest(lang)),
-  wordUpdate: word => dispatch(wordActions.wordsUpdate(word)),
+  wordUpdate: word => dispatch(wordActions.wordUpdateRequest(word)),
 });
 
 const mapStateToProps = (state) => {

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import autoBind from '../../utils/autobind';
 import * as wordActions from '../../actions/words';
-// import * as profileActions from '../../actions/profile';
 import * as routes from '../../utils/routes';
 
 import './word-form.scss';
