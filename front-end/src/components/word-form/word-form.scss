@@ -13,10 +13,10 @@
     
     fieldset {
       border: 1px dashed black;
-      background-color: #E0E0E0;
+      background-color: $word-form-background;
 
       p {
-        color: red;
+        color: $error;
       }
     }
     
@@ -32,27 +32,12 @@
         vertical-align: middle;
       }
     }
+
+    button {
+      float: right;
+    }
     
     div {
-      #dropdowns {
-        * {
-          display: inline-block;
-        }
-      }
-
-      input, label, span {
-        padding: 5px;
-        margin: 5px;
-      }
-
-      select {
-        border: 1px solid black;
-      }
-
-      span {
-        color: $error;
-      }
-
       #divider {
         display: block;
         color: black;
@@ -72,38 +57,26 @@
   }
 }
 
-@media only screen and (min-width: 420px) {
+@media only screen and (min-width: 1120px) {
   #vocab-container {
-    #vocab-form {  
+    #vocab-form {
       div {
-        display: inline-block;
-
-        #dropdowns {
-          label {
-            display: inline-block;
-          }
-        }
-
-        select {
-          border: none;
-        }
-  
-        label {
-          display: inline-block;
+        #divider {
+          display: none;
         }
       }
-  
-      button {
-        float: right;
+    }
+  }
+
+  @media only screen and (min-width: 420px) {
+    #vocab-container {
+      button:hover {
+        background-color: $card-buttons-dark;
       }
-    }
-  
-    button:hover {
-      background-color: $card-buttons-dark;
-    }
-  
-    button:focus {
-      outline: none;
+    
+      button:focus {
+        outline: none;
+      }
     }
   }
 }

@@ -175,47 +175,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  
-    form {
-      fieldset {
-        background-color: $light-grey;
-    
-        span {
-          color: red;
-        }
-      }
-      
-      legend {
-        background-color: white;
-        border: 1px dashed black;
-        padding: 10px 20px;
-      }
-    
-      #dropdowns {
-        * {
-          display: inline-block;
-        }
-      }
-    
-      input, label, span {
-        padding: 5px;
-        margin: 5px;
-      }
-    
-      select {
-        border: 1px solid black;
-      }
-  
-      button {
-        padding: 5px 10px;
-        border-radius: 2px;
-        background-color: $card-buttons-light;
-        border: none;
-      }
-  
-      button:hover {
-        background-color: $card-buttons-dark;
-      }
+    overflow: scroll;
+
+    button {
+      border: none;
     }
   }
 }
@@ -285,9 +248,9 @@
     display: inline-block;
   }
 
-  #modal {
+  #edit-modal {
     #edit-form-modal {
-      width: 70%;
+      width: 60%;
     }
 
     button:hover {
@@ -314,6 +277,12 @@
 
     .lang-info-box {
       text-align: center;
+    }
+
+    #edit-modal {
+      #edit-form-modal {
+        width: 80%;
+      }
     }
   }
 }

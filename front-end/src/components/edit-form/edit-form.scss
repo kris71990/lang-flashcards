@@ -1,6 +1,41 @@
 @import '../../style/colors';
 @import '../../style/fonts';
 
-#edit-form-modal {
-  overflow: scroll;
+.form-container {
+  font-family: $body-serif;
+  margin: 10px;
+  form {
+    fieldset {
+      border: 1px dashed black;
+      background-color: $word-form-background;
+  
+      span {
+        color: red;
+      }
+    }
+    
+    legend {
+      background-color: white;
+      border: 1px dashed black;
+      padding: 10px 20px;
+    }
+  
+    input, label, span {
+      padding: 5px;
+      margin: 5px;
+    }
+  
+    select {
+      border: 1px solid black;
+    }
+
+    button {
+      padding: 5px 10px;
+      border: 1px solid black;
+    }
+
+    button:hover {
+      background-color: $card-buttons-dark;
+    }
+  }
 }

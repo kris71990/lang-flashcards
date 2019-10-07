@@ -1,0 +1,39 @@
+@import '../../style/colors';
+
+#form-container {
+  * {
+    display: inline-block;
+  }
+
+  input, label, span {
+    padding: 5px;
+    margin: 5px;
+  }
+
+  select {
+    border: 1px solid black;
+  }
+
+  span {
+    color: $error;
+  }
+}
+
+
+@media only screen and (min-width: 420px) {
+  #form-container {
+    #dropdowns {
+      label {
+        display: inline-block;
+      }
+    }
+
+    select {
+      border: none;
+    }
+
+    label {
+      display: inline-block;
+    }
+  }
+}

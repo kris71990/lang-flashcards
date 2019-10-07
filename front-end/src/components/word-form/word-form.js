@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import FormContent from '../form-content/form-content';
+import langFormatter from '../../utils/lang-formatter';
 import autoBind from '../../utils/autobind';
 import * as wordActions from '../../actions/words';
 import * as routes from '../../utils/routes';
@@ -167,7 +169,7 @@ class WordForm extends React.Component {
     const { totalFields } = this.state;
     let formattedLang;
     if (languageSelection) {
-      formattedLang = `${languageSelection.charAt(0).toUpperCase()}${languageSelection.slice(1)}`;
+      formattedLang = langFormatter(languageSelection);
     }
 
     return (
@@ -182,108 +184,13 @@ class WordForm extends React.Component {
                 return (
                   <div key={i}>
                     { i > 0 ? <span id="divider">-----------</span> : null }
-                    <div>
-                      <div>
-                        <label>English:</label> 
-                        <input 
-                          type="text" 
-                          className="english" 
-                          name="wordEnglish"
-                          index={`${i}`}
-                          placeholder="ex. boy"
-                          onChange={ this.handleChange }
-                        />
-                      </div>
-                      <div>
-                        <label>{ formattedLang }:</label> 
-                        <input 
-                          type="text" 
-                          className={ languageSelection }
-                          name="wordLocal"
-                          index={i}
-                          placeholder="ex. jongen"
-                          onChange={ this.handleChange }
-                        />
-                      </div>
-                    </div>
-                    { language.languageSelectionTransliteration ?
-                      <div>
-                        <label>Latinization:</label> 
-                        <input 
-                          type="text" 
-                          className="transliteration" 
-                          name="transliteration"
-                          index={`${i}`}
-                          placeholder="ex. ni hao"
-                          onChange={ this.handleChange }
-                        />
-                      </div>
-                      : null
-                    }
-                    <div id="dropdowns">
-                      <div>
-                        <label>Part of Speech</label> 
-                        <select
-                          className="wordType-select"
-                          name="typeOfWord"
-                          index={i}
-                          value={ this.state.value }
-                          onChange={ this.handleChange }
-                        >
-                          <option value="">Select</option>
-                          <option value="noun">Noun</option>
-                          <option value="pronoun">Pronoun</option>
-                          <option value="proper noun">Proper Noun</option>
-                          <option value="verb">Verb</option>
-                          <option value="adjective">Adjective</option>
-                          <option value="adverb">Adverb</option>
-                          <option value="preposition">Preposition</option>
-                          <option value="conjunction">Conjunction</option>
-                          <option value="other">Other</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label>Category</label> 
-                        <select
-                          className="category-select"
-                          name="categoryOfWord"
-                          index={i}
-                          value={ this.state.value }
-                          onChange={ this.handleChange }
-                        >
-                          <option value="">Select</option>
-                          <option value="animal">Animal</option>
-                          <option value="art">Art</option>
-                          <option value="accomodation/housing">Accomodation/Housing</option>
-                          <option value="body">Body Part</option>
-                          <option value="color">Color</option>
-                          <option value="education">Education</option>
-                          <option value="food/cooking">Food/Cooking</option>
-                          <option value="greeting">Greeting</option>
-                          <option value="health">Health</option>
-                          <option value="location">Location</option>
-                          <option value="love">Love</option>
-                          <option value="money">Money</option>
-                          <option value="number">Number</option>
-                          <option value="object">Object</option>
-                          <option value="outdoors">Outdoors</option>
-                          <option value="person">Person</option>
-                          <option value="phrase">Phrase</option>
-                          <option value="religion">Religion</option>
-                          <option value="society/urban">Society/Urban Life</option>
-                          <option value="sport">Sport</option>
-                          <option value="time/date">Time/Date</option>
-                          <option value="transportation">Transportation</option>
-                          <option value="weather">Weather/Climate</option>
-                          <option value="other">Other</option>
-                        </select>
-                      </div>
-                    </div>
-                    <span>
-                      { this.state.wordDirty && this.state.wordDirtyIndex === i 
-                        ? this.state.wordError : null
-                      }
-                    </span>
+                    <FormContent
+                      index={ i }
+                      languageString={ formattedLang }
+                      baseLang={ language }
+                      formState={ this.state }
+                      handleChange={ this.handleChange }
+                    />
                   </div>
                 );
               })
