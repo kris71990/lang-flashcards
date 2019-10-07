@@ -149,35 +149,39 @@ class CardView extends React.Component {
     const { cardNumber } = this.state;
     const rand = Math.floor(Math.random() * 100 + 1);
 
-    switch (rand % 4) {
+    if (words[cardNumber].transliteration) {
+      switch (rand % 3) {
+        case 0:
+          return this.setState({
+            hintCategory: true,
+            hintType: false,
+            hintTransliteration: false,
+          });
+        case 1:
+          return this.setState({
+            hintType: true,
+            hintCategory: false,
+            hintTransliteration: false,
+          });
+        default:
+          return this.setState({
+            hintType: false,
+            hintCategory: false,
+            hintTransliteration: true,
+          });
+      }
+    }
+
+    switch (rand % 2) {
       case 0:
         return this.setState({
           hintCategory: true,
           hintType: false,
           hintTransliteration: false,
         });
-      case 1:
+      default: 
         return this.setState({
           hintType: true,
-          hintCategory: false,
-          hintTransliteration: false,
-        });
-      case 2:
-        if (!words[cardNumber].transliteration) {
-          return this.setState({
-            hintType: false,
-            hintCategory: false,
-            hintTransliteration: false,
-          });
-        }
-        return this.setState({
-          hintType: false,
-          hintCategory: false,
-          hintTransliteration: true,
-        });
-      default:
-        return this.setState({
-          hintType: false,
           hintCategory: false,
           hintTransliteration: false,
         });
