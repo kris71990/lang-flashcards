@@ -28,7 +28,7 @@ class CardView extends React.Component {
       score: [0, 0],
       color: 'black',
       editing: false,
-      editError: undefined,
+      actionError: undefined,
       delete: false,
     };
     autoBind.call(this, CardView);
@@ -199,13 +199,6 @@ class CardView extends React.Component {
     return this.props.history.push(routes.CARD_FORM_ROUTE);
   }
 
-  handleToggleDelete() {
-    const toggle = !this.state.delete;
-    return this.setState({
-      delete: toggle,
-    });
-  }
-
   handleDelete() {
     const id = this.props.langData.words[this.state.cardNumber].wordId;
     return this.props.wordDelete(id)
@@ -222,18 +215,35 @@ class CardView extends React.Component {
     });
   }
 
-  handleToggleForm() {
+  handleToggleAction(e) {
     if (!this.props.profile) {
       let hideError = false;
-      if (this.state.editError) hideError = true;
+      let errMsg;
+
+      if (this.state.actionError) hideError = true;
+      if (e.target.textContent === 'Edit Word') {
+        errMsg = 'Log in to edit word';
+      } else {
+        errMsg = 'Log in to delete word';
+      }
+
       return this.setState({
-        editError: hideError ? undefined : 'Log in to edit word',
+        actionError: hideError ? undefined : errMsg,
       });
-    }
-    const toggle = !this.state.editing;
+    } 
+
+    if (e.target.textContent === 'Edit Word') {
+      const toggle = !this.state.editing;
+      return this.setState({
+        editing: toggle,
+        actionError: undefined,
+      });
+    } 
+
+    const toggle = !this.state.delete;
     return this.setState({
-      editing: toggle,
-      editError: undefined,
+      delete: toggle,
+      actionError: undefined,
     });
   }
 
@@ -335,11 +345,11 @@ class CardView extends React.Component {
             />
             <label htmlFor="isCorrect">Correct?</label>
             <div>
-              <button onClick={ this.handleToggleForm }>Edit Word</button>
-              <button onClick={ this.handleToggleDelete }>Delete Word</button>
+              <button onClick={ this.handleToggleAction }>Edit Word</button>
+              <button onClick={ this.handleToggleAction }>Delete Word</button>
               <button onClick={ this.handleLoadForm }>Add Words</button>
             </div>
-            { this.state.editError ? <span>{ this.state.editError }</span> : null }
+            { this.state.actionError ? <span>{ this.state.actionError }</span> : null }
           </div>
           : 
           <div className="card-box">

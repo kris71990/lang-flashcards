@@ -95,6 +95,7 @@ class WordForm extends React.Component {
     if (!this.props.profile) {
       return this.setState({
         wordDirty: true,
+        wordError: 'Log in to add words',
       });
     }
     const { 

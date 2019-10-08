@@ -41,10 +41,14 @@ From the root of the frontend directory, start the webpack dev server with `npm 
 AuthForm       |  /   LanguageMenu
     |          | /    LanguageChoicePanel
 ProfileView ---|/     TranslationChoice
-                            |    
-                      CardsContainer   
+    |                      |    
+ConfirmModal          CardsContainer   
                         /       \
                     CardView   WordForm
+                            \ /
+                          EditForm - FormContent
+                             |
+                        ConfirmModal
 ```
 
 **Component Functionality**
@@ -82,7 +86,7 @@ ProfileView ---|/     TranslationChoice
 - `CardView`
   - Main flashcard component
   - Displays a flashcard section and a language info section
-  - Flashcard section allows user to cycle through words, tracks user score, shows hints, and provides function to add more words via `WordForm`
+  - Flashcard section allows user to cycle through words, tracks user score, shows hints, and provides function to add more words via `WordForm`, or edit via `EditForm`
 
 - `WordForm`
   - Adds words to a language 
@@ -94,10 +98,26 @@ ProfileView ---|/     TranslationChoice
     - `Category` - dropdown menu to describe category of word (required)
   - Fields can be added to add more than one word at once
 
+- `EditForm`
+  - Similar to `WordForm`
+  - Provides ability to edit a word
+  - Appears as a modal over `CardView`
+
+- `FormContent`
+  - Renders a collection of fields associated with one word 
+  - Shared between `WordForm` and `Edit Form`
+    - As child component of `WordForm`, it is conditionally rendered depending on number of words being entered
+    - As child component of `EditForm`, it renders pre-filled with data from current word being edited
+
 - `ProfileView`
   - Entered from `Header`
   - Displays name and profile age
   - Displays table of languages and language data that the user has practiced
+
+- `ConfirmModal`
+  - This modal is shared between `ProfileView` and `CardView`, displaying a different message depending on its location
+    - From `ProfileView`, it appears when a user is deleting a language from their profile, and prompts to user to confirm their action
+    - From `CardView`, it appears when a user is deleting a word from the flashcard collection, prompting the user to confirm their action
 
 
 ## Testing
