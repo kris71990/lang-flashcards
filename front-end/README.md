@@ -1,4 +1,4 @@
-# Language Flashcards - Frontend
+# Polyglot's Corner - Frontend
 
 **Author:** Kris Sakarias
 

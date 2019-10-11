@@ -27,8 +27,9 @@ class Header extends React.Component {
 
     return (
       <header className="header">
-        <h1><Link to={routes.ROOT_ROUTE}>Language Learner</Link></h1>
-        <p><Link to={routes.ROOT_ROUTE}>Learn a New Language Today!</Link></p>
+        <h1><Link to={routes.ROOT_ROUTE}><span>Polyglot&apos;s Corner</span></Link></h1>
+        <p><Link to={routes.ROOT_ROUTE}>Learn a new language</Link></p>
+        <p><Link to={routes.ROOT_ROUTE}>Develop your knowledge</Link></p>
         <nav>
           { this.props.loggedIn ? JSXLoggedIn : JSXLoggedOut }
         </nav>

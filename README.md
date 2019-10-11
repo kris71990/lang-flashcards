@@ -1,4 +1,4 @@
-# Language Flashcards
+# Polyglot's Corner
 
 **Author:** Kris Sakarias
 

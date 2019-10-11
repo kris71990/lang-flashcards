@@ -1,4 +1,4 @@
-# Language Flashcards - Backend
+# Polyglot's Corner - Backend
 
 **Author:** Kris Sakarias
 

@@ -19,7 +19,6 @@ header {
 
   h1 {
     font-family: $header-title;
-    letter-spacing: 0.1em;
     text-shadow: 2px 2px black;
   }
 
@@ -51,20 +50,33 @@ header {
 
 @media only screen and (min-width: 420px) {
   header {    
-    h1 {
-      margin: 2% 0;
-      width: 50%;
-      letter-spacing: 0.2em;
+    h1, p {
+      text-align: left;
+      padding-left: 20px;
     }
+
+    h1 {
+      width: 60%;
+      letter-spacing: 2px;
+      text-decoration-line: underline;
+      color: $header-underline;
+
+      span {
+        color: white;
+      }
+    }
+
   
     p {
       display: block;
-      width: 50%;
-      font-size: 130%;
-      text-align: center;
-      letter-spacing: 0.1em;
+      width: 60%;
+      font-size: 110%;
+      letter-spacing: 3px;
+      margin: 0;
+      padding-bottom: 5px;
+      font-style: italic;
     }
-  
+
     nav {
       width: 40%;
       position: absolute;
