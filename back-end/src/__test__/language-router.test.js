@@ -31,11 +31,10 @@ describe('Language Router Tests', () => {
             .set('Authorization', `Bearer ${accountMock.token}`)
             .send({ languageName: 'Dutch', transliteration: false })
             .then((response) => {
-              const { language } = response.body;
               expect(response.status).toEqual(201);
-              expect(language).toBeInstanceOf(Object);
-              expect(language.languageName).toEqual('Dutch');
-              expect(language.languageId).toBeTruthy();
+              expect(response.body).toBeInstanceOf(Object);
+              expect(response.body.languageName).toEqual('Dutch');
+              expect(response.body.languageId).toBeTruthy();
             });
         });
     });
