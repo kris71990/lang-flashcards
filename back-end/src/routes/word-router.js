@@ -159,6 +159,8 @@ wordRouter.put('/word/:id', bearerAuthMiddleware, jsonParser, (request, response
     .catch(next);
 });
 
+// TODO - decrement word count on language model when word is deleted 
+// see post /word
 wordRouter.delete('/word/:id', bearerAuthMiddleware, (request, response, next) => {
   logger.log(logger.INFO, 'Processing a delete on /word/:id');
 

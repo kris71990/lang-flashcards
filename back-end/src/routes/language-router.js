@@ -42,7 +42,7 @@ languageRouter.post('/language', bearerAuthMiddleware, jsonParser, (request, res
   })
     .then((language) => {
       logger.log(logger.INFO, 'Language created.');
-      return response.status(201).json({ language });
+      return response.status(201).json(language);
     })
     .catch(next);
 });

@@ -1,4 +1,4 @@
-# Polyglot's Corner - Frontend
+# Flashcard Repo - Frontend
 
 **Author:** Kris Sakarias
 

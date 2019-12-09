@@ -1,4 +1,4 @@
-# Polyglot's Corner
+# Flashcard Repo
 
 **Author:** Kris Sakarias
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import langFormatter from '../../utils/lang-formatter';
+import { languageNameCapitalizer } from '../../utils/lang-formatter';
 import autoBind from '../../utils/autobind';
 
 import './form-content.scss';
@@ -20,7 +20,7 @@ class FormContent extends React.Component {
       language, languageString, baseLang, formState, handleChange, index,
     } = this.props;
     const { type } = this.state;
-    const formattedLang = type === 'edit' ? langFormatter(language.lang) : languageString;
+    const formattedLang = type === 'edit' ? languageNameCapitalizer(language.lang) : languageString;
 
     return (
       <div id="form-container">

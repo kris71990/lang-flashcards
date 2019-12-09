@@ -1,4 +1,4 @@
-# Polyglot's Corner - Backend
+# Flashcard Repo - Backend
 
 **Author:** Kris Sakarias
 

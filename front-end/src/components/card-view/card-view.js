@@ -40,6 +40,9 @@ class CardView extends React.Component {
       langData = JSON.parse(localStorage.getItem('words'));
       baseLangData = JSON.parse(localStorage.getItem('language'));
 
+      // TODO - refactor fetch flow - is this proper functionality?
+      // (on mount, get data from local storage and always refetch that data??)
+
       return this.props.wordsFetch({ 
         languageSelection: langData.languageSelection, 
         translationDirection: langData.translationDirection, 
