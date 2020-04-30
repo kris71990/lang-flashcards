@@ -19,6 +19,18 @@ let server = null;
 
 app.use(cors({ credentials: true, origin: CLIENT_URL }));
 
+// const corsWhitelist = [CLIENT_URL, LN_URL, process.env.MOBILE_URL];
+// app.use(cors({ 
+//   credentials: true, 
+//   origin(origin, callback) {
+//     if (corsWhitelist.indexOf(origin) === -1) {
+//       callback(new HttpError(501, 'Bad Gateway'));
+//     } else {
+//       callback(null, true);
+//     }
+//   },
+// }));
+
 app.use(accountRouter);
 app.use(profileRouter);
 app.use(languageRouter);
