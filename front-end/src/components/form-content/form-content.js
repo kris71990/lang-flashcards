@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { languageNameCapitalizer } from '../../utils/lang-formatter';
+import languageNameCapitalizer from '../../utils/lang-formatter';
 import autoBind from '../../utils/autobind';
 
 import './form-content.scss';

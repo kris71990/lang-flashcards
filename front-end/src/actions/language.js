@@ -40,7 +40,7 @@ const languageCreateRequest = lang => (store) => {
       languageName: selectedLanguage, transliteration, spokenIn, family, totalSpeakers, wordCount: 0, 
     })
     .then((response) => {
-      return store.dispatch(languageAdd(response.body.language));
+      return store.dispatch(languageAdd(response.body));
     });
 };
 

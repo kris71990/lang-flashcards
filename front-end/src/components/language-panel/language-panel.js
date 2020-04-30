@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import autoBind from '../../utils/autobind';
 
-import * as supportedLanguages from '../../utils/supported-langs';
+import { supportedLanguages } from '../../utils/supported-langs';
 import './language-panel.scss';
 
 class LanguagePanel extends React.Component {
@@ -16,7 +16,6 @@ class LanguagePanel extends React.Component {
   }
 
   handleChange(e) {
-    const trans = supportedLanguages.supportedLanguages;
     let parseId = e.target.id.split('-id:');
     const parseParentId = e.nativeEvent.target.parentNode.id.split('-id:');
 
@@ -28,16 +27,16 @@ class LanguagePanel extends React.Component {
       });
     } else {
       if (!parseId[0]) parseId = parseParentId;
-      const translit = trans[parseId[0]].transliteration;
-      const name = trans[parseId[0]].localName;
+      const translit = supportedLanguages[parseId[0]].transliteration;
+      const name = supportedLanguages[parseId[0]].localName;
       this.props.setLanguage({ 
         lang: parseId[0], 
         id: parseId[1], 
         transliteration: translit,
         localName: name, 
-        spokenIn: trans[parseId[0]].spokenIn,
-        family: trans[parseId[0]].family,
-        totalSpeakers: trans[parseId[0]].totalSpeakers,
+        spokenIn: supportedLanguages[parseId[0]].spokenIn,
+        family: supportedLanguages[parseId[0]].family,
+        totalSpeakers: supportedLanguages[parseId[0]].totalSpeakers,
       });
       this.setState({
         languageSelection: parseId[0],
@@ -50,7 +49,6 @@ class LanguagePanel extends React.Component {
     let { languages } = this.props;
     languages = languages.sort((a, b) => b.wordCount - a.wordCount); 
     const { languageSelection } = this.state;
-    const supportedLangs = supportedLanguages.supportedLanguages;
 
     return (
       <section id="langs" onClick={ this.handleChange }>
@@ -67,7 +65,7 @@ class LanguagePanel extends React.Component {
                     `${choice.languageName.charAt(0).toUpperCase()}${choice.languageName.slice(1)}`
                   }
                   </h2>
-                  <h5 className="local-name">{ supportedLangs[choice.languageName].localName }</h5>
+                  <h5 className="local-name">{ supportedLanguages[choice.languageName].localName }</h5>
                 </div>
                 <span>{choice.wordCount}</span>
               </div>
