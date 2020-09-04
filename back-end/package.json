@@ -39,7 +39,7 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.8.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.44.3",
+    "sequelize": "^5.15.1",
     "superagent": "^4.1.0",
     "winston": "^3.2.1"
   }
